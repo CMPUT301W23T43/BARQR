@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ccd0da"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="30mm"
+            android:layout_height="30mm"
+            android:layout_marginLeft="5mm"
+            android:background="#000"
+            android:layout_marginRight="13mm"
+            />
+
+        <Button
+            android:id="@+id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:textSize="2mm"
+            android:fontFamily="monospace"
+            android:backgroundTint="#000"
+            android:textColor="#9ca0b0"
+            >
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <Button
+            android:id="@+id/playerSearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number of Codes"
+            android:layout_gravity="center"
+            android:fontFamily="monospace"
+            android:backgroundTint="#000"
+            android:textColor="#9ca0b0"
+            android:layout_marginRight="5mm"
+            >
+        </Button>
+        <Button
+            android:id="@+id/codeSearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Individual Codes"
+            android:layout_gravity="center"
+            android:fontFamily="monospace"
+            android:backgroundTint="#000"
+            android:textColor="#9ca0b0"
+            >
+        </Button>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/leaderBoardList"
+        android:layout_width="wrap_content"
+        android:layout_height="344dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+
+        />
+
+
+    <!-- below is the taskbar code -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="8.5dp"
+        android:background="#000"
+        />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="8.5dp"
+            android:layout_height="75dp"
+            android:background="#000"
+            />
+        <ImageButton
+            android:id="@+id/newCodeButton"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/camera"
+            android:background="#9ca0b0"
+            />
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="75dp"
+            android:background="#000"
+            />
+        <ImageButton
+            android:id="@+id/leaderBoardButton"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/Trophy"
+            android:background="#9ca0b0"
+            />
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="75dp"
+            android:background="#000"
+            />
+        <ImageButton
+            android:id="@+id/homeButton"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/house"
+            android:background="#9ca0b0"
+            />
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="75dp"
+            android:background="#000"
+            />
+        <ImageButton
+            android:id="@+id/mapButton"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/map"
+            android:background="#9ca0b0"
+            />
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="75dp"
+            android:background="#000"
+            />
+        <ImageButton
+            android:id="@+id/settingsButton"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/setting"
+            android:background="#9ca0b0"
+            />
+        <ImageView
+            android:layout_width="8.5dp"
+            android:layout_height="75dp"
+            android:background="#000"
+            />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="8.5dp"
+        android:background="#000"
+        />
+
+</LinearLayout>

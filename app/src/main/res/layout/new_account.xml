@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ccd0da"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5mm"
+        android:paddingBottom="20mm"
+        android:text="Create New Account"
+        android:textColor="#000"
+        android:fontFamily="monospace"
+        android:textSize="5mm"
+        android:layout_gravity="center"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2mm"
+            android:text="Username :"
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            android:paddingLeft="10mm"
+            />
+        <EditText
+            android:id="@+id/usernameField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2mm"
+            android:hint="                  "
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2mm"
+            android:text="Password :"
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            android:paddingLeft="10mm"
+            />
+        <EditText
+            android:id="@+id/passwordField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2mm"
+            android:hint="                  "
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2mm"
+            android:text="Confirm Password :"
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            android:paddingLeft="10mm"
+            />
+        <EditText
+            android:id="@+id/confirmPasswordField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2mm"
+            android:text="                "
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2mm"
+            android:text="Email :"
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            android:paddingLeft="10mm"
+            />
+        <EditText
+            android:id="@+id/emailField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2mm"
+            android:text="                     "
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Terms and Services"
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_marginTop="2.5mm"
+        android:layout_gravity="center"
+        android:backgroundTint="#000"
+        android:textColor="#9ca0b0"
+        android:layout_marginBottom="2.5mm"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_marginTop="2.5mm"
+        android:layout_gravity="center"
+        android:backgroundTint="#000"
+        android:textColor="#9ca0b0"
+        android:layout_marginBottom="5mm"
+        />
+</LinearLayout>

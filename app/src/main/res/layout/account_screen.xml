@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ccd0da"
+    >
+
+    <ImageView
+        android:layout_width="30mm"
+        android:layout_height="30mm"
+        android:layout_marginTop="5mm"
+        android:background="#000"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10mm"
+        android:text="My Account"
+        android:textColor="#000"
+        android:fontFamily="monospace"
+        android:textSize="5mm"
+        android:layout_gravity="center"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2mm"
+            android:text="Username :"
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            android:paddingLeft="10mm"
+            />
+        <TextView
+            android:id="@+id/usernameMyAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2mm"
+            android:text="                "
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2mm"
+            android:text="Email :"
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            android:paddingLeft="10mm"
+            />
+        <TextView
+            android:id="@+id/passwordMyAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2mm"
+            android:text="                "
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="3mm"
+            />
+    </LinearLayout>
+    <Button
+        android:id="@+id/logOutMyAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log Out"
+        android:layout_marginTop="25mm"
+        android:layout_gravity="center"
+        android:backgroundTint="#000"
+        android:textColor="#9ca0b0"
+        android:layout_marginBottom="2.5mm"
+        />
+    <Button
+        android:id="@+id/closeMyAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Close"
+        android:layout_gravity="center"
+        android:backgroundTint="#000"
+        android:textColor="#9ca0b0"
+        android:layout_marginBottom="2.5mm"
+        />
+</LinearLayout>

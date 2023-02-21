@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ccd0da"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="____'s Codes"
+        android:fontFamily="monospace"
+        android:textSize="25dp"
+        android:textColor="#000"
+        android:paddingBottom="50dp"
+        android:paddingLeft="25dp"
+        android:paddingTop="25dp"
+        />
+
+    <!-- codes display -->
+    <ListView
+        android:id="@+id/playerCodesDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="428dp"
+        android:paddingTop="25dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingBottom="25dp"
+        />
+
+    <!-- totals display -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="25dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Codes Scanned: "
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="15dp"
+            />
+        <TextView
+            android:id="@+id/codeTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="_______"
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="15dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="62dp"
+        android:paddingLeft="25dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Points Scanned: "
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="15dp"
+            />
+        <TextView
+            android:id="@+id/pointTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="_______"
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="15dp"
+            />
+
+    </LinearLayout>
+
+
+
+    <!-- below is the taskbar code -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="8.5dp"
+        android:background="#000"
+        />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="8.5dp"
+            android:layout_height="75dp"
+            android:background="#000"
+            />
+        <ImageButton
+            android:id="@+id/newCodeButton"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/camera"
+            android:background="#9ca0b0"
+            />
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="75dp"
+            android:background="#000"
+            />
+        <ImageButton
+            android:id="@+id/leaderBoardButton"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/Trophy"
+            android:background="#9ca0b0"
+            />
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="75dp"
+            android:background="#000"
+            />
+        <ImageButton
+            android:id="@+id/homeButton"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/house"
+            android:background="#9ca0b0"
+            />
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="75dp"
+            android:background="#000"
+            />
+        <ImageButton
+            android:id="@+id/mapButton"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/map"
+            android:background="#9ca0b0"
+            />
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="75dp"
+            android:background="#000"
+            />
+        <ImageButton
+            android:id="@+id/settingsButton"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/setting"
+            android:background="#9ca0b0"
+            />
+        <ImageView
+            android:layout_width="8.5dp"
+            android:layout_height="75dp"
+            android:background="#000"
+            />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="8.5dp"
+        android:background="#000"
+        />
+
+</LinearLayout>

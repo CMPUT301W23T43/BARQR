@@ -23,7 +23,6 @@
             android:id="@+id/nameField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="                 "
             android:textSize="2.5mm"
             android:fontFamily="monospace"
             android:layout_marginTop="2.5mm"
@@ -47,7 +46,6 @@
             android:id="@+id/pointsField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="                 "
             android:textSize="2.5mm"
             android:fontFamily="monospace"
             android:layout_marginTop="2.5mm"
@@ -71,7 +69,6 @@
             android:id="@+id/commentField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="                 "
             android:textSize="2.5mm"
             android:fontFamily="monospace"
             android:layout_marginTop="2.5mm"
@@ -162,6 +159,7 @@
         android:orientation="horizontal"
         >
         <Button
+            android:id="@+id/closeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Close"
@@ -185,97 +183,7 @@
             android:layout_marginBottom="30dp"
             />
     </LinearLayout>
-    <!-- below is the taskbar code -->
-    <LinearLayout
-        android:paddingTop="46dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-    </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="8.5dp"
-        android:background="#000"
-        />
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <ImageView
-            android:layout_width="8.5dp"
-            android:layout_height="75dp"
-            android:background="#000"
-            />
-        <ImageButton
-            android:id="@+id/newCodeButton"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:src="@drawable/camera"
-            android:background="#9ca0b0"
-            />
-        <ImageView
-            android:layout_width="5dp"
-            android:layout_height="75dp"
-            android:background="#000"
-            />
-        <ImageButton
-            android:id="@+id/leaderBoardButton"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:src="@drawable/trophy"
-            android:background="#9ca0b0"
-            />
-        <ImageView
-            android:layout_width="5dp"
-            android:layout_height="75dp"
-            android:background="#000"
-            />
-        <ImageButton
-            android:id="@+id/homeButton"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:src="@drawable/house"
-            android:background="#9ca0b0"
-            />
-        <ImageView
-            android:layout_width="5dp"
-            android:layout_height="75dp"
-            android:background="#000"
-            />
-        <ImageButton
-            android:id="@+id/mapButton"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:src="@drawable/map"
-            android:background="#9ca0b0"
-            />
-        <ImageView
-            android:layout_width="5dp"
-            android:layout_height="75dp"
-            android:background="#000"
-            />
-        <ImageButton
-            android:id="@+id/settingsButton"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:src="@drawable/setting"
-            android:background="#9ca0b0"
-            />
-        <ImageView
-            android:layout_width="8.5dp"
-            android:layout_height="75dp"
-            android:background="#000"
-            />
-    </LinearLayout>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="8.5dp"
-        android:background="#000"
-        />
 
 
 </LinearLayout>

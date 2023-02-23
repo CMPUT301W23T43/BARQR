@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore dataBase;
     CollectionReference usersRef;
     CollectionReference codesRef;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        // The code below this comment is simply for testing that the database 
         HashMap<String, Object> userInfo = new HashMap<>();
         HashMap<String, Object> codesInfo = new HashMap<>();
 

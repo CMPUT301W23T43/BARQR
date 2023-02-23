@@ -23,7 +23,6 @@
             android:id="@+id/nameField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="                 "
             android:textSize="2.5mm"
             android:fontFamily="monospace"
             android:layout_marginTop="2.5mm"
@@ -47,7 +46,6 @@
             android:id="@+id/pointsField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="                 "
             android:textSize="2.5mm"
             android:fontFamily="monospace"
             android:layout_marginTop="2.5mm"
@@ -71,7 +69,6 @@
             android:id="@+id/commentField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Player's Comment"
             android:textSize="2.5mm"
             android:fontFamily="monospace"
             />
@@ -119,7 +116,7 @@
         android:layout_gravity="center"
         >
         <ImageView
-            android:id="@+id/myImage"
+            android:id="@+id/playerImage"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:background="#000"
@@ -161,6 +158,7 @@
         android:orientation="horizontal"
         >
         <Button
+            android:id="@+id/closeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Close"
@@ -172,7 +170,7 @@
             android:layout_marginBottom="30dp"
             />
         <Button
-            android:id="@+id/deleteCodeButton"
+            android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete"

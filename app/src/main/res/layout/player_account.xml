@@ -123,7 +123,7 @@
             android:id="@+id/leaderBoardButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:src="@drawable/Trophy"
+            android:src="@drawable/trophy"
             android:background="#9ca0b0"
             />
         <ImageView

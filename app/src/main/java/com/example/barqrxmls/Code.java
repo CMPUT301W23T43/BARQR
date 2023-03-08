@@ -23,6 +23,9 @@ public class Code {
      * @param data Scanned data from the Code
      */
     public Code(String data) {
+        if (data.length() <= 0) {
+            throw new IllegalArgumentException("Code data must be non-empty!");
+        }
         // From www.baeldung.com
         // https://www.baeldung.com/sha-256-hashing-java
         // written by "baeldung", accessed March 6 2023
@@ -51,17 +54,17 @@ public class Code {
         ArrayList<String> prefixes = new ArrayList<>((Arrays.asList("Doctor", "Professor",
                 "Teacher", "King", "Queen", "The Honourable", "The", "Sir", "Madam", "Dog", "Guy",
                 "That", "Mr", "Mrs", "Ms", "Real G")));
-        ArrayList<String> suffixes = new ArrayList<>(Arrays.asList("Tall", "Fat",
-                "Tiny", "Strange", "Round", "Stupid", "Smart", "Courageous", "Cowardly"));
-        ArrayList<String> suffixArticles = new ArrayList<>(Arrays.asList("the", "a", "an",
-                "PhD in", "MD in"));
         ArrayList<String> names = new ArrayList<>(Arrays.asList("Tyler", "Anjelica", "Danielle",
                 "James", "Gregory", "Greg", "Robin", "Richard", "Dick", "Joe", "Joseph", "Kannan",
                 "Sarah", "Morgan"));
+        ArrayList<String> suffixArticles = new ArrayList<>(Arrays.asList(", the", ", a", ", an",
+                ", PhD in", ", MD in"));
+        ArrayList<String> suffixes = new ArrayList<>(Arrays.asList("Tall", "Fat",
+                "Tiny", "Strange", "Round", "Stupid", "Smart", "Courageous", "Cowardly"));
         nameParts.put(0, prefixes);
-        nameParts.put(1, suffixes);
+        nameParts.put(1, names);
         nameParts.put(2, suffixArticles);
-        nameParts.put(3, names);
+        nameParts.put(3, suffixes);
 
         name = generateName(nameParts);
         points = calculateScore();
@@ -74,25 +77,29 @@ public class Code {
      * @return the generated name
      */
     public String generateName(HashMap<Integer, ArrayList<String>> nameParts) {
-        // 5891b 5b522 d5df0 86d0f f0b110fbd9d 21bb4fc7163af34d08286a2e846f6be03
         // TODO: Generate tests for this function.
         StringBuilder generatedName = new StringBuilder();
         Integer digRepr;
-        int start, end;
-        int step = 8;
-        int i = 0;
+        int start = 0, end;
+        int step = 2;
         int idx;
-        for (start = 0; start < nameParts.size(); start+=step) {
+        for (int k = 0; k < nameParts.size(); k++) {
             end = start+step;
             String slice = hash.substring(start, end);
             digRepr = Integer.parseInt(slice, 16);
-            ArrayList<String> options = nameParts.get(i);
+            ArrayList<String> options = nameParts.get(k);
             try {
                 idx = digRepr % options.size();
-                generatedName.append(nameParts.get(i).get(idx));
+                generatedName.append(nameParts.get(k).get(idx));
             } catch (NullPointerException e) {
                 System.out.println(e);
             }
+            if (k != 1 && k != nameParts.size() - 1) {
+                // Don't put a space after name, since we want a comma there instead.
+                // Also don't end the name with a space.
+                generatedName.append(" ");
+            }
+            start = end;
         }
         return generatedName.toString();
     }
@@ -122,21 +129,29 @@ public class Code {
     }
 
     /**
-     * Calculate the score, as the flat sum of the first 8*numParts.size() digits.
+     * Calculate the score, based on the following rules:
+     *  1. If the previous character is the same as the next character, +1 point
+     *  2. If the current character is the a digit under 9, add that digit
+     *  3. If the current letter is the first letter of a team member's name, add 50 points.
      * @return score
      */
     public Integer calculateScore() {
-        //TODO: Create a scoring scheme and function
-        // That is more complex than simple sum.
-        int start, end;
-        int step = 8;
+        int start;
         int sum = 0;
-        int digRepr;
-        for (start = 0; start < 4; start+=step) {
-            end = start+step;
-            String slice = hash.substring(start, end);
-            digRepr = Integer.parseInt(slice, 16);
-            sum += digRepr;
+        int stop = 16;
+        ArrayList<String> bonusLetters = new ArrayList<>(Arrays.asList("a", "t", "s", "d", "n", "k"));
+        for (start = 0; start < stop; start++) {
+            String curr = hash.substring(start, start+1);
+            String next = hash.substring(start+1, start+2);
+            if (curr.equals(next)) {
+                sum += 1;
+            }
+            if (Integer.parseInt(curr, 16) <= 9) {
+                sum += Integer.parseInt(curr, 16);
+            }
+            if (bonusLetters.contains(curr)) {
+                sum += 50;
+            }
         }
         return sum;
     }

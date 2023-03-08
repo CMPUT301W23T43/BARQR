@@ -14,7 +14,7 @@ import java.util.List;
 public class Code {
 
     private String hash;
-    private String points;
+    private Integer points;
     private String name;
 
     private HashMap<Integer, ArrayList<String>> nameParts;
@@ -67,6 +67,7 @@ public class Code {
         nameParts.put(3, names);
 
         name = generateName();
+        points = calculateScore();
     }
 
     /**
@@ -108,19 +109,28 @@ public class Code {
     }
 
     /**
-     *
-     * @param hash
+     * Setter for the unique hash corresponding to this object.
+     * @param hash The base-16 hash for this code.
      */
     public void setHash(String hash) {
         this.hash = hash;
     }
 
     /**
+     * Getter for points
+     * @return points
+     */
+    public Integer getPoints() {
+        return this.points;
+    }
+
+    /**
      * Calculate the score, as the flat sum of the first 8*numParts.size() digits.
      * @return score
      */
-    public int calculateScore() {
+    public Integer calculateScore() {
         //TODO: Create a scoring scheme and function
+        // That is more complex than simple sum.
         int start, end;
         int step = 8;
         int sum = 0;
@@ -135,24 +145,24 @@ public class Code {
     }
 
     /**
-     *
-     * @param points
+     * Setter for points
+     * @param points the Integer value for points to become.
      */
-    public void setPoints(String points) {
+    public void setPoints(Integer points) {
         this.points = points;
     }
 
     /**
-     *
-     * @return
+     * Getter for name.
+     * @return name
      */
     public String getName() {
         return name;
     }
 
     /**
-     *
-     * @param name
+     * Setter for name
+     * @param name the name to assume.
      */
     public void setName(String name) {
         this.name = name;

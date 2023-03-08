@@ -1,15 +1,11 @@
 package com.example.barqrxmls;
 
-import android.os.Message;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 public class Code {
 
@@ -17,7 +13,6 @@ public class Code {
     private Integer points;
     private String name;
 
-    private HashMap<Integer, ArrayList<String>> nameParts;
     // Access like nameParts['suffix']
 
     // Hashes are uniquely identified by their sha256sum
@@ -50,15 +45,17 @@ public class Code {
 
         hash = hexStr.toString();
 
+
+        HashMap<Integer, ArrayList<String>> nameParts = new HashMap<>();
         // Format will be like "Doctor James Smith the Fat"
-        ArrayList<String> prefixes = new ArrayList<String>((Arrays.asList("Doctor", "Professor",
+        ArrayList<String> prefixes = new ArrayList<>((Arrays.asList("Doctor", "Professor",
                 "Teacher", "King", "Queen", "The Honourable", "The", "Sir", "Madam", "Dog", "Guy",
                 "That", "Mr", "Mrs", "Ms", "Real G")));
-        ArrayList<String> suffixes = new ArrayList<String>(Arrays.asList("Tall", "Fat",
+        ArrayList<String> suffixes = new ArrayList<>(Arrays.asList("Tall", "Fat",
                 "Tiny", "Strange", "Round", "Stupid", "Smart", "Courageous", "Cowardly"));
-        ArrayList<String> suffixArticles = new ArrayList<String>(Arrays.asList("the", "a", "an",
+        ArrayList<String> suffixArticles = new ArrayList<>(Arrays.asList("the", "a", "an",
                 "PhD in", "MD in"));
-        ArrayList<String> names = new ArrayList<String>(Arrays.asList("Tyler", "Anjelica", "Danielle",
+        ArrayList<String> names = new ArrayList<>(Arrays.asList("Tyler", "Anjelica", "Danielle",
                 "James", "Gregory", "Greg", "Robin", "Richard", "Dick", "Joe", "Joseph", "Kannan",
                 "Sarah", "Morgan"));
         nameParts.put(0, prefixes);
@@ -66,7 +63,7 @@ public class Code {
         nameParts.put(2, suffixArticles);
         nameParts.put(3, names);
 
-        name = generateName();
+        name = generateName(nameParts);
         points = calculateScore();
     }
 
@@ -76,7 +73,7 @@ public class Code {
      * This gives a unique number; we can then modulo this number by the available bins.
      * @return the generated name
      */
-    public String generateName() {
+    public String generateName(HashMap<Integer, ArrayList<String>> nameParts) {
         // 5891b 5b522 d5df0 86d0f f0b110fbd9d 21bb4fc7163af34d08286a2e846f6be03
         // TODO: Generate tests for this function.
         StringBuilder generatedName = new StringBuilder();
@@ -94,7 +91,7 @@ public class Code {
                 idx = digRepr % options.size();
                 generatedName.append(nameParts.get(i).get(idx));
             } catch (NullPointerException e) {
-                System.out.println(e.toString());
+                System.out.println(e);
             }
         }
         return generatedName.toString();
@@ -135,7 +132,7 @@ public class Code {
         int step = 8;
         int sum = 0;
         int digRepr;
-        for (start = 0; start < nameParts.size(); start+=step) {
+        for (start = 0; start < 4; start+=step) {
             end = start+step;
             String slice = hash.substring(start, end);
             digRepr = Integer.parseInt(slice, 16);

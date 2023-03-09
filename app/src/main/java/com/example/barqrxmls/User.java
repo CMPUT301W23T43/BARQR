@@ -1,5 +1,7 @@
 package com.example.barqrxmls;
 
+import android.widget.EditText;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,8 @@ public class User {
         this.userName = userName;
         this.password = password;
     }
+
+
 
     /**
      *
@@ -50,5 +54,7 @@ public class User {
         User user = (User) o;
         return this.userName.compareTo(user.getUserName());
     }
+
+
 
 }

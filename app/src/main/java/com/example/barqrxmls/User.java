@@ -4,26 +4,22 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class User {
 
-    private String userName;
-    private HashMap<String,String> codes;
-    private int totalPoints;
+    private static String userName;
+    private static HashMap<String,String> codes;
+    private static int totalPoints;
     private String email;
     private String id;
-    private int numCodes;
+    private static int numCodes;
 
     /**
      *
@@ -126,7 +122,7 @@ public class User {
         codes.remove(removeCode);
         totalPoints = totalPoints - codePoints;
         numCodes = numCodes - 1;
-        updateInDatabase();
+        this.updateInDatabase();
         return;
     }
 

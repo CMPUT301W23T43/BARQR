@@ -22,6 +22,21 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name=".MainActivity" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name=".LeaderBoard" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name=".Account" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name=".Map" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name=".NewCode" />
+            </intent-filter>
 
             <meta-data
                 android:name="android.app.lib_name"

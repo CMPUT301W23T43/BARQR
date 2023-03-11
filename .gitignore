@@ -255,3 +255,6 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/android,androidstudio,java,vim,emacs
+
+# Add DS_Store file to ignore
+.DS_Store

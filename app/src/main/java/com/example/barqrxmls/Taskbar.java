@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,13 +18,24 @@ import java.util.HashMap;
 public class Taskbar {
     HashMap<String, OnClickListener> switchActivityMap;
     Context callerContext;
-//    public Taskbar(Context context) {
-//        this(   context,
-//                new ArrayList<>(Arrays.asList(MainActivity.class, TestActivity.class)),
-//                new ArrayList<>(Arrays.asList("MainActivity", "TestActivity"))
-//        );
-//    }
 
+    /**
+     * Construct a default taskbar
+     *
+     * This constructor creates a default taskbar for the current layout of the app.
+     * Internally, it calls the second constructor with a default list of arguments.
+     * @param context The caller's context, required for view switching to work.
+     */
+    public Taskbar(Context context) {
+        this(   context,
+                new ArrayList<>(Arrays.asList(MainActivity.class, LeaderBoard.class, Map.class, NewCode.class, Account.class)),
+                new ArrayList<>(Arrays.asList("MainActivity", "LeaderBoard", "Map", "NewCode", "Account"))
+        );
+    }
+
+    // Class generic creation style from StackOverflow (<? extends ...> and <T extends ...>)
+    // Author Joshua Gainey https://stackoverflow.com/users/11390398/joshua-gainey
+    // Source:https://stackoverflow.com/a/55824729
     /**
      * Construct a hashmap of ActivityName, OnClickListener entries.
      *
@@ -46,14 +56,11 @@ public class Taskbar {
         switchActivityMap = listenerHashMap;
     }
 
-    // Class generic creation style from StackOverflow,
-    // Author Joshua Gainey https://stackoverflow.com/users/11390398/joshua-gainey
-    // Source:https://stackoverflow.com/a/55824729
 
     /**
      * Create an OnClickListener that swaps from the given Context to the target activity.
      *
-     * @param target The target activity to switch to
+     * @param target The target activity to switch to. Must be a Class of type T.
      * @return OnClickListener with behaviour of switching to target activity.
      * @param <T> A class that extends AppCompatActivity.
      */

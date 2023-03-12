@@ -35,16 +35,8 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-
-        Intent backToMain = new Intent(CameraActivity.this, MainActivity.class);
-        String qrData = "codeData";
-        String bitmap="codeBitmap";
         scanCode();
-        backToMain.putExtra(qrData,data);
-        backToMain.putExtra(bitmap,bitmapOfLocation);
-        setResult(15, backToMain);
-        //startActivity(backToMain);
-        //finish();
+
     }
 
 
@@ -58,6 +50,8 @@ public class CameraActivity extends AppCompatActivity {
         options.setOrientationLocked(true);
         options.setCaptureActivity(CaptureAct.class);
         barLauncher.launch(options);
+
+
 
     }
 
@@ -74,6 +68,7 @@ public class CameraActivity extends AppCompatActivity {
             surroundingBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    getBackToMain();
                     dialogInterface.dismiss();
                 }
             });
@@ -122,6 +117,7 @@ public class CameraActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData()!= null){
                     Bundle bundle = result.getData().getExtras();
                     bitmapOfLocation=(Bitmap) bundle.get("data");
+                    getBackToMain();
 
                 }
             }
@@ -131,6 +127,17 @@ public class CameraActivity extends AppCompatActivity {
     }
     public Bitmap getBitmap(){
         return bitmapOfLocation;
+    }
+    public void getBackToMain(){
+        Intent backToMain = new Intent(CameraActivity.this, MainActivity.class);
+        String qrData = "codeData";
+        String bitmap="codeBitmap";
+
+        backToMain.putExtra(qrData,data);
+        backToMain.putExtra(bitmap,bitmapOfLocation);
+        setResult(15, backToMain);
+        //startActivity(backToMain);
+        finish();
     }
 
 

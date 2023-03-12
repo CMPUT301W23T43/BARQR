@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ccd0da"
+    android:gravity="bottom"
     >
 
     <TextView
@@ -23,7 +24,7 @@
     <ListView
         android:id="@+id/playerCodesDisplay"
         android:layout_width="wrap_content"
-        android:layout_height="428dp"
+        android:layout_height="400dp"
         android:paddingTop="25dp"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
@@ -35,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="25dp"
+
         >
         <TextView
             android:layout_width="wrap_content"
@@ -58,7 +60,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="62dp"
+        android:paddingBottom="50dp"
         android:paddingLeft="25dp"
         >
         <TextView

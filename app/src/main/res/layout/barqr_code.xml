@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ccd0da"
+    android:gravity="bottom"
+    android:paddingBottom="100dp"
     >
     <LinearLayout
         android:layout_width="wrap_content"

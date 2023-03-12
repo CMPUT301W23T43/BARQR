@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ccd0da"
+    android:gravity="bottom"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,10 +64,57 @@
         </Button>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Player Ranking:"
+            android:fontFamily="monospace"
+            >
+        </TextView>
+        <TextView
+            android:id="@+id/playerRanking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text="_____"
+            >
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@android:dimen/notification_large_icon_height"
+            >
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Code Ranking:"
+            android:fontFamily="monospace"
+            >
+        </TextView>
+        <TextView
+            android:id="@+id/codeRanking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text="_____"
+            >
+        </TextView>
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/leaderBoardList"
         android:layout_width="wrap_content"
-        android:layout_height="344dp"
+        android:layout_height="300dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="25dp"

@@ -42,7 +42,7 @@ public class CameraActivity extends AppCompatActivity {
     /**
      * Implements the QR scanner by starting the Capture Act.
      */
-    private void scanCode(){
+    public void scanCode(){
         ScanOptions options = new ScanOptions();
         options.setPrompt("Volume up for Flash");
         options.setBeepEnabled(true);

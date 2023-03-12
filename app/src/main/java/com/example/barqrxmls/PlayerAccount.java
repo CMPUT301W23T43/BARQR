@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+
 public class PlayerAccount extends AppCompatActivity {
+
+    private ArrayList<Code> CodeDataList;
+    private CodeArrayAdapter CodeAdapter;
 
     FirebaseFirestore dataBase;
     CollectionReference usersRef;
@@ -25,7 +31,13 @@ public class PlayerAccount extends AppCompatActivity {
     ListView CodesList;
 
 
-    public void onCreate(Bundle savedInstanceState) {
+
+
+
+
+
+
+    public void onResume(Bundle savedInstanceState) {
         dataBase = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
@@ -43,6 +55,23 @@ public class PlayerAccount extends AppCompatActivity {
             if (currentUser != null) {
                 // Get the current user's ID
                 String currentUserEmail = currentUser.getEmail();
+                User user = new User(currentUser.toString(), currentUserId.toString(), currentUserEmail.toString());
+
+
+
+
+
+
+                CodeDataList = new ArrayList<Code>();
+                for (String key : user.getCodes().keySet()) {
+                    CodeDataList.add(new Code(key));
+                }
+                CodeAdapter = new CodeArrayAdapter(this, CodeDataList);
+                CodesList.setAdapter(CodeAdapter);
+
+
+
+
 
                 /**
                  Sets up an OnItemLongClickListener for the CodesList AdapterView in the PlayerAccount activity.
@@ -63,7 +92,6 @@ public class PlayerAccount extends AppCompatActivity {
                                 setTitle("Delete Code").
                                 setMessage("Are you sure you want to delete this Code?").
                                 setPositiveButton("Yes", (dialog, which) -> {
-                                    User user = new User(currentUser.toString(), currentUserId.toString(), currentUserEmail.toString());
                                     String CodeToDelete = (String) parent.getItemAtPosition(position);
                                     Code CodeDeleted = new Code(CodeToDelete);
                                     user.removeCode(CodeToDelete,CodeDeleted.getPoints());
@@ -75,6 +103,18 @@ public class PlayerAccount extends AppCompatActivity {
                         return true;
                     }
                 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

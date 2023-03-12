@@ -28,7 +28,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     final String TAG = "Sample";
-
     FirebaseFirestore dataBase;
     CollectionReference usersRef;
     CollectionReference codesRef;
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
 
+        Taskbar taskbar = new Taskbar(MainActivity.this);
         // setting screen changes from taskbar
         // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
 
@@ -51,90 +51,45 @@ public class MainActivity extends AppCompatActivity {
          * @author Noah Jeans
          * @version 1
          * @return opens MainActivity which is linked to main_screen.xml
-         * @param v the view which is to be opened
          */
         ImageButton home = (ImageButton) findViewById(R.id.homeButton);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // go to MainActivity screen
-                Intent myIntent = new Intent(v.getContext(), MainActivity.class);
-                startActivity(myIntent);
-            }
-        });
+        home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
 
         /**
          * LeaderBoard Button implementation
          * @author Noah Jeans
          * @version 1
          * @return opens LeaderBoard which is linked to leaderboard_screen.xml
-         * @param v the view which is to be opened
          */
         ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
-        leaderboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // go to LeaderBoard screen
-                Intent myIntent = new Intent(v.getContext(), LeaderBoard.class);
-                startActivity(myIntent);
-            }
-        });
+        leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
 
         /**
          * NewCode Button implementation
-         * @author Noah Jeans
-         * @version 1
+         * @author Noah Jeans, Tyler Pollom
+         * @version 2
          * @return opens NewCode which is linked to barqr_code.xml
-         * @param v the view which is to be opened
          */
         ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
-        newCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // go to camera screen
-                Intent myIntent = new Intent(v.getContext(), NewCode.class);
-                startActivity(myIntent);
-            }
-        });
+        newCode.setOnClickListener(taskbar.getSwitchActivityMap().get("NewCode"));
 
         /**
          * Map Button implementation
-         * @author Noah Jeans
-         * @version 1
+         * @author Noah Jeans, Tyler Pollom
+         * @version 2
          * @return opens Map which is linked to map.xml
-         * @param v the view which is to be opened
          */
         ImageButton map = (ImageButton) findViewById(R.id.mapButton);
-        map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // go to map screen
-                Intent myIntent = new Intent(v.getContext(), Map.class);
-                startActivity(myIntent);
-            }
-        });
+        map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));
 
         /**
          * Account Button implementation
-         * @author Noah Jeans
-         * @version 1
+         * @author Noah Jeans, Tyler Pollom
+         * @version 2
          * @return opens Account which is linked to account_screen.xml
-         * @param v the view which is to be opened
          */
         ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
-        account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // go to settings screen
-                Intent myIntent = new Intent(v.getContext(), Account.class);
-                startActivity(myIntent);
-            }
-        });
+        account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
 
         // The code below this comment is simply for testing that the database 
         HashMap<String, Object> userInfo = new HashMap<>();

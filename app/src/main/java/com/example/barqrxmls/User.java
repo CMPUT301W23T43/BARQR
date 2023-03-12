@@ -2,28 +2,38 @@ package com.example.barqrxmls;
 
 import android.util.Log;
 
+import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class User {
 
-    private static String userName;
-    private static HashMap<String,String> codes;
-    private static int totalPoints;
+public class User {
+    private String userName;
+    private HashMap<String,String> codes;
+    private int totalPoints;
     private String email;
     private String id;
-    private static int numCodes;
+    private int numCodes;
 
     /**
+     * stores information related to the user's account
+     * @param userName is a String of the player's Unique Username
+     * @param id is a String of the player's id
+     * @param email is a String of the user's email
      *
-     * @param
+
      */
     User(String userName, String id, String email) {
         this.userName = userName;
@@ -31,67 +41,68 @@ public class User {
         this.totalPoints = 0;
         this.email = email;
         this.numCodes = 0;
+
     }
 
     /**
-     *
-     * @param
+     *Empty user constructor for pulling a user from the database
      */
     User() {
 
     }
 
     /**
-     *
-     * @return
+     * return the user's username
+     * @return the user's username
      */
     public String getUserName() {
         return userName;
     }
 
     /**
-     *
-     * @return
+     * return's user's id
+     * @return the user's id
      */
     public String getId() {
         return id;
     }
 
     /**
-     *
-     * @param
+     * return's a hashmap of the user's code hashes and code comments
+     * @return a hashmap of the user's code hashes and code comments
      */
     public HashMap<String, String> getCodes() {
         return codes;
     }
 
     /**
-     *
-     * @param
+     * returns user's total points
+     * @return user's total points
      */
     public int getTotalPoints() {
         return totalPoints;
     }
 
     /**
-     *
-     * @param
+     * returns user's email
+     * @return user's email
      */
     public String getEmail() {
         return email;
     }
 
     /**
-     *
-     * @param
+     * returns the number of codes the user has
+     * @return the number of codes the user has
      */
     public int getNumCodes() {
         return numCodes;
     }
 
     /**
-     *
-     * @param
+     * adds a code to the user's list of codes without a comment
+     * @param codeHash is a String of the hash of the code
+     * @param codePoints is an int of the number of points the code is worth
      */
     public void addCode(String codeHash, int codePoints) {
         // add code without comment to user codes, update points and total codes
@@ -102,8 +113,10 @@ public class User {
     }
 
     /**
-     *
-     * @param
+     * adds a code to the user's list of codes with a comment
+     * @param codeHash is a String of the hash of the code
+     * @param comment is a String of the user's comment on their code
+     * @param codePoints is an int of the number of points the code is worth
      */
     public void addCode(String codeHash, String comment, int codePoints) {
         // add code with comment to user codes, update points and total codes
@@ -114,21 +127,61 @@ public class User {
     }
 
     /**
-     *
-     * @param
+     * adds a comment to a code, overwrites any existing comment
+     * @param codeHash is a String of the hash of the code to add
+     * @param codeComment is the comment to add to the code
+     */
+    public void addComment(String codeHash, String codeComment) {
+        if(codes.get(codeHash) == null) {
+            return;
+        }
+        codes.put(codeHash, codeComment);
+        updateInDatabase();
+    }
+
+    /**
+     * removes a comment from a code
+     * @param codeHash is a String of the hash of the code to remove comment from
+     */
+    public void removeComment(String codeHash) {
+        if(codes.get(codeHash) == null) {
+            return;
+        }
+        codes.put(codeHash,"");
+        updateInDatabase();
+    }
+
+    /**
+     * checks if a code has a comment
+     * @param codeHash the hash of the code to check
+     * @return true if the code has a comment, false otherwise
+     */
+    public boolean hasComment(String codeHash) {
+        if (codes.get(codeHash) == "" || codes.get(codeHash) == null) {
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+
+    /**
+     * removes a code from the user's list of codes
+     * @param removeCode is the hash of the code to remove from the user's code list
+     * @param codePoints is the number of points the code to remove is worth
      */
     public void removeCode(String removeCode, int codePoints) {
         // remove code from user codes, update points and total codes
         codes.remove(removeCode);
         totalPoints = totalPoints - codePoints;
         numCodes = numCodes - 1;
-        this.updateInDatabase();
+        updateInDatabase();
         return;
     }
 
     /**
-     *
-     * @param
+     * updates the database when a change is made to the user
      */
     private void updateInDatabase() {
         // get database

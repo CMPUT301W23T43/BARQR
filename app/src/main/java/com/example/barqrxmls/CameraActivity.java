@@ -37,11 +37,14 @@ public class CameraActivity extends AppCompatActivity {
 
 
         Intent backToMain = new Intent(CameraActivity.this, MainActivity.class);
-        String qrData = "";
-        String bitmap="";
+        String qrData = "codeData";
+        String bitmap="codeBitmap";
+        scanCode();
         backToMain.putExtra(qrData,data);
         backToMain.putExtra(bitmap,bitmapOfLocation);
-        startActivity(backToMain);
+        setResult(15, backToMain);
+        //startActivity(backToMain);
+        finish();
     }
 
 

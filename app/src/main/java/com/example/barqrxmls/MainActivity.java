@@ -1,11 +1,16 @@
 package com.example.barqrxmls;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +36,25 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore dataBase;
     CollectionReference usersRef;
     CollectionReference codesRef;
+    Code testScannedCode;
+    Bitmap testScannedCodeImage;
+
+    ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    // Use the camera data to build a new Code object.
+                    if (result.getResultCode() == 15) {
+                        Intent camResultIntent = result.getData();
+
+                        if (camResultIntent != null) {
+                            Bundle cameraResults = camResultIntent.getExtras();
+                            Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("cameraData").toString()));
+                        }
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +95,13 @@ public class MainActivity extends AppCompatActivity {
          * @return opens NewCode which is linked to barqr_code.xml
          */
         ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
-        newCode.setOnClickListener(taskbar.getSwitchActivityMap().get("NewCode"));
+        newCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cameraIntent = new Intent(MainActivity.this, CameraActivity.class);
+                cameraLauncher.launch(cameraIntent);
+            }
+        });
 
         /**
          * Map Button implementation

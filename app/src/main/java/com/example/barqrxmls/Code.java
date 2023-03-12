@@ -71,6 +71,12 @@ public class Code {
     }
 
     /**
+     * Empty constructor, for use with the Database.
+     */
+    public Code() {
+
+    }
+    /**
      * Take the hash and convert it into a relatively unique name.
      * This is achieved by consuming 'n' digits of the has, and adding them together.
      * This gives a unique number; we can then modulo this number by the available bins.

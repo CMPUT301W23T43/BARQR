@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
                         if (camResultIntent != null) {
                             Bundle cameraResults = camResultIntent.getExtras();
-                            Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("cameraData").toString()));
+                            Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("codeData").toString()));
                         }
                     }
                 }

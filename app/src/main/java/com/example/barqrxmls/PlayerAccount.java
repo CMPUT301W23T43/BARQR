@@ -32,11 +32,6 @@ public class PlayerAccount extends AppCompatActivity {
 
 
 
-
-
-
-
-
     public void onResume(Bundle savedInstanceState) {
         dataBase = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -103,23 +98,6 @@ public class PlayerAccount extends AppCompatActivity {
                         return true;
                     }
                 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             }

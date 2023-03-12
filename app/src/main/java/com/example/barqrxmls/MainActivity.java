@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -90,6 +91,27 @@ public class MainActivity extends AppCompatActivity {
          */
         ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
         account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
+
+
+        /**
+         * Account Button implementation
+         * @author Kannan Khosla, Tyler Pollom
+         * @version 2
+         * @return opens PlayerAccount which is linked to player_account_.xml
+         */
+
+        Button Account= (Button) findViewById(R.id.accountButton);
+        Account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PlayerAccount.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
 
         // The code below this comment is simply for testing that the database 
         HashMap<String, Object> userInfo = new HashMap<>();

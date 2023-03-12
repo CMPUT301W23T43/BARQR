@@ -44,7 +44,7 @@ public class CameraActivity extends AppCompatActivity {
         backToMain.putExtra(bitmap,bitmapOfLocation);
         setResult(15, backToMain);
         //startActivity(backToMain);
-        finish();
+        //finish();
     }
 
 

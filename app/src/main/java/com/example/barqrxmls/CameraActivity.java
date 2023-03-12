@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.widget.ImageView;
 
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
@@ -35,7 +34,14 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        scanCode();
+
+
+        Intent backToMain = new Intent(CameraActivity.this, MainActivity.class);
+        String qrData = "";
+        String bitmap="";
+        backToMain.putExtra(qrData,data);
+        backToMain.putExtra(bitmap,bitmapOfLocation);
+        startActivity(backToMain);
     }
 
 
@@ -57,10 +63,8 @@ public class CameraActivity extends AppCompatActivity {
      * Has two Alert Dialog, one for scanning QR code and  one for taking picture of surrounding location
      * User can take surrounding Picture after having successfully scanning an QR code.
      */
-    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->
-    {
-        if(result.getContents() !=null)
-        {
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result-> {
+        if(result.getContents() !=null) {
             AlertDialog.Builder surroundingBuilder = new AlertDialog.Builder(CameraActivity.this);
             surroundingBuilder.setTitle("Do you want to take a picture of the surrounding?");
 
@@ -73,8 +77,7 @@ public class CameraActivity extends AppCompatActivity {
             surroundingBuilder.setPositiveButton("Take", new DialogInterface.OnClickListener()
             {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i)
-                {
+                public void onClick(DialogInterface dialogInterface, int i) {
                     captureImage();
 
                     dialogInterface.dismiss();
@@ -87,8 +90,7 @@ public class CameraActivity extends AppCompatActivity {
             builder.setMessage(result.getContents());
             data= result.getContents();
             dataBytes=result.getRawBytes();
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
-            {
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i)
                 {
@@ -121,6 +123,14 @@ public class CameraActivity extends AppCompatActivity {
                 }
             }
     );
+    public String getData(){
+        return data;
+    }
+    public Bitmap getBitmap(){
+        return bitmapOfLocation;
+    }
+
+
 
 
 

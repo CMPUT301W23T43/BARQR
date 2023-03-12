@@ -1,6 +1,7 @@
 package com.example.barqrxmls;
 
 import android.util.Log;
+
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ public class User {
      * @param id is a String of the player's id
      * @param email is a String of the user's email
      *
+
      */
     User(String userName, String id, String email) {
         this.userName = userName;
@@ -39,6 +41,7 @@ public class User {
         this.totalPoints = 0;
         this.email = email;
         this.numCodes = 0;
+
     }
 
     /**

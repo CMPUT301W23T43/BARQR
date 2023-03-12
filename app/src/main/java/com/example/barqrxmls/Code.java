@@ -55,7 +55,7 @@ public class Code {
                 "Teacher", "King", "Queen", "The Honourable", "The", "Sir", "Madam", "Dog", "Guy",
                 "That", "Mr", "Mrs", "Ms", "Real G")));
         ArrayList<String> names = new ArrayList<>(Arrays.asList("Tyler", "Anjelica", "Danielle",
-                "James", "Gregory", "Greg", "Robin", "Richard", "Dick", "Joe", "Joseph", "Kannan",
+                "James", "Gregory", "Greg", "Robin", "Richard", "Peter", "Joe", "Joseph", "Kannan",
                 "Sarah", "Morgan"));
         ArrayList<String> suffixArticles = new ArrayList<>(Arrays.asList(", the", ", a", ", an",
                 ", PhD in", ", MD in"));

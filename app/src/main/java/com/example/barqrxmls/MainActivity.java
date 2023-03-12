@@ -1,7 +1,10 @@
 package com.example.barqrxmls;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +28,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     final String TAG = "Sample";
-
     FirebaseFirestore dataBase;
     CollectionReference usersRef;
     CollectionReference codesRef;
@@ -38,7 +40,56 @@ public class MainActivity extends AppCompatActivity {
         usersRef = dataBase.collection("Users");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_screen);
+
+        Taskbar taskbar = new Taskbar(MainActivity.this);
+        // setting screen changes from taskbar
+        // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
+
+        /**
+         * Home Button implementation
+         * @author Noah Jeans
+         * @version 1
+         * @return opens MainActivity which is linked to main_screen.xml
+         */
+        ImageButton home = (ImageButton) findViewById(R.id.homeButton);
+        home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
+
+        /**
+         * LeaderBoard Button implementation
+         * @author Noah Jeans
+         * @version 1
+         * @return opens LeaderBoard which is linked to leaderboard_screen.xml
+         */
+        ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
+        leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
+
+        /**
+         * NewCode Button implementation
+         * @author Noah Jeans, Tyler Pollom
+         * @version 2
+         * @return opens NewCode which is linked to barqr_code.xml
+         */
+        ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
+        newCode.setOnClickListener(taskbar.getSwitchActivityMap().get("NewCode"));
+
+        /**
+         * Map Button implementation
+         * @author Noah Jeans, Tyler Pollom
+         * @version 2
+         * @return opens Map which is linked to map.xml
+         */
+        ImageButton map = (ImageButton) findViewById(R.id.mapButton);
+        map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));
+
+        /**
+         * Account Button implementation
+         * @author Noah Jeans, Tyler Pollom
+         * @version 2
+         * @return opens Account which is linked to account_screen.xml
+         */
+        ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
+        account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
 
         // The code below this comment is simply for testing that the database 
         HashMap<String, Object> userInfo = new HashMap<>();

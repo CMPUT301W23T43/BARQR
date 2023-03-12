@@ -2,11 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="#ccd0da"
-    tools:context=".NewAccount"
-
+    android:gravity="bottom"
+    android:paddingBottom="300dp"
     >
     <TextView
         android:layout_width="wrap_content"
@@ -107,11 +106,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
-        android:layout_marginTop="2.5mm"
         android:layout_gravity="center"
         android:backgroundTint="#000"
         android:textColor="#9ca0b0"
-        android:layout_marginBottom="2.5mm"
         />
 
 </LinearLayout>

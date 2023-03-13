@@ -51,11 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
 
@@ -143,10 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Just before conversion");
                 if (task.isSuccessful()) {
                     users[0] = task.getResult().toObject(User.class);
-                    if (users[0] == null) {
-                        System.out.println("User created from DB info is Null");
-                    }
-                    System.out.println(users[0].getCodes());
+                    doStuff(users[0]);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -156,38 +148,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        currentUserTest = users[0];
-//        int count = 0;
-//        while (currentUserTest == null) {
-//            currentUserTest = users[0];
-//            count++;
-//            if (count == Integer.MAX_VALUE) {
-//                System.out.println("We couldn't ever get the user?");
-//                break;
-//            }
-//        }
+
+
+    }
+
+    public void doStuff(User currentUserTest) {
         System.out.println("After attempting to convert to User object" + currentUserTest);
-
-
-//        if (currentUser != null) {
-            // Get the current user's ID
-//            String currentUserId = currentUser.getUid();
-//            if (currentUser != null) {
-                // Get the current user's ID
-//                String currentUserEmail = currentUser.getEmail();
-
-//         Create a new User object with the current user's ID and email
-
-
-//                User user = new User(currentUser.toString(), currentUserId.toString(), currentUserEmail.toString());
-
-
         CodeDataList = new ArrayList<Code>();
-//        for (String key : currentUserTest.getCodes().keySet()) {
-//            CodeDataList.add(new Code(key));
-//        }
         CodeAdapter = new CodeArrayAdapter(this, CodeDataList);
         CodesList.setAdapter(CodeAdapter);
+        for (String key : currentUserTest.getCodes().keySet()) {
+            codesRef.document(key).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        Code userCode = task.getResult().toObject(Code.class);
+                        CodeDataList.add(userCode);
+                        CodeAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+        }
+
 
 //        HashMap<String, String> userCodes = currentUserTest.getCodes();
 
@@ -201,9 +183,9 @@ public class MainActivity extends AppCompatActivity {
 //            CodeDataList.add(userCode);
 //            System.out.println("Code: " + userCode.getName());
 //        }
-        CodeDataList.add(testCode1);
-        CodeDataList.add(testCode2);
-        CodeDataList.add(testCode3);
+//        CodeDataList.add(testCode1);
+//        CodeDataList.add(testCode2);
+//        CodeDataList.add(testCode3);
         CodeAdapter.notifyDataSetChanged();
         System.out.println("Coded Data List:" + CodeDataList);
 
@@ -226,9 +208,8 @@ public class MainActivity extends AppCompatActivity {
                         setTitle("Delete Code").
                         setMessage("Are you sure you want to delete this Code?").
                         setPositiveButton("Yes", (dialog, which) -> {
-                            String CodeToDelete = (String) parent.getItemAtPosition(position);
-                            Code CodeDeleted = new Code(CodeToDelete);
-//                            currentUserTest.removeCode(CodeToDelete, CodeDeleted.getPoints());
+                            Code CodeToDelete = CodeDataList.get(position);
+                            currentUserTest.removeCode(CodeToDelete.getHash(), CodeToDelete.getPoints());
                         }).
                         setNegativeButton("No", (dialog, which) -> {
                         }).
@@ -237,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+        CodeAdapter.notifyDataSetChanged();
     }
 }
 //    }

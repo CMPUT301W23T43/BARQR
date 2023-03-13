@@ -116,6 +116,12 @@ public class MainActivity extends AppCompatActivity {
         loginLauncher.launch(loginIntent);
     }
 
+
+    /**
+     * Performs necessary operations to retrieve and display codes associated with the current user.
+     *
+     * @param currentUserTest The User object representing the current user.
+     */
     public void doStuff(User currentUserTest) {
         System.out.println("After attempting to convert to User object" + currentUserTest);
 

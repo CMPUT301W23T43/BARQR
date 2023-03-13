@@ -19,7 +19,7 @@ import com.journeyapps.barcodescanner.ScanOptions;
  * QR Camera and Capture Location implementation
  * @author Shafayat Sadman
  * @version 1
- * Has no Unit tests as the QR code have to be scanned manually after opening camera.
+ * Has no Unit and UI tests as the QR code have to be scanned manually after opening camera.
  * @return
  *      String data: Data of the QR code that is scanned.
  *      Bitmap bitmapOfLocation: The bitmap of the image of the surrounding Location.

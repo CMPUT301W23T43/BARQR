@@ -59,7 +59,7 @@
             android:text="Email :"
             android:textColor="#000"
             android:fontFamily="monospace"
-            android:textSize="20dp"
+            android:textSize="20sp"
             />
         <EditText
             android:id="@+id/emailField"
@@ -68,7 +68,7 @@
             android:text="                "
             android:textColor="#000"
             android:fontFamily="monospace"
-            android:textSize="20dp"
+            android:textSize="20sp"
             />
     </LinearLayout>
 
@@ -90,7 +90,7 @@
             android:text="Terms and Services"
             android:textColor="#000"
             android:fontFamily="monospace"
-            android:textSize="20dp"
+            android:textSize="20sp"
             />
     </LinearLayout>
 
@@ -103,7 +103,7 @@
         android:backgroundTint="#000"
         android:textColor="#9ca0b0"
         android:fontFamily="monospace"
-        android:textSize="15dp"
+        android:textSize="15sp"
         />
 
 </LinearLayout>

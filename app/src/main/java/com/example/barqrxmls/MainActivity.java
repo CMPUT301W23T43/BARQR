@@ -58,98 +58,35 @@ public class MainActivity extends AppCompatActivity {
 
     Code testScannedCode;
     Bitmap testScannedCodeImage;
-//    Boolean cameraWasUsed = false;
 
-    ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    // Use the camera data to build a new Code object.
-                    if (result.getResultCode() == 15) {
-                        Intent camResultIntent = result.getData();
-
-                        if (camResultIntent != null) {
-                            Bundle cameraResults = camResultIntent.getExtras();
-                            Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("codeData").toString()));
-                            testScannedCode = new Code(cameraResults.get("codeData").toString());
-                            testScannedCodeImage = (Bitmap) cameraResults.get("codeImage");
-                            currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
-//                            CodeAdapter.notifyDataSetChanged();
-//                            cameraWasUsed = true;
-                        }
-                    }
-                }
-            });
-
+    ActivityResultLauncher<Intent> loginLauncher;
+    ActivityResultLauncher<Intent> cameraLauncher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
+        cameraLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        // Use the camera data to build a new Code object.
+                        if (result.getResultCode() == 15) {
+                            Intent camResultIntent = result.getData();
 
-        Taskbar taskbar = new Taskbar(MainActivity.this);
-        // setting screen changes from taskbar
-        // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
-
-        /**
-         * Home Button implementation
-         * @author Noah Jeans
-         * @version 1
-         * @return opens MainActivity which is linked to main_screen.xml
-         */
-        ImageButton home = (ImageButton) findViewById(R.id.homeButton);
-        home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
-
-        /**
-         * LeaderBoard Button implementation
-         * @author Noah Jeans
-         * @version 1
-         * @return opens LeaderBoard which is linked to leaderboard_screen.xml
-         */
-        ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
-        leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
-
-        /**
-         * NewCode Button implementation
-         * @author Noah Jeans, Tyler Pollom
-         * @version 2
-         * @return opens NewCode which is linked to barqr_code.xml
-         */
-        ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
-        newCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cameraIntent = new Intent(MainActivity.this, CameraActivity.class);
-                cameraLauncher.launch(cameraIntent);
-            }
-        });
-
-        /**
-         * Map Button implementation
-         * @author Noah Jeans, Tyler Pollom
-         * @version 2
-         * @return opens Map which is linked to map.xml
-         */
-        ImageButton map = (ImageButton) findViewById(R.id.mapButton);
-        map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));
-
-        /**
-         * Account Button implementation
-         * @author Noah Jeans, Tyler Pollom
-         * @version 2
-         * @return opens Account which is linked to account_screen.xml
-         */
-        ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
-        account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
-
-
-
-        Code testCode1 = new Code("/usr/code1");
-        Code testCode2 = new Code(";lkajsdf");
-        Code testCode3 = new Code("Smithy");
-
-        Intent loginIntent = new Intent(this, NewAccount.class);
-        ActivityResultLauncher<Intent> loginLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                            if (camResultIntent != null) {
+                                Bundle cameraResults = camResultIntent.getExtras();
+                                Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("codeData").toString()));
+                                testScannedCode = new Code(cameraResults.get("codeData").toString());
+                                testScannedCodeImage = (Bitmap) cameraResults.get("codeImage");
+                                currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
+                                CodeDataList.add(testScannedCode);
+                                CodeAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+        loginLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
                 Bundle bundle = result.getData().getExtras();
@@ -158,13 +95,17 @@ public class MainActivity extends AppCompatActivity {
                 usersRef = dataBase.collection("Users");
 
                 CodesList = findViewById(R.id.myCodesDisplay);
+                Code testCode1 = new Code("/usr/code1");
+                Code testCode2 = new Code(";lkajsdf");
+                Code testCode3 = new Code("Smithy");
                 currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
                 currentTestUser.addCode(testCode2.getHash(), testCode2.getPoints());
                 currentTestUser.addCode(testCode3.getHash(), testCode3.getPoints());
-                doStuff(currentTestUser);            }
+                doStuff(currentTestUser);
+            }
         });
+        Intent loginIntent = new Intent(this, NewAccount.class);
         loginLauncher.launch(loginIntent);
-
     }
 
     public void doStuff(User currentUserTest) {
@@ -232,15 +173,68 @@ public class MainActivity extends AppCompatActivity {
         TextView codePointsTV = findViewById(R.id.pointTotal);
         codePointsTV.setText(String.valueOf(currentUserTest.getTotalPoints()));
     }
-}
 
-//    public void onResume() {
-//        super.onResume();
-//        setContentView(R.layout.main_screen);
-//        System.out.print("Inside onResume");
+    public void onResume() {
+        super.onResume();
+        //setContentView(R.layout.main_screen);
+        System.out.print("Inside onResume");
 //        dataBase = FirebaseFirestore.getInstance();
 //        mAuth = FirebaseAuth.getInstance();
-//
-//
-//    }
-//}
+
+        Taskbar taskbar = new Taskbar(MainActivity.this);
+        // setting screen changes from taskbar
+        // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
+
+        /**
+         * Home Button implementation
+         * @author Noah Jeans
+         * @version 1
+         * @return opens MainActivity which is linked to main_screen.xml
+         */
+        ImageButton home = (ImageButton) findViewById(R.id.homeButton);
+//        home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
+
+        /**
+         * LeaderBoard Button implementation
+         * @author Noah Jeans
+         * @version 1
+         * @return opens LeaderBoard which is linked to leaderboard_screen.xml
+         */
+        ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
+        leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
+
+        /**
+         * NewCode Button implementation
+         * @author Noah Jeans, Tyler Pollom
+         * @version 2
+         * @return opens NewCode which is linked to barqr_code.xml
+         */
+        ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
+        newCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cameraIntent = new Intent(MainActivity.this, CameraActivity.class);
+                cameraLauncher.launch(cameraIntent);
+            }
+        });
+
+        /**
+         * Map Button implementation
+         * @author Noah Jeans, Tyler Pollom
+         * @version 2
+         * @return opens Map which is linked to map.xml
+         */
+        ImageButton map = (ImageButton) findViewById(R.id.mapButton);
+        map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));
+
+        /**
+         * Account Button implementation
+         * @author Noah Jeans, Tyler Pollom
+         * @version 2
+         * @return opens Account which is linked to account_screen.xml
+         */
+        ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
+        account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
+
+    }
+}

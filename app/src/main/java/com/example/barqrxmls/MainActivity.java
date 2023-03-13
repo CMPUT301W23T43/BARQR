@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                             testScannedCode = new Code(cameraResults.get("codeData").toString());
                             testScannedCodeImage = (Bitmap) cameraResults.get("codeImage");
                             currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
-                            CodeAdapter.notifyDataSetChanged();
+//                            CodeAdapter.notifyDataSetChanged();
 //                            cameraWasUsed = true;
                         }
                     }

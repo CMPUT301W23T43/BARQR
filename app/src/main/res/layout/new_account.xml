@@ -10,8 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="5mm"
-        android:paddingBottom="20mm"
+        android:paddingBottom="100dp"
         android:text="Create New Account"
         android:textColor="#000"
         android:fontFamily="monospace"
@@ -28,22 +27,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2mm"
             android:text="Username :"
             android:textColor="#000"
             android:fontFamily="monospace"
-            android:textSize="3mm"
-            android:paddingLeft="10mm"
+            android:textSize="10sp"
             />
         <EditText
             android:id="@+id/usernameField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2mm"
-            android:hint="                  "
+            android:hint="    "
             android:textColor="#000"
             android:fontFamily="monospace"
-            android:textSize="3mm"
+            android:textSize="10sp"
             />
     </LinearLayout>
 
@@ -60,22 +56,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2mm"
             android:text="Email :"
             android:textColor="#000"
             android:fontFamily="monospace"
-            android:textSize="3mm"
-            android:paddingLeft="10mm"
+            android:textSize="20sp"
             />
         <EditText
             android:id="@+id/emailField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2mm"
-            android:text="                     "
+            android:text="                "
             android:textColor="#000"
             android:fontFamily="monospace"
-            android:textSize="3mm"
+            android:textSize="20sp"
             />
     </LinearLayout>
 
@@ -97,7 +90,7 @@
             android:text="Terms and Services"
             android:textColor="#000"
             android:fontFamily="monospace"
-            android:textSize="3mm"
+            android:textSize="20sp"
             />
     </LinearLayout>
 
@@ -109,6 +102,8 @@
         android:layout_gravity="center"
         android:backgroundTint="#000"
         android:textColor="#9ca0b0"
+        android:fontFamily="monospace"
+        android:textSize="15sp"
         />
 
 </LinearLayout>

@@ -19,3 +19,5 @@ How to use Toasts: [developer.android.com](https://developer.android.com/guide/t
 
 How to use FireStore databases: [firebase.google.com](https://firebase.google.com/docs/firestore/query-data/get-data)
 
+##### Other citations
+How to create an Intent Launcher [@DailyCoding](https://www.youtube.com/@DailyCoding), [Video here](https://www.youtube.com/watch?v=DfDj9EadOLk)

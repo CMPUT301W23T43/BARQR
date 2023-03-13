@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
 
+        // Citation: https://www.youtube.com/watch?v=DfDj9EadOLk
+        // from youtube channel https://www.youtube.com/@DailyCoding Daily Coding.
         cameraLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {

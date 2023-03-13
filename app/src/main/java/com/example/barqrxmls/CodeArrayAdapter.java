@@ -29,6 +29,7 @@ public class CodeArrayAdapter extends ArrayAdapter<Code> {
         } else {
             view = convertView;
         }
+
         Code code = getItem(position);
         TextView codeName = view.findViewById(R.id.codeText);
         codeName.setText(code.getName());

@@ -191,9 +191,10 @@ public class MainActivity extends AppCompatActivity {
                         setTitle("Delete Code").
                         setMessage("Are you sure you want to delete this Code?").
                         setPositiveButton("Yes", (dialog, which) -> {
-                            CodeAdapter.notifyDataSetChanged();
+
                             Code CodeToDelete = CodeDataList.get(position);
                             currentUserTest.removeCode(CodeToDelete.getHash(), CodeToDelete.getPoints());
+                            CodeDataList.remove(position);
                             CodeAdapter.notifyDataSetChanged();
                         }).
                         setNegativeButton("No", (dialog, which) -> {
@@ -204,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        CodeAdapter.notifyDataSetChanged();
+
     }
 }
 

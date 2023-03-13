@@ -37,11 +37,9 @@ public class MainActivityTest {
     ;
     CollectionReference usersRef = dataBase.collection("Users");
     CollectionReference codesRef = dataBase.collection("Codes");
-
-
     @Rule
-    public IntentsTestRule<NewAccount> intentsTestRule =
-            new IntentsTestRule<>(NewAccount.class);
+    public ActivityScenarioRule<NewAccount> activityRule = new ActivityScenarioRule<>(NewAccount.class);
+
 
     @Test
     public void testButtonClickSwitchesActivity() {
@@ -49,14 +47,6 @@ public class MainActivityTest {
         onView(withId(R.id.emailField));
         onView(withId(R.id.terms_and_services));
         onView(withId(R.id.submitButton));
-    }
-
-
-    @Test
-    public void testButtonClickSwitchesActivity2() {
-        onView(withId(R.id.usernameField));
-        onView(withId(R.id.emailField));
-        onView(withId(R.id.terms_and_services));
 
         onView(withId(R.id.usernameField)).perform(click()).perform(typeText("UserNameTest"));
         onView(withId(R.id.emailField)).perform(click()).perform(typeText("Email"));
@@ -73,24 +63,30 @@ public class MainActivityTest {
             usersRef.document("UserNameTest").delete();
 
         }
-
-        //onView(withId(R.id.submitButton)).perform(click());
-
-
-//        Intent name = new Intent();
-//        Intent email = new Intent();
-//        String Username = "kannan";
-//        String UserEmail = "kannan@gmail.com";
-//        name.putExtra("Username", Username);
-//        email.putExtra("UserEmail", UserEmail);
-//        ActivityResult result = new ActivityResult(Activity.RESULT_OK, name);
-//        ActivityResult result2 = new ActivityResult(Activity.RESULT_OK, email);
-//        intending(hasComponent(NewAccount.class.getName())).respondWith(result);
-//        intending(hasComponent(NewAccount.class.getName())).respondWith(result2);
+    }
 
 
-        // Click the button
+    @Test
+    public void testButtonClickSwitchesActivity2() {
+        onView(withId(R.id.usernameField));
+        onView(withId(R.id.emailField));
+        onView(withId(R.id.terms_and_services));
 
+     onView(withId(R.id.usernameField)).perform(click()).perform(typeText("UserNameTest"));
+        onView(withId(R.id.emailField)).perform(click()).perform(typeText("Email"));
+
+        onView(withId(R.id.usernameField)).check(matches(withText("UserNameTest")));
+        onView(withId(R.id.emailField)).check(matches(withText("Email")));
+
+        onView(withId(R.id.terms_and_services)).perform(click());
+
+        onView(withId(R.id.submitButton)).perform(click());
+
+        if (usersRef.document("UserNameTest") != null) {
+            onView(withId(R.id.accountButton));
+            usersRef.document("UserNameTest").delete();
+
+        }
 
     }
 }

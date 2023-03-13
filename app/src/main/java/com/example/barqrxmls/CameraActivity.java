@@ -23,6 +23,10 @@ import com.journeyapps.barcodescanner.ScanOptions;
  * @return
  *      String data: Data of the QR code that is scanned.
  *      Bitmap bitmapOfLocation: The bitmap of the image of the surrounding Location.
+ * Citations:
+ *              SCANCODE = "https://www.youtube.com/watch?v=jtT60yFPelI&t=18s"
+ *              Take Image = "https://www.youtube.com/watch?v=JMdHMMEO8ZQ&t=400s"
+ *
  *
  */
 public class CameraActivity extends AppCompatActivity {
@@ -44,6 +48,7 @@ public class CameraActivity extends AppCompatActivity {
      * Implements the QR scanner by starting the Capture Act.
      */
     public void scanCode(){
+        // <Cambo Tutorial> (<Mar 18, 2022>) <How to implement QR Scanner> [<source>] https://www.youtube.com/watch?v=jtT60yFPelI&t=18s
         ScanOptions options = new ScanOptions();
         options.setPrompt("Volume up for Flash");
         options.setBeepEnabled(true);
@@ -103,6 +108,7 @@ public class CameraActivity extends AppCompatActivity {
      * Launches the activity for taking the picture of the surrounding image.
      */
     private void captureImage() {
+        // <Muhammad Saad> (<Dec 25, 2022  >) <How to Take Image From Camera> [<source>] https://www.youtube.com/watch?v=JMdHMMEO8ZQ&t=400s
         Intent intent =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         activitySurroundingResultLauncher.launch(intent);
     }

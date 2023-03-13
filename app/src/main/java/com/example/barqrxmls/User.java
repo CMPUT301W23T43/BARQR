@@ -35,12 +35,13 @@ public class User {
      *
 
      */
-    User(String userName, String id, String email) {
+    User(String userName, String id, String email, HashMap<String, String> codes) {
         this.userName = userName;
         this.id = id;
         this.totalPoints = 0;
         this.email = email;
         this.numCodes = 0;
+        this.codes = codes;
 
     }
 

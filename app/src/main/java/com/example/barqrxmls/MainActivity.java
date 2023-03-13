@@ -13,14 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.navigation.Navigation;
@@ -33,9 +38,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     final String TAG = "Sample";
-    FirebaseFirestore dataBase;
-    CollectionReference usersRef;
-    CollectionReference codesRef;
+    FirebaseFirestore dataBase = FirebaseFirestore.getInstance();;
+    CollectionReference usersRef = dataBase.collection("Users");
+    CollectionReference codesRef = dataBase.collection("Codes");
 
     private ArrayList<Code> CodeDataList;
     private CodeArrayAdapter CodeAdapter;
@@ -43,12 +48,13 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     ListView CodesList;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        dataBase = FirebaseFirestore.getInstance();
-        codesRef = dataBase.collection("Codes");
-        usersRef = dataBase.collection("Users");
+
+
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
@@ -104,76 +110,145 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        }
+        Code testCode1 = new Code("/usr/code1");
+        Code testCode2 = new Code(";lkajsdf");
+        Code testCode3 = new Code("Smithy");
+        HashMap<String, String> codesHashMap = new HashMap<>();
+        codesHashMap.put(testCode1.getHash(), "");
+        codesHashMap.put(testCode2.getHash(), "");
+        codesHashMap.put(testCode3.getHash(), "");
+        DocumentReference currentUser = usersRef.document("CurrentUser");
+        currentUser.update("codes", codesHashMap);
 
+        codesRef.document(testCode1.getHash()).set(testCode1);
+        codesRef.document(testCode2.getHash()).set(testCode2);
+        codesRef.document(testCode3.getHash()).set(testCode3);
 
-
-    public void onResume(Bundle savedInstanceState) {
-        dataBase = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-
+        System.out.println("Inside onCreate");
         codesRef = dataBase.collection("Codes");
         usersRef = dataBase.collection("Users");
 
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_screen);
 
+//        mAuth = FirebaseAuth.getInstance();
         CodesList = findViewById(R.id.myCodesDisplay);
 //        currentUser= mAuth.getCurrentUser();
+
+        DocumentReference currentUserRef = usersRef.document("CurrentUser");
+        final User[] users = new User[1];
+        User currentUserTest;
+        currentUserRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                System.out.println("Just before conversion");
+                if (task.isSuccessful()) {
+                    users[0] = task.getResult().toObject(User.class);
+                    if (users[0] == null) {
+                        System.out.println("User created from DB info is Null");
+                    }
+                    System.out.println(users[0].getCodes());
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("Failed to convert to User");
+            }
+        });
+
+        currentUserTest = users[0];
+//        int count = 0;
+//        while (currentUserTest == null) {
+//            currentUserTest = users[0];
+//            count++;
+//            if (count == Integer.MAX_VALUE) {
+//                System.out.println("We couldn't ever get the user?");
+//                break;
+//            }
+//        }
+        System.out.println("After attempting to convert to User object" + currentUserTest);
+
+
 //        if (currentUser != null) {
-//            // Get the current user's ID
+            // Get the current user's ID
 //            String currentUserId = currentUser.getUid();
 //            if (currentUser != null) {
-//                // Get the current user's ID
+                // Get the current user's ID
 //                String currentUserEmail = currentUser.getEmail();
 
-        // Create a new User object with the current user's ID and email
+//         Create a new User object with the current user's ID and email
 
 
-                User user = new User(currentUser.toString(), currentUserId.toString(), currentUserEmail.toString());
+//                User user = new User(currentUser.toString(), currentUserId.toString(), currentUserEmail.toString());
 
 
-                CodeDataList = new ArrayList<Code>();
-                for (String key : user.getCodes().keySet()) {
-                    CodeDataList.add(new Code(key));
-                }
-                CodeAdapter = new CodeArrayAdapter(this, CodeDataList);
-                CodesList.setAdapter(CodeAdapter);
+        CodeDataList = new ArrayList<Code>();
+//        for (String key : currentUserTest.getCodes().keySet()) {
+//            CodeDataList.add(new Code(key));
+//        }
+        CodeAdapter = new CodeArrayAdapter(this, CodeDataList);
+        CodesList.setAdapter(CodeAdapter);
 
+//        HashMap<String, String> userCodes = currentUserTest.getCodes();
 
-                /**
-                 Sets up an OnItemLongClickListener for the CodesList AdapterView in the PlayerAccount activity.
-                 When a long click is detected on an item in the CodesList, an AlertDialog is displayed to confirm
-                 if the user wants to delete the selected code. If the user confirms deletion, the corresponding code
-                 is removed from the current user's codes collection in Firestore.
-                 @param parent The AdapterView containing the list of codes.
-                 @param view The View representing the selected code in the list.
-                 @param position The position of the selected code in the list.
-                 @param id The ID of the selected code.
-                 @return true if the long click event is consumed, false otherwise.
-                 */
-                CodesList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//        HashMap<String, String> whatWeShouldHaveGotten = codesHashMap;
+        // https://stackoverflow.com/a/10462838
+//        for (String hash: whatWeShouldHaveGotten.keySet()) {
+//            // Indexed by the unique hash of the code.
+////            Code userCode = codesRef.document(hash).get().getResult().toObject(Code.class);
+//            //Code userCode = whatWeShouldHaveGotten.get(hash);
+//
+//            CodeDataList.add(userCode);
+//            System.out.println("Code: " + userCode.getName());
+//        }
+        CodeDataList.add(testCode1);
+        CodeDataList.add(testCode2);
+        CodeDataList.add(testCode3);
+        CodeAdapter.notifyDataSetChanged();
+        System.out.println("Coded Data List:" + CodeDataList);
 
-                        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).
-                                setTitle("Delete Code").
-                                setMessage("Are you sure you want to delete this Code?").
-                                setPositiveButton("Yes", (dialog, which) -> {
-                                    String CodeToDelete = (String) parent.getItemAtPosition(position);
-                                    Code CodeDeleted = new Code(CodeToDelete);
-                                    user.removeCode(CodeToDelete, CodeDeleted.getPoints());
-                                }).
-                                setNegativeButton("No", (dialog, which) -> {
-                                }).
-                                create();
-                        alertDialog.show();
-                        return true;
-                    }
-                });
+        /**
+         Sets up an OnItemLongClickListener for the CodesList AdapterView in the PlayerAccount activity.
+         When a long click is detected on an item in the CodesList, an AlertDialog is displayed to confirm
+         if the user wants to delete the selected code. If the user confirms deletion, the corresponding code
+         is removed from the current user's codes collection in Firestore.
+         @param parent The AdapterView containing the list of codes.
+         @param view The View representing the selected code in the list.
+         @param position The position of the selected code in the list.
+         @param id The ID of the selected code.
+         @return true if the long click event is consumed, false otherwise.
+         */
+        CodesList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-}
-        }
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).
+                        setTitle("Delete Code").
+                        setMessage("Are you sure you want to delete this Code?").
+                        setPositiveButton("Yes", (dialog, which) -> {
+                            String CodeToDelete = (String) parent.getItemAtPosition(position);
+                            Code CodeDeleted = new Code(CodeToDelete);
+//                            currentUserTest.removeCode(CodeToDelete, CodeDeleted.getPoints());
+                        }).
+                        setNegativeButton("No", (dialog, which) -> {
+                        }).
+                        create();
+                alertDialog.show();
+                return true;
+            }
+        });
+
     }
 }
+//    }
+
+//    public void onResume() {
+//        super.onResume();
+//        setContentView(R.layout.main_screen);
+//        System.out.print("Inside onResume");
+//        dataBase = FirebaseFirestore.getInstance();
+//        mAuth = FirebaseAuth.getInstance();
+//
+//
+//    }
+//}

@@ -169,23 +169,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-
-
-//        HashMap<String, String> userCodes = currentUserTest.getCodes();
-
-//        HashMap<String, String> whatWeShouldHaveGotten = codesHashMap;
-        // https://stackoverflow.com/a/10462838
-//        for (String hash: whatWeShouldHaveGotten.keySet()) {
-//            // Indexed by the unique hash of the code.
-////            Code userCode = codesRef.document(hash).get().getResult().toObject(Code.class);
-//            //Code userCode = whatWeShouldHaveGotten.get(hash);
-//
-//            CodeDataList.add(userCode);
-//            System.out.println("Code: " + userCode.getName());
-//        }
-//        CodeDataList.add(testCode1);
-//        CodeDataList.add(testCode2);
-//        CodeDataList.add(testCode3);
         CodeAdapter.notifyDataSetChanged();
         System.out.println("Coded Data List:" + CodeDataList);
 
@@ -208,10 +191,13 @@ public class MainActivity extends AppCompatActivity {
                         setTitle("Delete Code").
                         setMessage("Are you sure you want to delete this Code?").
                         setPositiveButton("Yes", (dialog, which) -> {
+                            CodeAdapter.notifyDataSetChanged();
                             Code CodeToDelete = CodeDataList.get(position);
                             currentUserTest.removeCode(CodeToDelete.getHash(), CodeToDelete.getPoints());
+                            CodeAdapter.notifyDataSetChanged();
                         }).
                         setNegativeButton("No", (dialog, which) -> {
+                            CodeAdapter.notifyDataSetChanged();
                         }).
                         create();
                 alertDialog.show();
@@ -221,7 +207,6 @@ public class MainActivity extends AppCompatActivity {
         CodeAdapter.notifyDataSetChanged();
     }
 }
-//    }
 
 //    public void onResume() {
 //        super.onResume();

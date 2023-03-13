@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     Code testScannedCode;
     Bitmap testScannedCodeImage;
-    Boolean cameraWasUsed = false;
+//    Boolean cameraWasUsed = false;
 
     ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
                             testScannedCode = new Code(cameraResults.get("codeData").toString());
                             testScannedCodeImage = (Bitmap) cameraResults.get("codeImage");
                             currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
-                            cameraWasUsed = true;
+                            CodeAdapter.notifyDataSetChanged();
+//                            cameraWasUsed = true;
                         }
                     }
                 }
@@ -222,10 +223,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        if (cameraWasUsed) {
-            CodeAdapter.notifyDataSetChanged();
-            cameraWasUsed = false;
-        }
     }
 
     public void updateCountTextViews(User currentUserTest, ArrayList<Code> codeDataList) {

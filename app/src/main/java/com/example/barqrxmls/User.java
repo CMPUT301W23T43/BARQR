@@ -6,10 +6,12 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -19,7 +21,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
-public class User {
+public class User implements Serializable {
     private String userName;
     private HashMap<String,String> codes;
     private int totalPoints;
@@ -41,7 +43,8 @@ public class User {
         this.totalPoints = 0;
         this.email = email;
         this.numCodes = 0;
-
+        this.codes = new HashMap<>();
+        updateInDatabase();
     }
 
     /**
@@ -157,7 +160,7 @@ public class User {
      * @return true if the code has a comment, false otherwise
      */
     public boolean hasComment(String codeHash) {
-        if (codes.get(codeHash) == "" || codes.get(codeHash) == null) {
+        if (Objects.equals(codes.get(codeHash), "") || codes.get(codeHash) == null) {
             return false;
         }
         else {

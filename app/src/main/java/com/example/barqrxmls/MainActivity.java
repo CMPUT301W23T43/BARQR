@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
+
         cameraLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                                 testScannedCode = new Code(cameraResults.get("codeData").toString());
                                 testScannedCodeImage = (Bitmap) cameraResults.get("codeImage");
                                 currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
+                                codesRef.document(testScannedCode.getHash()).set(testScannedCode);
                                 CodeDataList.add(testScannedCode);
                                 CodeAdapter.notifyDataSetChanged();
                             }
@@ -101,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
                 currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
                 currentTestUser.addCode(testCode2.getHash(), testCode2.getPoints());
                 currentTestUser.addCode(testCode3.getHash(), testCode3.getPoints());
+                CodeDataList = new ArrayList<Code>();
+                CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
+                CodesList.setAdapter(CodeAdapter);
                 doStuff(currentTestUser);
             }
         });
@@ -110,24 +115,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void doStuff(User currentUserTest) {
         System.out.println("After attempting to convert to User object" + currentUserTest);
-        CodeDataList = new ArrayList<Code>();
-        CodeAdapter = new CodeArrayAdapter(this, CodeDataList);
-        CodesList.setAdapter(CodeAdapter);
+
         for (String key : currentUserTest.getCodes().keySet()) {
             codesRef.document(key).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
+                        System.out.println("Trying to convert database object with hash " + key);
                         Code userCode = task.getResult().toObject(Code.class);
-                        CodeDataList.add(userCode);
-                        CodeAdapter.notifyDataSetChanged();
-
-                        updateCountTextViews(currentUserTest, CodeDataList);
+                        if (userCode == null) {
+                            System.out.println("Our converted Code object was null");
+                        } else {
+                            System.out.println("Document doStuff adding code: " + userCode);
+                            CodeDataList.add(userCode);
+                            CodeAdapter.notifyDataSetChanged();
+                            updateCountTextViews(currentUserTest, CodeDataList);
+                        }
                     }
                 }
             });
         }
-        CodeAdapter.notifyDataSetChanged();
+//        CodeAdapter.notifyDataSetChanged();
         System.out.println("Coded Data List:" + CodeDataList);
 
         /**

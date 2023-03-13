@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                                 codesRef.document(testScannedCode.getHash()).set(testScannedCode);
                                 CodeDataList.add(testScannedCode);
                                 CodeAdapter.notifyDataSetChanged();
+                                updateCountTextViews(currentTestUser, CodeDataList);
                             }
                         }
                     }

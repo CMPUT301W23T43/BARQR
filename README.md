@@ -10,3 +10,12 @@ How to use generics over a list and a function: [stackoverflow.com](https://stac
 
 ##### [Code and Code Test]
 How to use AssertThrows https://howtodoinjava.com/junit5/expected-exception-example/
+
+How to use ActivityResultLauncher: [youtube.com](https://www.youtube.com/watch?v=DfDj9EadOLk), by [Daily Coding](https://www.youtube.com/@DailyCoding)
+
+How to get an Android Device Id: [GeeksForGeeks](https://www.geeksforgeeks.org/how-to-fetch-device-id-in-android-programmatically/amp/)
+
+How to use Toasts: [developer.android.com](https://developer.android.com/guide/topics/ui/notifiers/toasts#java) 
+
+How to use FireStore databases: [firebase.google.com](https://firebase.google.com/docs/firestore/query-data/get-data)
+

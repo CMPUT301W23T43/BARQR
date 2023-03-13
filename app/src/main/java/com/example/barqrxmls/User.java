@@ -37,7 +37,7 @@ public class User implements Serializable {
      *
 
      */
-    User(String userName, String id, String email, HashMap<String, String> codes) {
+    User(String userName, String id, String email) {
         this.userName = userName;
         this.id = id;
         this.totalPoints = 0;

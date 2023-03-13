@@ -11,6 +11,10 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     ListView CodesList;
+    User currentTestUser;
 
 
     @Override
@@ -110,47 +115,23 @@ public class MainActivity extends AppCompatActivity {
         Code testCode1 = new Code("/usr/code1");
         Code testCode2 = new Code(";lkajsdf");
         Code testCode3 = new Code("Smithy");
-        HashMap<String, String> codesHashMap = new HashMap<>();
-        codesHashMap.put(testCode1.getHash(), "");
-        codesHashMap.put(testCode2.getHash(), "");
-        codesHashMap.put(testCode3.getHash(), "");
-        DocumentReference currentUser = usersRef.document("CurrentUser");
-        currentUser.update("codes", codesHashMap);
 
-        codesRef.document(testCode1.getHash()).set(testCode1);
-        codesRef.document(testCode2.getHash()).set(testCode2);
-        codesRef.document(testCode3.getHash()).set(testCode3);
-
-        System.out.println("Inside onCreate");
-        codesRef = dataBase.collection("Codes");
-        usersRef = dataBase.collection("Users");
-
-
-
-//        mAuth = FirebaseAuth.getInstance();
-        CodesList = findViewById(R.id.myCodesDisplay);
-//        currentUser= mAuth.getCurrentUser();
-
-        DocumentReference currentUserRef = usersRef.document("CurrentUser");
-        final User[] users = new User[1];
-        User currentUserTest;
-        currentUserRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        Intent loginIntent = new Intent(this, NewAccount.class);
+        ActivityResultLauncher<Intent> loginLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                System.out.println("Just before conversion");
-                if (task.isSuccessful()) {
-                    users[0] = task.getResult().toObject(User.class);
-                    doStuff(users[0]);
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                System.out.println("Failed to convert to User");
-            }
+            public void onActivityResult(ActivityResult result) {
+                Bundle bundle = result.getData().getExtras();
+                currentTestUser = (User)bundle.get("User");
+                codesRef = dataBase.collection("Codes");
+                usersRef = dataBase.collection("Users");
+
+                CodesList = findViewById(R.id.myCodesDisplay);
+                currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
+                currentTestUser.addCode(testCode2.getHash(), testCode2.getPoints());
+                currentTestUser.addCode(testCode3.getHash(), testCode3.getPoints());
+                doStuff(currentTestUser);            }
         });
-
-
+        loginLauncher.launch(loginIntent);
 
     }
 
@@ -215,12 +196,9 @@ public class MainActivity extends AppCompatActivity {
     public void updateCountTextViews(User currentUserTest, ArrayList<Code> codeDataList) {
         TextView codeCountTV = findViewById(R.id.codeTotal);
         codeCountTV.setText(String.valueOf(codeDataList.size()));
-        int sum = 0;
-        for (Code c: codeDataList) {
-            sum += c.getPoints();
-        }
+
         TextView codePointsTV = findViewById(R.id.pointTotal);
-        codePointsTV.setText(String.valueOf(sum));
+        codePointsTV.setText(String.valueOf(currentUserTest.getTotalPoints()));
     }
 }
 

@@ -34,36 +34,53 @@ public class LeaderboardUITest {
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<MainActivity>(MainActivity.class);
 
-    @Rule
-    public IntentsRule intentsRule = new IntentsRule();
-
+    /**
+     * This test checks that the leaderboard activity is launched properly from main.
+     */
     @Test
     public void testSwitchToLeaderboard() {
         onView(withId(R.id.leaderBoardButton)).perform(click()).check(matches(isDisplayed()));
 
     }
 
+
+    /**
+     * This test checks that the leaderboard list is displayed upon the launch of the activity.
+     */
     @Test
-    public void checkLeaderList() {
+    public void testLeaderListDisplay() {
         onView(withId(R.id.leaderBoardButton)).perform(click()).check(matches(isDisplayed()));
         onView(withId(R.id.leaderBoardList)).check(matches(isDisplayed()));
     }
 
+    /**
+     * This test checks that the two search buttons are displayed upon the launch of the activity.
+     */
+
     @Test
-    public void checkButtons() {
+    public void testButtonsDisplay() {
         onView(withId(R.id.leaderBoardButton)).perform(click()).check(matches(isDisplayed()));
         onView(withId(R.id.playerSearchButton)).check(matches(isDisplayed()));
         onView(withId(R.id.codeSearchButton)).check(matches(isDisplayed()));
     }
 
+    /**
+     * This test checks that the user ranking is displayed upon the launch of the activity.
+     */
+
     @Test
-    public void checkUserRank() {
+    public void testUserRankDisplay() {
         onView(withId(R.id.leaderBoardButton)).perform(click()).check(matches(isDisplayed()));
         onView(withId(R.id.playerRanking)).check(matches(isDisplayed()));
     }
 
+    /**
+     * This test checks that a user can return to the home screen from the leaderboard activty
+     * by using the home button on the taskbar.
+     */
+
     @Test
-    public void checkLeaveLeaderboard() {
+    public void testLeaveLeaderboard() {
         onView(withId(R.id.leaderBoardButton)).perform(click()).check(matches(isDisplayed()));
         onView(withId(R.id.homeButton)).perform(click()).check(matches(isDisplayed()));
 

@@ -65,7 +65,7 @@
             android:id="@+id/emailField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="                "
+            android:hint="                "
             android:textColor="#000"
             android:fontFamily="monospace"
             android:textSize="20sp"

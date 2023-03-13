@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -165,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
                         Code userCode = task.getResult().toObject(Code.class);
                         CodeDataList.add(userCode);
                         CodeAdapter.notifyDataSetChanged();
+
+                        updateCountTextViews(currentUserTest, CodeDataList);
                     }
                 }
             });
@@ -196,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
                             currentUserTest.removeCode(CodeToDelete.getHash(), CodeToDelete.getPoints());
                             CodeDataList.remove(position);
                             CodeAdapter.notifyDataSetChanged();
+                            updateCountTextViews(currentUserTest, CodeDataList);
                         }).
                         setNegativeButton("No", (dialog, which) -> {
                             CodeAdapter.notifyDataSetChanged();
@@ -205,7 +210,17 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
 
+    public void updateCountTextViews(User currentUserTest, ArrayList<Code> codeDataList) {
+        TextView codeCountTV = findViewById(R.id.codeTotal);
+        codeCountTV.setText(String.valueOf(codeDataList.size()));
+        int sum = 0;
+        for (Code c: codeDataList) {
+            sum += c.getPoints();
+        }
+        TextView codePointsTV = findViewById(R.id.pointTotal);
+        codePointsTV.setText(String.valueOf(sum));
     }
 }
 

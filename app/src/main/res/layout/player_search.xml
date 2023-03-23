@@ -6,6 +6,20 @@
     android:background="#ccd0da"
     android:gravity="bottom"
     >
+
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Close"
+        android:textSize="15dp"
+        android:fontFamily="monospace"
+        android:backgroundTint="#000"
+        android:textColor="#9ca0b0"
+        android:layout_marginLeft="5dp"
+        >
+    </Button>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +28,7 @@
         android:layout_marginLeft="25dp"
         >
         <EditText
+            android:id="@+id/search_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Search Account Username ..."
@@ -23,10 +38,10 @@
             />
 
         <Button
-            android:id="@+id/closeButton"
+            android:id="@+id/search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Close"
+            android:text="Search"
             android:textSize="15dp"
             android:fontFamily="monospace"
             android:backgroundTint="#000"
@@ -47,5 +62,6 @@
         android:layout_marginBottom="25dp"
 
         />
+
 
 </LinearLayout>

@@ -79,7 +79,8 @@
             android:text="               "
             android:textColor="#000"
             android:maxLength="15"
-            android:textSize="20dp" />
+            android:textSize="20sp"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -112,6 +113,8 @@
         android:layout_gravity="center"
         android:backgroundTint="#000"
         android:textColor="#9ca0b0"
+        android:fontFamily="monospace"
+        android:textSize="15sp"
         />
 
 </LinearLayout>

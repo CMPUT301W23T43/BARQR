@@ -45,18 +45,18 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
+
         <Button
             android:id="@+id/playerSearchButton"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="Search Username"
             android:layout_gravity="center"
-            android:fontFamily="monospace"
-            android:backgroundTint="#000"
-            android:textColor="#9ca0b0"
             android:layout_marginRight="5dp"
-            >
-        </Button>
+            android:backgroundTint="#000"
+            android:fontFamily="monospace"
+            android:text="Search Username"
+            android:textColor="#9ca0b0"></Button>
+
         <Button
             android:id="@+id/codeSearchButton"
             android:layout_width="180dp"

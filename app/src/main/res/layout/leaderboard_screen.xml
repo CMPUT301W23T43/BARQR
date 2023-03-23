@@ -19,18 +19,6 @@
             android:layout_marginRight="90dp"
             />
 
-        <Button
-            android:id="@+id/closeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Close"
-            android:textSize="15dp"
-            android:fontFamily="monospace"
-            android:backgroundTint="#000"
-            android:textColor="#9ca0b0"
-            >
-        </Button>
-
     </LinearLayout>
 
     <LinearLayout

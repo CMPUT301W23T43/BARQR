@@ -20,6 +20,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * represents a User and stores all user related information
+ * Unit test for User class exists but does not work, could not figure out how to do a unit test
+ * on a class that communicates with the database
+ */
 
 public class User implements Serializable {
     private String userName;

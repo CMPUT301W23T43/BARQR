@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mySnackId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ccd0da"
-    android:gravity="bottom"
-    >
-    <LinearLayout
+    android:gravity="bottom">
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         >
-        <EditText
+            <EditText
+            android:id="@+id/playerSearchBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Search Account Username ..."
@@ -22,30 +27,53 @@
             android:textColor="#000"
             />
 
-        <Button
+            <Button
             android:id="@+id/closeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Close"
-            android:textSize="15dp"
+            android:textSize="13dp"
             android:fontFamily="monospace"
             android:backgroundTint="#000"
             android:textColor="#9ca0b0"
             android:layout_marginLeft="25dp"
             >
-        </Button>
+            </Button>
 
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/belowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="75dp"
+
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/searchUserButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:backgroundTint="#000"
+            android:fontFamily="monospace"
+            android:text="Search"
+            android:textColor="#9ca0b0"
+            android:textSize="15dp"></Button>
+
+        <ListView
+            android:id="@+id/accountNameList"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="25dp"
+
+            />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/accountNameList"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="25dp"
 
-        />
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

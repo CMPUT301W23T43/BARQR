@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -195,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         //setContentView(R.layout.main_screen);
         System.out.print("Inside onResume");
+        String id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID).replace("/","_");
 //        dataBase = FirebaseFirestore.getInstance();
 //        mAuth = FirebaseAuth.getInstance();
 
@@ -218,7 +221,14 @@ public class MainActivity extends AppCompatActivity {
          * @return opens LeaderBoard which is linked to leaderboard_screen.xml
          */
         ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
-        leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
+        leaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent leaderIntent = new Intent(MainActivity.this, LeaderBoard.class);
+                leaderIntent.putExtra("id", id);
+                startActivity(leaderIntent);
+            }
+        });
 
         /**
          * NewCode Button implementation
@@ -252,6 +262,15 @@ public class MainActivity extends AppCompatActivity {
          */
         ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
         account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
+
+        Button searchUsers = (Button) findViewById(R.id.playerSearchButton);
+        searchUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent searchUserIntent = new Intent(MainActivity.this, PlayerSearch.class);
+                startActivity(searchUserIntent);
+            }
+        });
 
     }
 }

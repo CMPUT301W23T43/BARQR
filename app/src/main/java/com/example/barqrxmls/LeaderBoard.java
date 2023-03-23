@@ -7,6 +7,7 @@
 package com.example.barqrxmls;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -25,7 +26,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * This class displays the leaderboard along with the current player's (the app user)
@@ -33,13 +36,14 @@ import java.util.List;
  */
 public class LeaderBoard extends AppCompatActivity {
     final String TAG = "Sample";
+    private String currentUser;
 
     CollectionReference usersRef;
 
     private ListView leaderBoard;
     private LeaderboardAdapter boardAdapter;
-    HashMap<Object, Object> leaders;
-    HashMap<Object, Object> rankings;
+    LinkedHashMap<Object, Object> leaders;
+    LinkedHashMap<Object, Object> rankings;
 
     TextView userRank;
 
@@ -59,6 +63,11 @@ public class LeaderBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.leaderboard_screen);
 
+        Bundle extra = getIntent().getExtras();
+        if (extra != null) {
+            currentUser = String.valueOf(extra.get("id"));
+        }
+
         Taskbar taskbar = new Taskbar(LeaderBoard.this);
         // setting screen changes from taskbar
         // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
@@ -72,14 +81,6 @@ public class LeaderBoard extends AppCompatActivity {
         ImageButton home = (ImageButton) findViewById(R.id.homeButton);
         home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
 
-        /**
-         * LeaderBoard Button implementation
-         * @author Noah Jeans
-         * @version 1
-         * @return opens LeaderBoard which is linked to leaderboard_screen.xml
-         */
-        ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
-        leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
 
         /**
          * NewCode Button implementation
@@ -116,8 +117,9 @@ public class LeaderBoard extends AppCompatActivity {
         List<User> queryUsers = new ArrayList<>();
 
         userRank = findViewById(R.id.playerRanking);
-        leaders = new HashMap<>();
-        rankings = new HashMap<>();
+        leaders = new LinkedHashMap<>();
+        rankings = new LinkedHashMap<>();
+
         getUsersByScores.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -126,14 +128,12 @@ public class LeaderBoard extends AppCompatActivity {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, String.valueOf(document.get("userName")));
                         leaders.put(document.get("userName"), document.get("totalPoints"));
-                        boardAdapter = new LeaderboardAdapter(leaders);
-                        leaderBoard.setAdapter(boardAdapter);
-                        updateList();
-                        rankings.put(document.get("userName"), i);
+                        rankings.put(document.get("id"), i);
                         i++;
 
                     }
-                    userRank.setText(rankings.get("CurrentUser").toString());
+                    updateList();
+                    userRank.setText(rankings.get(currentUser).toString());
                 }
             }
         });
@@ -144,7 +144,8 @@ public class LeaderBoard extends AppCompatActivity {
      *
      */
     private void updateList() {
+        boardAdapter = new LeaderboardAdapter(leaders);
+        leaderBoard.setAdapter(boardAdapter);
         boardAdapter.notifyDataSetChanged();
-        System.out.println(leaders);
     }
 }

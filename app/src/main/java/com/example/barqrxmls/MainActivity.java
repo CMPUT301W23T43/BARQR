@@ -91,16 +91,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-        loginLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                Bundle bundle = result.getData().getExtras();
-                currentTestUser = (User)bundle.get("User");
-                codesRef = dataBase.collection("Codes");
-                usersRef = dataBase.collection("Users");
-
-                CodesList = findViewById(R.id.myCodesDisplay);
-                Code testCode1 = new Code("/usr/code1");
+        currentTestUser = CurrentUser.getInstance().getUser();
+        codesRef = dataBase.collection("Codes");
+        usersRef = dataBase.collection("Users");
+        CodesList = findViewById(R.id.myCodesDisplay);
+        Code testCode1 = new Code("/usr/code1");
                 Code testCode2 = new Code(";lkajsdf");
                 Code testCode3 = new Code("Smithy");
                 currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
@@ -109,11 +104,8 @@ public class MainActivity extends AppCompatActivity {
                 CodeDataList = new ArrayList<Code>();
                 CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
                 CodesList.setAdapter(CodeAdapter);
-                doStuff(currentTestUser);
-            }
-        });
-        Intent loginIntent = new Intent(this, NewAccount.class);
-        loginLauncher.launch(loginIntent);
+        doStuff(currentTestUser);
+
     }
 
 

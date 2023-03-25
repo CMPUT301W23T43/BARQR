@@ -20,6 +20,8 @@ import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -69,45 +71,52 @@ public class PlayerSearch extends AppCompatActivity {
 
                //get query
                String queryString = searchBar.getText().toString();
-
-               //search database for usernames the first 20 usernames that start with queryString
-               String TAG = "PlayerSearch";
-               usersRef
-                       .whereGreaterThanOrEqualTo("userName", queryString)
-                       .orderBy("userName", Query.Direction.DESCENDING).limit(20)
-                       .get()
-                       .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                           @Override
-                           public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                               if (task.isSuccessful()) {
-                                   //get the string with the biggest ascii code that satisfies the query
-                                   String searchLimit = queryString.concat("zzzzzzzzzzzzzzz");
-                                   searchLimit = String.format("%.15s", searchLimit);
-                                   //add usernames to the listview
-                                   for (QueryDocumentSnapshot document : task.getResult()) {
-                                       Log.d(TAG, document.getId() + " => " + document.getData());
-                                       String foundUsername = (String) document.get("userName");
-                                       assert foundUsername != null;
-                                       if (foundUsername.compareTo(searchLimit) <= 0) {
-                                           System.out.println("added");
-                                           userDataList.add(foundUsername);
-                                           userAdapter.notifyDataSetChanged();
+               if (queryString.isEmpty()) {
+                   Snackbar.make(findViewById(R.id.mySnackId), "Please enter text to search.", BaseTransientBottomBar.LENGTH_LONG).show();
+               }else{
+                   //search database for usernames the first 20 usernames that start with queryString
+                   String TAG = "PlayerSearch";
+                   usersRef
+                           .whereGreaterThanOrEqualTo("userName", queryString)
+                           .orderBy("userName", Query.Direction.DESCENDING).limit(20)
+                           .get()
+                           .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                               @Override
+                               public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                   if (task.isSuccessful()) {
+                                       //get the string with the biggest ascii code that satisfies the query
+                                       String searchLimit = queryString.concat("zzzzzzzzzzzzzzz");
+                                       searchLimit = String.format("%.15s", searchLimit);
+                                       //add usernames to the listview
+                                       for (QueryDocumentSnapshot document : task.getResult()) {
+                                           Log.d(TAG, document.getId() + " => " + document.getData());
+                                           String foundUsername = (String) document.get("userName");
+                                           assert foundUsername != null;
+                                           if (foundUsername.compareTo(searchLimit) <= 0) {
+                                               System.out.println("added");
+                                               userDataList.add(foundUsername);
+                                               userAdapter.notifyDataSetChanged();
+                                           }
                                        }
+
+                                       //if user clicks on item in the
+                                       userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                           @Override
+                                           public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                               String username = (String) userAdapter.getItem(i);
+                                               switchToPlayer(username);
+                                           }
+                                       });
+
+                                   } else {
+                                       Log.d(TAG, "Error getting documents: ", task.getException());
                                    }
-
-                                   //if user clicks on item in the
-                                   userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                       @Override
-                                       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                           String username = (String) userAdapter.getItem(i);
-                                           switchToPlayer(username);
-                                       }
-                                   });
-                               } else {
-                                   Log.d(TAG, "Error getting documents: ", task.getException());
+                                   if (userDataList.size() == 0){
+                                       Snackbar.make(findViewById(R.id.mySnackId), "No matching users were found, please try again.", BaseTransientBottomBar.LENGTH_LONG).show();
+                                   }
                                }
-                           }
-                       });
+                           });
+               }
             }
         });
     }

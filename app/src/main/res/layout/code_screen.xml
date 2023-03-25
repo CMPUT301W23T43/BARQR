@@ -20,6 +20,7 @@
             android:fontFamily="monospace"
             android:textSize="20dp"
             android:paddingLeft="10dp"
+            android: android:id="@+id/code_name"
             />
         <TextView
             android:id="@+id/nameField"
@@ -91,23 +92,23 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Image :"
-        android:textColor="#000"
-        android:fontFamily="monospace"
-        android:textSize="20dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BARQR :"
-        android:textColor="#000"
-        android:fontFamily="monospace"
-        android:textSize="20dp"
-        android:paddingLeft="120dp"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Image :"
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BARQR :"
+            android:textColor="#000"
+            android:fontFamily="monospace"
+            android:textSize="20dp"
+            android:paddingLeft="120dp"
+            />
     </LinearLayout>
 
     <LinearLayout

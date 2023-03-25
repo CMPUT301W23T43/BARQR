@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -252,6 +253,21 @@ public class MainActivity extends AppCompatActivity {
          */
         ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
         account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
+
+
+        /**
+         * Player Search Button implementation
+         * @author Anjelica Marianicz
+         * @version 1
+         */
+        Button playerSearch = (Button) findViewById(R.id.playerSearchButton);
+        playerSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playerSearchPage = new Intent(MainActivity.this, PlayerSearch.class);
+                startActivity(playerSearchPage);
+            }
+        });
 
     }
 }

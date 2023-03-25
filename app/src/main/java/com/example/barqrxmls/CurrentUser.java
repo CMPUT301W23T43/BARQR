@@ -18,7 +18,7 @@ public class CurrentUser {
      * Get the instance of the CurrentUser class
      * @return instance
      */
-    public CurrentUser getInstance() {
+    public static CurrentUser getInstance() {
         if (instance == null) {
             instance = new CurrentUser();
         }

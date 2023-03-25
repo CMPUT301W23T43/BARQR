@@ -198,7 +198,9 @@ public class MainActivity extends AppCompatActivity {
 //        dataBase = FirebaseFirestore.getInstance();
 //        mAuth = FirebaseAuth.getInstance();
 
-        Taskbar taskbar = new Taskbar(MainActivity.this);
+//        Taskbar taskbar = new Taskbar(MainActivity.this);
+        Taskbar taskbar = Taskbar.getInstance(MainActivity.this);
+
         // setting screen changes from taskbar
         // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
 

@@ -66,10 +66,9 @@
             android:paddingLeft="70dp"
             />
         <TextView
-            android:id="@+id/passwordMyAccount"
+            android:id="@+id/emailMyAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:text="                "
             android:textColor="#000"
             android:fontFamily="monospace"

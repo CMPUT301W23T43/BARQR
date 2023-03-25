@@ -17,8 +17,7 @@ public class Account extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_screen);
-        Bundle bundle = getIntent().getExtras();
-        User user = (User)bundle.get("User");
+        User user = CurrentUser.getInstance().getUser();
 
         TextView username = findViewById(R.id.usernameField);
         TextView email = findViewById(R.id.emailField);

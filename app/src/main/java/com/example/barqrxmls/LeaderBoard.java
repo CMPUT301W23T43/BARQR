@@ -63,12 +63,9 @@ public class LeaderBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.leaderboard_screen);
 
-        Bundle extra = getIntent().getExtras();
-        if (extra != null) {
-            currentUser = String.valueOf(extra.get("id"));
-        }
-
-        Taskbar taskbar = new Taskbar(LeaderBoard.this);
+        Taskbar taskbar = Taskbar.getInstance(LeaderBoard.this);
+        CurrentUser currentInstance = CurrentUser.getInstance();
+        User currentUser = currentInstance.getUser();
         // setting screen changes from taskbar
         // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
 
@@ -133,7 +130,7 @@ public class LeaderBoard extends AppCompatActivity {
 
                     }
                     updateList();
-                    userRank.setText(rankings.get(currentUser).toString());
+                    userRank.setText(rankings.get(currentUser.getId()).toString());
                 }
             }
         });

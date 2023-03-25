@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -92,23 +91,21 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-        loginLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                Bundle bundle = result.getData().getExtras();
-                currentTestUser = (User)bundle.get("User");
-                codesRef = dataBase.collection("Codes");
-                usersRef = dataBase.collection("Users");
+        currentTestUser = CurrentUser.getInstance().getUser();
+        codesRef = dataBase.collection("Codes");
+        usersRef = dataBase.collection("Users");
+        CodesList = findViewById(R.id.myCodesDisplay);
+        Code testCode1 = new Code("/usr/code1");
+        Code testCode2 = new Code(";lkajsdf");
+        Code testCode3 = new Code("Smithy");
+        currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
+        currentTestUser.addCode(testCode2.getHash(), testCode2.getPoints());
+        currentTestUser.addCode(testCode3.getHash(), testCode3.getPoints());
+        CodeDataList = new ArrayList<Code>();
+        CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
+        CodesList.setAdapter(CodeAdapter);
+        doStuff(currentTestUser);
 
-                CodesList = findViewById(R.id.myCodesDisplay);
-                CodeDataList = new ArrayList<Code>();
-                CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
-                CodesList.setAdapter(CodeAdapter);
-                doStuff(currentTestUser);
-            }
-        });
-        Intent loginIntent = new Intent(this, NewAccount.class);
-        loginLauncher.launch(loginIntent);
     }
 
 
@@ -193,8 +190,9 @@ public class MainActivity extends AppCompatActivity {
 //        dataBase = FirebaseFirestore.getInstance();
 //        mAuth = FirebaseAuth.getInstance();
 
-        Taskbar taskbar = new Taskbar(MainActivity.this);
-        String id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID).replace("/","_");
+//        Taskbar taskbar = new Taskbar(MainActivity.this);
+        Taskbar taskbar = Taskbar.getInstance(MainActivity.this);
+
         // setting screen changes from taskbar
         // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
 
@@ -214,15 +212,7 @@ public class MainActivity extends AppCompatActivity {
          * @return opens LeaderBoard which is linked to leaderboard_screen.xml
          */
         ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
-        //leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
-        leaderboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent leaderIntent = new Intent(MainActivity.this, LeaderBoard.class);
-                leaderIntent.putExtra("id", id);
-                startActivity(leaderIntent);
-            }
-        });
+        leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
 
         /**
          * NewCode Button implementation

@@ -63,7 +63,8 @@ public class LeaderBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.leaderboard_screen);
 
-        Taskbar taskbar = new Taskbar(LeaderBoard.this);
+//        Taskbar taskbar = new Taskbar(LeaderBoard.this);
+        Taskbar taskbar = Taskbar.getInstance(LeaderBoard.this);
         // setting screen changes from taskbar
         // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
 

@@ -20,6 +20,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * represents a User and stores all user related information
+ * Unit test for User class exists but does not work, could not figure out how to do a unit test
+ * on a class that communicates with the database
+ */
 
 public class User implements Serializable {
     private String userName;
@@ -109,6 +114,9 @@ public class User implements Serializable {
      */
     public void addCode(String codeHash, int codePoints) {
         // add code without comment to user codes, update points and total codes
+        if(codes.containsKey(codeHash)) {
+            return;
+        }
         codes.put(codeHash,"");
         totalPoints = totalPoints + codePoints;
         numCodes = numCodes + 1;
@@ -123,6 +131,9 @@ public class User implements Serializable {
      */
     public void addCode(String codeHash, String comment, int codePoints) {
         // add code with comment to user codes, update points and total codes
+        if(codes.containsKey(codeHash)) {
+            return;
+        }
         codes.put(codeHash,comment);
         totalPoints = totalPoints + codePoints;
         numCodes = numCodes + 1;
@@ -135,7 +146,7 @@ public class User implements Serializable {
      * @param codeComment is the comment to add to the code
      */
     public void addComment(String codeHash, String codeComment) {
-        if(codes.get(codeHash) == null) {
+        if(!codes.containsKey(codeHash)) {
             return;
         }
         codes.put(codeHash, codeComment);
@@ -147,7 +158,7 @@ public class User implements Serializable {
      * @param codeHash is a String of the hash of the code to remove comment from
      */
     public void removeComment(String codeHash) {
-        if(codes.get(codeHash) == null) {
+        if(!codes.containsKey(codeHash) || codes.get(codeHash) == null) {
             return;
         }
         codes.put(codeHash,"");

@@ -17,20 +17,36 @@ import java.util.HashMap;
  */
 public class Taskbar {
     HashMap<String, OnClickListener> switchActivityMap;
-    Context callerContext;
+    //Context callerContext;
+    private static Taskbar instance = null;
+
+    public static Taskbar getInstance(Context context) {
+        if (instance == null) {
+            instance = new Taskbar(context);
+        }
+        return instance;
+    }
+
+
+    public void setupDefaultTaskbar(Context context) {
+        makeTaskbar(context,
+                new ArrayList<>(Arrays.asList(MainActivity.class, LeaderBoard.class, Map.class, NewCode.class, Account.class)),
+                new ArrayList<>(Arrays.asList("MainActivity", "LeaderBoard", "Map", "NewCode", "Account"))
+        );
+    }
 
     /**
      * Construct a default taskbar
      *
      * This constructor creates a default taskbar for the current layout of the app.
      * Internally, it calls the second constructor with a default list of arguments.
-     * @param context The caller's context, required for view switching to work.
      */
-    public Taskbar(Context context) {
-        this(   context,
-                new ArrayList<>(Arrays.asList(MainActivity.class, LeaderBoard.class, Map.class, NewCode.class, Account.class)),
-                new ArrayList<>(Arrays.asList("MainActivity", "LeaderBoard", "Map", "NewCode", "Account"))
-        );
+    private Taskbar(Context context) {
+        setupDefaultTaskbar(context);
+//        this(instance.callerContext,
+//                new ArrayList<>(Arrays.asList(MainActivity.class, LeaderBoard.class, Map.class, NewCode.class, Account.class)),
+//                new ArrayList<>(Arrays.asList("MainActivity", "LeaderBoard", "Map", "NewCode", "Account"))
+//        );
     }
 
     // Class generic creation style from StackOverflow (<? extends ...> and <T extends ...>)
@@ -46,12 +62,11 @@ public class Taskbar {
      * @param classList List of classes, such as MainActivity.class or HomeActivity.class
      * @param activityNames List of strings corresponding 1:1 to class list.
      */
-    public Taskbar(Context context, ArrayList<Class<? extends AppCompatActivity>> classList, ArrayList<String> activityNames) {
-        this.callerContext = context;
+    private void makeTaskbar(Context context, ArrayList<Class<? extends AppCompatActivity>> classList, ArrayList<String> activityNames) {
         assert(classList.size() == activityNames.size());
         HashMap<String, OnClickListener> listenerHashMap = new HashMap<>();
         for (int i = 0; i < classList.size(); i++) {
-            listenerHashMap.put(activityNames.get(i), createListener(classList.get(i)));
+            listenerHashMap.put(activityNames.get(i), createListener(classList.get(i), context));
         }
         switchActivityMap = listenerHashMap;
     }
@@ -64,7 +79,7 @@ public class Taskbar {
      * @return OnClickListener with behaviour of switching to target activity.
      * @param <T> A class that extends AppCompatActivity.
      */
-    private <T extends AppCompatActivity> OnClickListener createListener(Class<T> target) {
+    private <T extends AppCompatActivity> OnClickListener createListener(Class<T> target, Context callerContext) {
         return new OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -58,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
 
     Code testScannedCode;
     Bitmap testScannedCodeImage;
+    String testScannedCity,testScannedCountry,testScannedAddress;
+    Double testScannedLatitude,testScannedLongitude;
+    byte[] testScannedCompressedByteArray;
+
 
     ActivityResultLauncher<Intent> loginLauncher;
     ActivityResultLauncher<Intent> cameraLauncher;
@@ -65,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
+
 
         // Citation: https://www.youtube.com/watch?v=DfDj9EadOLk
         // from youtube channel https://www.youtube.com/@DailyCoding Daily Coding.
@@ -81,7 +87,15 @@ public class MainActivity extends AppCompatActivity {
                                 Bundle cameraResults = camResultIntent.getExtras();
                                 Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("codeData").toString()));
                                 testScannedCode = new Code(cameraResults.get("codeData").toString());
-                                testScannedCodeImage = (Bitmap) cameraResults.get("codeImage");
+                                testScannedCodeImage = (Bitmap) cameraResults.get("codeBitmap");
+                                testScannedCountry = cameraResults.get("codeCountry").toString();
+                                testScannedAddress = cameraResults.get("codeAddress").toString();
+                                testScannedLatitude = (Double) cameraResults.get("codeLatitude");
+                                testScannedLongitude = (Double) cameraResults.get("codeLongitude");
+                                testScannedCompressedByteArray = (byte[]) cameraResults.get("codeByteArray");
+
+
+
                                 currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
                                 codesRef.document(testScannedCode.getHash()).set(testScannedCode);
                                 CodeDataList.add(testScannedCode);
@@ -91,16 +105,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-        loginLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                Bundle bundle = result.getData().getExtras();
-                currentTestUser = (User)bundle.get("User");
-                codesRef = dataBase.collection("Codes");
-                usersRef = dataBase.collection("Users");
-
-                CodesList = findViewById(R.id.myCodesDisplay);
-                Code testCode1 = new Code("/usr/code1");
+        currentTestUser = CurrentUser.getInstance().getUser();
+        codesRef = dataBase.collection("Codes");
+        usersRef = dataBase.collection("Users");
+        CodesList = findViewById(R.id.myCodesDisplay);
+        Code testCode1 = new Code("/usr/code1");
                 Code testCode2 = new Code(";lkajsdf");
                 Code testCode3 = new Code("Smithy");
                 currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
@@ -109,11 +118,8 @@ public class MainActivity extends AppCompatActivity {
                 CodeDataList = new ArrayList<Code>();
                 CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
                 CodesList.setAdapter(CodeAdapter);
-                doStuff(currentTestUser);
-            }
-        });
-        Intent loginIntent = new Intent(this, NewAccount.class);
-        loginLauncher.launch(loginIntent);
+        doStuff(currentTestUser);
+
     }
 
 
@@ -198,7 +204,9 @@ public class MainActivity extends AppCompatActivity {
 //        dataBase = FirebaseFirestore.getInstance();
 //        mAuth = FirebaseAuth.getInstance();
 
-        Taskbar taskbar = new Taskbar(MainActivity.this);
+//        Taskbar taskbar = new Taskbar(MainActivity.this);
+        Taskbar taskbar = Taskbar.getInstance(MainActivity.this);
+
         // setting screen changes from taskbar
         // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
 

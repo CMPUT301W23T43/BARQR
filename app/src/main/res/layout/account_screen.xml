@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="80dp"
         android:text="My Account"
+        android:paddingVertical="5dp"
         android:textColor="#000"
         android:fontFamily="monospace"
         android:textSize="30dp"
@@ -34,7 +35,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username :"
+            android:text="Username: "
+            android:textStyle="bold"
             android:textColor="#000"
             android:fontFamily="monospace"
             android:textSize="20dp"
@@ -59,7 +61,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email :"
+            android:text="Email: "
+            android:textStyle="bold"
             android:textColor="#000"
             android:fontFamily="monospace"
             android:textSize="20dp"
@@ -76,6 +79,74 @@
             />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/lowestDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:paddingLeft="70dp"
+            android:text="Lowest Scoring QR Code:"
+            android:textColor="#000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/lowestQRCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:paddingLeft="70dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textStyle="italic"
+            android:text="                "
+            android:textColor="#000"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="20dp"
+            android:autoSizeMinTextSize="18dp"
+            android:autoSizeStepGranularity="2dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/highestDisplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:paddingLeft="70dp"
+            android:textStyle="bold"
+            android:text="Highest Scoring QR Code:"
+            android:textColor="#000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/highestQRCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:paddingLeft="70dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="                "
+            android:textColor="#000"
+            android:textStyle="italic"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="20dp"
+            android:autoSizeMinTextSize="18dp"
+            android:autoSizeStepGranularity="2dp"
+            />
+    </LinearLayout>
+
     <Button
         android:id="@+id/closeButton"
         android:layout_width="wrap_content"
@@ -84,6 +155,6 @@
         android:layout_gravity="center"
         android:backgroundTint="#000"
         android:textColor="#9ca0b0"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="180dp"
         />
 </LinearLayout>

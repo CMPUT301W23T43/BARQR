@@ -46,6 +46,9 @@ public class Account extends AppCompatActivity {
     String highCode;
     String lowCode;
 
+    TextView highCodeName;
+    TextView lowCodeName;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_screen);
@@ -57,6 +60,12 @@ public class Account extends AppCompatActivity {
         username = findViewById(R.id.usernameMyAccount);
 
         email = findViewById(R.id.emailMyAccount);
+
+        highCodeName = findViewById(R.id.highestQRCode);
+        lowCodeName = findViewById(R.id.lowestQRCode);
+
+        highCodeName.setVisibility(View.INVISIBLE);
+        lowCodeName.setVisibility(View.INVISIBLE);
 
         Button closeButton = (Button) findViewById(R.id.closeButton);
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -83,20 +92,29 @@ public class Account extends AppCompatActivity {
                     checkCode.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if (Long.valueOf((Long) documentSnapshot.get("points")).intValue() >= highestScore || highestScore == 0) {
+
+                            System.out.println(Long.valueOf((Long) documentSnapshot.get("points")).intValue());
+                            if (Long.valueOf((Long) documentSnapshot.get("points")).intValue() > highestScore || highestScore == 0) {
                                 highCode = (String) documentSnapshot.get("name");
                                 highestScore = (Long.valueOf((Long) documentSnapshot.get("points")).intValue());
-                            } else if (Long.valueOf((Long) documentSnapshot.get("points")).intValue() <= lowestScore || lowestScore == 0) {
+                                highCodeName.setText(highCode);
+                            }
+                            if (Long.valueOf((Long) documentSnapshot.get("points")).intValue() < lowestScore || lowestScore == 0) {
                                 lowCode = (String) documentSnapshot.get("name");
                                 lowestScore = Long.valueOf((Long) documentSnapshot.get("points")).intValue();
+                                lowCodeName.setText(lowCode);
+
                             }
+
                         }
                     });
+
                 }
 
             }
         });
 
+        highCodeName.setVisibility(View.VISIBLE);
+        lowCodeName.setVisibility(View.VISIBLE);
     }
-
 }

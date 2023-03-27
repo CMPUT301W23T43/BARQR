@@ -7,6 +7,7 @@
 package com.example.barqrxmls;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,19 +24,27 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Source;
 
-import org.checkerframework.checker.units.qual.Current;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Account extends AppCompatActivity {
 
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private CollectionReference usersRef = database.collection("Users");
+    private CollectionReference codesRef = database.collection("Codes");
 
     String usernameValue;
 
     TextView username;
     TextView email;
+
+    Integer highestScore = 0;
+    Integer lowestScore = 0;
+    String highCode;
+    String lowCode;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +70,32 @@ public class Account extends AppCompatActivity {
         username.setText(usernameValue);
         email.setText(thisUser.getEmail());
 
+        DocumentReference userInDatabase = usersRef.document(thisUser.getUserName());
+
+        userInDatabase.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                HashMap<Object, Object> userCodes = new HashMap<>();
+                userCodes.putAll((Map<Object, Object>) documentSnapshot.get("codes"));
+
+                for (Map.Entry<Object, Object> code : userCodes.entrySet()) {
+                    DocumentReference checkCode = codesRef.document(code.getKey().toString());
+                    checkCode.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (Long.valueOf((Long) documentSnapshot.get("points")).intValue() >= highestScore || highestScore == 0) {
+                                highCode = (String) documentSnapshot.get("name");
+                                highestScore = (Long.valueOf((Long) documentSnapshot.get("points")).intValue());
+                            } else if (Long.valueOf((Long) documentSnapshot.get("points")).intValue() <= lowestScore || lowestScore == 0) {
+                                lowCode = (String) documentSnapshot.get("name");
+                                lowestScore = Long.valueOf((Long) documentSnapshot.get("points")).intValue();
+                            }
+                        }
+                    });
+                }
+
+            }
+        });
 
     }
 

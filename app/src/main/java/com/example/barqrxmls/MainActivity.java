@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -58,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
 
     Code testScannedCode;
     Bitmap testScannedCodeImage;
+    String testScannedCity,testScannedCountry,testScannedAddress;
+    Double testScannedLatitude,testScannedLongitude;
+    byte[] testScannedCompressedByteArray;
+
 
     ActivityResultLauncher<Intent> loginLauncher;
     ActivityResultLauncher<Intent> cameraLauncher;
@@ -65,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
+
 
         // Citation: https://www.youtube.com/watch?v=DfDj9EadOLk
         // from youtube channel https://www.youtube.com/@DailyCoding Daily Coding.
@@ -81,7 +87,15 @@ public class MainActivity extends AppCompatActivity {
                                 Bundle cameraResults = camResultIntent.getExtras();
                                 Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("codeData").toString()));
                                 testScannedCode = new Code(cameraResults.get("codeData").toString());
-                                testScannedCodeImage = (Bitmap) cameraResults.get("codeImage");
+                                testScannedCodeImage = (Bitmap) cameraResults.get("codeBitmap");
+                                testScannedCountry = cameraResults.get("codeCountry").toString();
+                                testScannedAddress = cameraResults.get("codeAddress").toString();
+                                testScannedLatitude = (Double) cameraResults.get("codeLatitude");
+                                testScannedLongitude = (Double) cameraResults.get("codeLongitude");
+                                testScannedCompressedByteArray = (byte[]) cameraResults.get("codeByteArray");
+
+
+
                                 currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
                                 codesRef.document(testScannedCode.getHash()).set(testScannedCode);
                                 CodeDataList.add(testScannedCode);

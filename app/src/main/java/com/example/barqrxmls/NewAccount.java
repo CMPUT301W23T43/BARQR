@@ -26,6 +26,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.checkerframework.checker.units.qual.C;
+
 
 //Acknowledgements:
 
@@ -54,6 +56,7 @@ public class NewAccount extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            Log.d(TAG, "successfully retrieved user");
                             User user = null;
                             //set user to result of query
                             for (QueryDocumentSnapshot document : task.getResult()) {
@@ -65,9 +68,10 @@ public class NewAccount extends AppCompatActivity {
                             if(user != null) {
                                 //https://www.youtube.com/watch?v=DfDj9EadOLk , https://www.youtube.com/@DailyCoding
                                 Intent myIntent = new Intent(NewAccount.this, MainActivity.class);
-                                myIntent.putExtra("User", user);
-                                setResult(RESULT_OK,myIntent);
-                                finish();
+//                                setResult(RESULT_OK,myIntent);
+                                CurrentUser currentUser = CurrentUser.getInstance();
+                                currentUser.setUser(user);
+                                startActivity(myIntent);
                             }
 
                             //if user does not exist start new account screen
@@ -111,9 +115,9 @@ public class NewAccount extends AppCompatActivity {
                                                             //https://www.youtube.com/watch?v=DfDj9EadOLk , https://www.youtube.com/@DailyCoding
                                                             User user = new User(username, id, newEmail.getText().toString());
                                                             Intent myIntent = new Intent(NewAccount.this, MainActivity.class);
-                                                            myIntent.putExtra("User", user);
-                                                            setResult(RESULT_OK,myIntent);
-                                                            finish();
+                                                            CurrentUser currentUser = CurrentUser.getInstance();
+                                                            currentUser.setUser(user);
+                                                            startActivity(myIntent);
                                                         }
 
                                                     }

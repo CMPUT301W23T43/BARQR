@@ -88,14 +88,17 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("codeData").toString()));
                                 testScannedCode = new Code(cameraResults.get("codeData").toString());
                                 testScannedCodeImage = (Bitmap) cameraResults.get("codeBitmap");
-                                testScannedCountry = cameraResults.get("codeCountry").toString();
-                                testScannedAddress = cameraResults.get("codeAddress").toString();
-                                testScannedLatitude = (Double) cameraResults.get("codeLatitude");
-                                testScannedLongitude = (Double) cameraResults.get("codeLongitude");
-                                testScannedCompressedByteArray = (byte[]) cameraResults.get("codeByteArray");
+                                // All this stuff below us might be NULL if the User declines
+                                // Geolocation tagging.
+                                testScannedCountry = cameraResults.getString("codeCountry");
+                                testScannedAddress = cameraResults.getString("codeAddress");
+                                testScannedLatitude = cameraResults.getDouble("codeLatitude");
+                                testScannedLongitude = cameraResults.getDouble("codeLongitude");
+                                testScannedCompressedByteArray = (byte[]) cameraResults.getByteArray("codeByteArray");
 
 
-
+                                testScannedCode.setLatitude(testScannedLatitude);
+                                testScannedCode.setLongitude(testScannedLongitude);
                                 currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
                                 codesRef.document(testScannedCode.getHash()).set(testScannedCode);
                                 CodeDataList.add(testScannedCode);
@@ -110,14 +113,14 @@ public class MainActivity extends AppCompatActivity {
         usersRef = dataBase.collection("Users");
         CodesList = findViewById(R.id.myCodesDisplay);
         Code testCode1 = new Code("/usr/code1");
-                Code testCode2 = new Code(";lkajsdf");
-                Code testCode3 = new Code("Smithy");
-                currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
-                currentTestUser.addCode(testCode2.getHash(), testCode2.getPoints());
-                currentTestUser.addCode(testCode3.getHash(), testCode3.getPoints());
-                CodeDataList = new ArrayList<Code>();
-                CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
-                CodesList.setAdapter(CodeAdapter);
+        Code testCode2 = new Code(";lkajsdf");
+        Code testCode3 = new Code("Smithy");
+        currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
+        currentTestUser.addCode(testCode2.getHash(), testCode2.getPoints());
+        currentTestUser.addCode(testCode3.getHash(), testCode3.getPoints());
+        CodeDataList = new ArrayList<Code>();
+        CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
+        CodesList.setAdapter(CodeAdapter);
         doStuff(currentTestUser);
 
     }

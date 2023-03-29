@@ -8,6 +8,7 @@ package com.example.barqrxmls;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
@@ -16,6 +17,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -33,17 +38,10 @@ public class Map extends AppCompatActivity {
     private MapView map;
 
     private MyLocationNewOverlay mLocationOverlay;
+    private IMapController mapController;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    double latitude, longitude;
 
-//    private ActivityResultLauncher<String> requestPermissionLauncher =
-//            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted -> {
-//                if (isGranted.get(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                    // TODO: Call a nice function that does all our work for us
-//                    showMap();
-//                } else {
-//                    // TODO: Just pop up a dialog or something and show a blank screen
-//                    System.out.println("We don't have permission :(");
-//                }
-//            });
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Map settings, like User Agent for internet and loading osmdroid configuration
@@ -61,23 +59,45 @@ public class Map extends AppCompatActivity {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
         ).toArray());
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+        });
+
+        map.setMultiTouchControls(true);
+        mapController = map.getController();
+        mapController.setZoom(15.5);
+        mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(Map.this), map);
+        // TODO: We have to make sure the location permission is enabled and stuff
+        ActivityCompat.requestPermissions(this, Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION).toArray(new String[0]), REQUEST_PERMISSIONS_REQUEST_CODE);
+
+//        System.out.println("Our location is " + myLocation.toString());
     }
 
     @Override
     public void onResume() {
         super.onResume();
         map.onResume();
+        this.mLocationOverlay.enableMyLocation();
+        map.getOverlays().add(this.mLocationOverlay);
+        GeoPoint myLocation = this.mLocationOverlay.getMyLocation();
+        GeoPoint testLocation = new GeoPoint(53.534444,  -113.490278);
+        if (myLocation == null) {
+            System.out.println("myLocation is null");
+        } else {
+            System.out.println("myLocation is not null! It is" + myLocation);
+        }
 
-        map.setMultiTouchControls(true);
-        IMapController mapController = map.getController();
-        mapController.setZoom(9.5);
-        mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this), map);
-        // TODO: We have to make sure the location permission is enabled and stuff
-        mLocationOverlay.enableMyLocation();
-        map.getOverlays().add(mLocationOverlay);
-        GeoPoint myLocation = mLocationOverlay.getMyLocation();
-//        System.out.println("Our location is " + myLocation.toString());
-        mapController.setCenter(myLocation);
+        mapController.setCenter(testLocation);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mLocationOverlay.disableMyLocation();
+        map.onPause();
     }
 
     private void requestPermissionsIfNecessary(String[] permissions) {

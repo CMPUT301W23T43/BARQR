@@ -12,6 +12,7 @@ public class Code {
     private String hash;
     private Integer points;
     private String name;
+    private double latitude, longitude;
 
     // Access like nameParts['suffix']
 
@@ -76,6 +77,41 @@ public class Code {
     public Code() {
 
     }
+
+    /***
+     * Set the code's Latitude.
+     * Can be NULL, if the user declined permission or didn't take it in this instance
+     * @param latitude The latitude of the code. Should be passed from Camera.
+     */
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    /***
+     * Set the code's Longitude.
+     * Can be NULL, if the user declined permission or didn't take it in this instance.
+     * @param longitude The longitude of the code. Should be passed from Camera.
+     */
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    /***
+     * Get the code's Latitude.
+     * @return Latitude, a double.
+     */
+    public double getLatitude() {
+        return latitude;
+    }
+
+    /***
+     * Get the codes Longitude
+     * @return longitude, a double
+     */
+    public double getLongitude() {
+        return longitude;
+    }
+
     /**
      * Take the hash and convert it into a relatively unique name.
      * This is achieved by consuming 'n' digits of the has, and adding them together.

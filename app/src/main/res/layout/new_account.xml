@@ -10,11 +10,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="5dp"
         android:paddingBottom="100dp"
         android:text="Create New Account"
         android:textColor="#000"
         android:fontFamily="monospace"
-        android:textSize="5mm"
+        android:textSize="35sp"
         android:layout_gravity="center"
         />
 
@@ -27,19 +28,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username :"
+            android:layout_marginTop="2dp"
+            android:text="Username:"
             android:textColor="#000"
             android:fontFamily="monospace"
-            android:textSize="10sp"
+            android:textSize="20sp"
+            android:paddingRight="10dp"
             />
         <EditText
             android:id="@+id/usernameField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="    "
+            android:layout_marginTop="2dp"
+            android:maxLength="15"
             android:textColor="#000"
             android:fontFamily="monospace"
-            android:textSize="10sp"
+            android:hint="               "
+            android:textSize="20sp"
             />
     </LinearLayout>
 
@@ -56,18 +61,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email :"
+            android:layout_marginTop="2dp"
+            android:text="Email:"
+            android:textAlignment="viewStart"
             android:textColor="#000"
             android:fontFamily="monospace"
             android:textSize="20sp"
+            android:paddingRight="20dp"
             />
+
         <EditText
             android:id="@+id/emailField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="                "
-            android:textColor="#000"
+            android:layout_marginTop="2dp"
             android:fontFamily="monospace"
+            android:text="               "
+            android:textColor="#000"
+            android:maxLength="15"
             android:textSize="20sp"
             />
     </LinearLayout>

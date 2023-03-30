@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     Code testScannedCode;
     Bitmap testScannedCodeImage;
-    String testScannedCity,testScannedCountry,testScannedAddress;
+    String testScannedCity,testScannedCountry,testScannedAddress,testScannedGeoLocation;
     Double testScannedLatitude,testScannedLongitude;
     byte[] testScannedCompressedByteArray;
 
@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                                 testScannedAddress = cameraResults.get("codeAddress").toString();
                                 testScannedLatitude = (Double) cameraResults.get("codeLatitude");
                                 testScannedLongitude = (Double) cameraResults.get("codeLongitude");
+                                testScannedGeoLocation =cameraResults.get("codeGeoLocation").toString();
                                 testScannedCompressedByteArray = (byte[]) cameraResults.get("codeByteArray");
 
 

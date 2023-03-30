@@ -91,16 +91,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-        loginLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                Bundle bundle = result.getData().getExtras();
-                currentTestUser = (User)bundle.get("User");
-                codesRef = dataBase.collection("Codes");
-                usersRef = dataBase.collection("Users");
-
-                CodesList = findViewById(R.id.myCodesDisplay);
-                Code testCode1 = new Code("/usr/code1");
+        currentTestUser = CurrentUser.getInstance().getUser();
+        codesRef = dataBase.collection("Codes");
+        usersRef = dataBase.collection("Users");
+        CodesList = findViewById(R.id.myCodesDisplay);
+        Code testCode1 = new Code("/usr/code1");
                 Code testCode2 = new Code(";lkajsdf");
                 Code testCode3 = new Code("Smithy");
                 currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
@@ -109,13 +104,16 @@ public class MainActivity extends AppCompatActivity {
                 CodeDataList = new ArrayList<Code>();
                 CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
                 CodesList.setAdapter(CodeAdapter);
-                doStuff(currentTestUser);
-            }
-        });
-        Intent loginIntent = new Intent(this, NewAccount.class);
-        loginLauncher.launch(loginIntent);
+        doStuff(currentTestUser);
+
     }
 
+
+    /**
+     * Performs necessary operations to retrieve and display codes associated with the current user.
+     *
+     * @param currentUserTest The User object representing the current user.
+     */
     public void doStuff(User currentUserTest) {
         System.out.println("After attempting to convert to User object" + currentUserTest);
 
@@ -192,7 +190,9 @@ public class MainActivity extends AppCompatActivity {
 //        dataBase = FirebaseFirestore.getInstance();
 //        mAuth = FirebaseAuth.getInstance();
 
-        Taskbar taskbar = new Taskbar(MainActivity.this);
+//        Taskbar taskbar = new Taskbar(MainActivity.this);
+        Taskbar taskbar = Taskbar.getInstance(MainActivity.this);
+
         // setting screen changes from taskbar
         // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
 

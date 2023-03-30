@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,7 +57,8 @@ public class CameraActivity extends AppCompatActivity  {
     byte[] dataBytes;
     Bitmap bitmapOfLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
-    String country,city,address;
+    String country="",city="",address="";
+    String userGeoLocation="";
     double longitude;
     double latitude;
 
@@ -116,6 +118,7 @@ public class CameraActivity extends AppCompatActivity  {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     getBackToMain();
                     dialogInterface.dismiss();
+
                 }
             });
             surroundingBuilder.setPositiveButton("Take", new DialogInterface.OnClickListener()
@@ -125,6 +128,7 @@ public class CameraActivity extends AppCompatActivity  {
                     captureImage();
 
                     dialogInterface.dismiss();
+                    getBackToMain();
                 }
             }).show();
             AlertDialog.Builder geoLocationBuilder = new AlertDialog.Builder(CameraActivity.this);
@@ -182,7 +186,8 @@ public class CameraActivity extends AppCompatActivity  {
                                     longitude=(addresses.get(0).getLongitude());
                                     address=(addresses.get(0).getAddressLine(0)).toString();
                                     city=(addresses.get(0).getLocality()).toString();
-                                    country=(addresses.get(0).getCountryName()).toString();}
+                                    country=(addresses.get(0).getCountryName()).toString();
+                                    userGeoLocation=String.format("Longitude: %s Latitude: %s Address: %s" , longitude,latitude,address);}
                                 catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -256,6 +261,7 @@ public class CameraActivity extends AppCompatActivity  {
     public Bitmap getBitmap(){
         return bitmapOfLocation;
     }
+    @SuppressLint("DefaultLocale")
     public void getBackToMain(){
         Intent backToMain = new Intent(CameraActivity.this, MainActivity.class);
         String qrData = "codeData";
@@ -266,16 +272,18 @@ public class CameraActivity extends AppCompatActivity  {
         String mLatitude="codeLatitude";
         String mCity="codeCity";
         String mByteArray="codeByteArray";
-
+        String mGeoLocation="codeGeoLocation";
 
         backToMain.putExtra(qrData,data);
         backToMain.putExtra(bitmap,compBitmap);
         backToMain.putExtra(mAddress,address);
         backToMain.putExtra(mCountry,country);
         backToMain.putExtra(mLongitude,longitude);
+        backToMain.putExtra(mGeoLocation,userGeoLocation);
         backToMain.putExtra(mLatitude,latitude);
         backToMain.putExtra(mCity,city);
         backToMain.putExtra(mByteArray,compressedBytes);
+
 
         setResult(15, backToMain);
         finish();

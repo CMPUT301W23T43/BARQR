@@ -1,5 +1,6 @@
 package com.example.barqrxmls;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import android.widget.EditText;
@@ -28,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class User implements Serializable {
     private String userName;
-    private HashMap<String,String> codes;
+    private HashMap<String,HashMap<String,Object>> codes;
     private int totalPoints;
     private String email;
     private String id;
@@ -79,7 +80,7 @@ public class User implements Serializable {
      * return's a hashmap of the user's code hashes and code comments
      * @return a hashmap of the user's code hashes and code comments
      */
-    public HashMap<String, String> getCodes() {
+    public HashMap<String, HashMap<String,Object>> getCodes() {
         return codes;
     }
 
@@ -108,35 +109,70 @@ public class User implements Serializable {
     }
 
     /**
-     * adds a code to the user's list of codes without a comment
+     * adds a code to the user's list of codes without a geolocation
      * @param codeHash is a String of the hash of the code
      * @param codePoints is an int of the number of points the code is worth
      */
     public void addCode(String codeHash, int codePoints) {
-        // add code without comment to user codes, update points and total codes
+        // re-init codes if null
+        if(codes == null) {
+            this.codes = new HashMap<>();
+        }
+        // return if user already has the code
         if(codes.containsKey(codeHash)) {
             return;
         }
-        codes.put(codeHash,"");
+        // add code without comment to user codes, update points and total codes
+        HashMap<String,Object> codeInfo = new HashMap<>();
+        codeInfo.put("geolocation","");
+        codeInfo.put("image","");
+        codeInfo.put("comment","");
+        codes.put(codeHash,codeInfo);
         totalPoints = totalPoints + codePoints;
         numCodes = numCodes + 1;
         updateInDatabase();
     }
 
     /**
-     * adds a code to the user's list of codes with a comment
+     * adds a code to the user's list of codes with a geolocation
      * @param codeHash is a String of the hash of the code
-     * @param comment is a String of the user's comment on their code
+     * @param geolocation is a String of the geolocation where the code was found
      * @param codePoints is an int of the number of points the code is worth
      */
-    public void addCode(String codeHash, String comment, int codePoints) {
-        // add code with comment to user codes, update points and total codes
+    public void addCode(String codeHash, String geolocation, int codePoints) {
+        // re-init codes if null
+        if(codes == null) {
+            this.codes = new HashMap<>();
+        }
+        // return if user already has the code
         if(codes.containsKey(codeHash)) {
             return;
         }
-        codes.put(codeHash,comment);
+        // add code with comment to user codes, update points and total codes
+        HashMap<String,Object> codeInfo = new HashMap<>();
+        codeInfo.put("geolocation",geolocation);
+        codeInfo.put("image","");
+        codeInfo.put("comment","");
+        codes.put(codeHash,codeInfo);
         totalPoints = totalPoints + codePoints;
         numCodes = numCodes + 1;
+        updateInDatabase();
+    }
+
+
+    /**
+     * removes a code from the user's list of codes
+     * @param removeCode is the hash of the code to remove from the user's code list
+     * @param codePoints is the number of points the code to remove is worth
+     */
+    public void removeCode(String removeCode, int codePoints) {
+        if(codes == null || !codes.containsKey(removeCode)) {
+            return;
+        }
+        // remove code from user codes, update points and total codes
+        codes.remove(removeCode);
+        totalPoints = totalPoints - codePoints;
+        numCodes = numCodes - 1;
         updateInDatabase();
     }
 
@@ -149,7 +185,7 @@ public class User implements Serializable {
         if(!codes.containsKey(codeHash)) {
             return;
         }
-        codes.put(codeHash, codeComment);
+        codes.get(codeHash).put("comment",codeComment);
         updateInDatabase();
     }
 
@@ -161,7 +197,7 @@ public class User implements Serializable {
         if(!codes.containsKey(codeHash) || codes.get(codeHash) == null) {
             return;
         }
-        codes.put(codeHash,"");
+        codes.get(codeHash).put("comment","");
         updateInDatabase();
     }
 
@@ -171,33 +207,31 @@ public class User implements Serializable {
      * @return true if the code has a comment, false otherwise
      */
     public boolean hasComment(String codeHash) {
-        if (Objects.equals(codes.get(codeHash), "") || codes.get(codeHash) == null) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return codes.get(codeHash) != null && !Objects.equals(codes.get(codeHash).get("comment"), "");
 
     }
 
     /**
-     * removes a code from the user's list of codes
-     * @param removeCode is the hash of the code to remove from the user's code list
-     * @param codePoints is the number of points the code to remove is worth
+     * adds an image represented as a byte array to a code
+     * @param codeHash is the hash of the code to add the image to
+     * @param image is the byte array representing the image
      */
-    public void removeCode(String removeCode, int codePoints) {
-        // remove code from user codes, update points and total codes
-        codes.remove(removeCode);
-        totalPoints = totalPoints - codePoints;
-        numCodes = numCodes - 1;
+
+    public void addImage(String codeHash, byte[] image) {
+        if(!codes.containsKey(codeHash)) {
+            return;
+        }
+        codes.get(codeHash).put("image",image);
         updateInDatabase();
-        return;
     }
 
     /**
      * updates the database when a change is made to the user
      */
     private void updateInDatabase() {
+        if(this.getClass().getSuperclass() == User.class) {
+            return;
+        }
         // get database
         FirebaseFirestore dataBase = FirebaseFirestore.getInstance();
         CollectionReference usersRef;

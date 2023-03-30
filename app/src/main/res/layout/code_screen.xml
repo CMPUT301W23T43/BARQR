@@ -7,11 +7,6 @@
     android:gravity="bottom"
     android:paddingBottom="100dp"
     >
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,22 +15,8 @@
             android:fontFamily="monospace"
             android:textSize="20dp"
             android:paddingLeft="10dp"
-            android: android:id="@+id/code_name"
+            android:id="@+id/code_name"
             />
-        <TextView
-            android:id="@+id/nameField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:fontFamily="monospace"
-
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,36 +25,34 @@
             android:fontFamily="monospace"
             android:textSize="20dp"
             android:paddingLeft="10dp"
+            android:id="@+id/point_value"
             />
-        <TextView
-            android:id="@+id/pointsField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:fontFamily="monospace"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Comment :"
+            android:text="Comment: (click to edit)"
             android:textColor="#000"
             android:fontFamily="monospace"
             android:textSize="20dp"
             android:paddingLeft="10dp"
+            android:id="@+id/code_comment"
             />
-        <EditText
-            android:id="@+id/commentField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:fontFamily="monospace"
-            />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+    <EditText
+        android:id="@+id/commentField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:clickable="true"
+        android:gravity="center"
+        android:hint="                        "
+        android:fontFamily="monospace"
+        />
     </LinearLayout>
 
     <Button
@@ -140,17 +119,7 @@
         android:textSize="20dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
-        />
-    <Button
-        android:id="@+id/addGeolocationButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Geolocation ..."
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        android:backgroundTint="#000"
-        android:textColor="#9ca0b0"
-        android:layout_marginBottom="10dp"
+        android:id="@+id/code_geolocation"
         />
 
     <LinearLayout
@@ -159,7 +128,7 @@
         android:orientation="horizontal"
         >
         <Button
-            android:id="@+id/closeButton"
+            android:id="@+id/close_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Close"
@@ -170,18 +139,18 @@
             android:textColor="#9ca0b0"
             android:layout_marginBottom="30dp"
             />
+
         <Button
-            android:id="@+id/deleteCodeButton"
+            android:id="@+id/delete_code_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="75dp"
             android:layout_gravity="center"
-            android:backgroundTint="#000"
-            android:textColor="#9ca0b0"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"
-            />
+            android:backgroundTint="#000"
+            android:text="Delete"
+            android:textColor="#9ca0b0" />
     </LinearLayout>
 
 

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -28,6 +29,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class User implements Serializable {
     private String userName;
+
+    private String searchUser;
     private HashMap<String,String> codes;
     private int totalPoints;
     private String email;
@@ -50,6 +53,7 @@ public class User implements Serializable {
         this.numCodes = 0;
         this.codes = new HashMap<>();
         updateInDatabase();
+        searchUser = userName.toLowerCase();
     }
 
     /**
@@ -67,6 +71,9 @@ public class User implements Serializable {
         return userName;
     }
 
+    public String getSearchUser() {
+        return searchUser;
+    }
     /**
      * return's user's id
      * @return the user's id
@@ -206,7 +213,7 @@ public class User implements Serializable {
         // overwrite old user with new information based on this user
         String TAG = "User.updateInDatabase";
         User update = this;
-        usersRef.document(userName)
+        usersRef.document(userName.toLowerCase(Locale.ROOT))
                 .set(update)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

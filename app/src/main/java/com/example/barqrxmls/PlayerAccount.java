@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Set;
 
 public class PlayerAccount extends AppCompatActivity {
@@ -36,7 +37,7 @@ public class PlayerAccount extends AppCompatActivity {
 
     ListView CodesList;
 
-    Taskbar taskbar = new Taskbar(PlayerAccount.this);
+    Taskbar taskbar = Taskbar.getInstance(PlayerAccount.this);
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,7 @@ public class PlayerAccount extends AppCompatActivity {
         //search for user in database
         String TAG = "PlayerAccount";
         usernameView.setText(username);
-        usersRef.document(username)
+        usersRef.document(username.toLowerCase(Locale.ROOT))
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override

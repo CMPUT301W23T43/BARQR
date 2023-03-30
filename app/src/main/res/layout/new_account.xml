@@ -4,20 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ccd0da"
-    android:gravity="bottom"
-    android:paddingBottom="300dp"
     >
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="monospace"
         android:paddingTop="5dp"
         android:paddingBottom="100dp"
         android:text="Create New Account"
         android:textColor="#000"
-        android:fontFamily="monospace"
-        android:textSize="35sp"
-        android:layout_gravity="center"
-        />
+        android:textSize="35sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -35,17 +33,17 @@
             android:textSize="20sp"
             android:paddingRight="10dp"
             />
+
         <EditText
             android:id="@+id/usernameField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:maxLength="15"
-            android:textColor="#000"
             android:fontFamily="monospace"
-            android:hint="               "
-            android:textSize="20sp"
-            />
+            android:maxLength="15"
+            android:hint="your username"
+            android:textColor="#000"
+            android:textSize="20sp" />
     </LinearLayout>
 
 
@@ -76,9 +74,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:fontFamily="monospace"
-            android:text="               "
+            android:hint="your email"
             android:textColor="#000"
-            android:maxLength="15"
             android:textSize="20sp"
             />
     </LinearLayout>

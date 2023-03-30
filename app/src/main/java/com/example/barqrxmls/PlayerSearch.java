@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -31,6 +32,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class PlayerSearch extends AppCompatActivity {
 
@@ -70,32 +72,35 @@ public class PlayerSearch extends AppCompatActivity {
                userList.setAdapter(userAdapter);
 
                //get query
-               String queryString = searchBar.getText().toString();
+               String queryString = searchBar.getText().toString().toLowerCase(Locale.ROOT);
                if (queryString.isEmpty()) {
                    Snackbar.make(findViewById(R.id.mySnackId), "Please enter text to search.", BaseTransientBottomBar.LENGTH_LONG).show();
                }else{
                    //search database for usernames the first 20 usernames that start with queryString
                    String TAG = "PlayerSearch";
                    usersRef
-                           .whereGreaterThanOrEqualTo("userName", queryString)
-                           .orderBy("userName", Query.Direction.DESCENDING).limit(20)
+                           .whereGreaterThanOrEqualTo("searchUser", queryString)
+                           .orderBy("searchUser", Query.Direction.ASCENDING).limit(20)
                            .get()
                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                @Override
                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                    if (task.isSuccessful()) {
-                                       //get the string with the biggest ascii code that satisfies the query
+                                       // get the string with the biggest ascii code that satisfies the query
                                        String searchLimit = queryString.concat("zzzzzzzzzzzzzzz");
                                        searchLimit = String.format("%.15s", searchLimit);
-                                       //add usernames to the listview
+                                       // add usernames to the listview
                                        for (QueryDocumentSnapshot document : task.getResult()) {
                                            Log.d(TAG, document.getId() + " => " + document.getData());
                                            String foundUsername = (String) document.get("userName");
                                            assert foundUsername != null;
-                                           if (foundUsername.compareTo(searchLimit) <= 0) {
-                                               System.out.println("added");
+                                           if (foundUsername.toLowerCase().compareTo(searchLimit) <= 0) {
                                                userDataList.add(foundUsername);
                                                userAdapter.notifyDataSetChanged();
+                                           }
+                                           // Reached part of list that does not begin with query
+                                           else {
+                                               break;
                                            }
                                        }
 

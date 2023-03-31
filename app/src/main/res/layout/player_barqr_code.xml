@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name :"
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:textSize="20dp"
             android:paddingLeft="15dp"
             />
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Point Value :"
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:textSize="20dp"
             android:paddingLeft="15dp"
             />
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Comment :"
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:textSize="20dp"
             android:paddingLeft="15dp"
             />
@@ -76,8 +76,8 @@
         android:text="Player Scans"
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
-        android:backgroundTint="#000"
-        android:textColor="#9ca0b0"
+        android:backgroundTint="#070707"
+        android:textColor="#C08497"
         android:layout_marginBottom="30dp"
         />
     <LinearLayout
@@ -90,14 +90,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Image :"
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:textSize="20dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BARQR :"
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:textSize="20dp"
             android:paddingLeft="120dp"
             />
@@ -127,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Geolocation: "
-        android:textColor="#000"
+        android:textColor="#1A237E"
         android:textSize="20dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
@@ -139,8 +139,8 @@
         android:text="Add Geolocation ..."
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:backgroundTint="#000"
-        android:textColor="#9ca0b0"
+        android:backgroundTint="#070707"
+        android:textColor="#C08497"
         android:layout_marginBottom="10dp"
         />
 
@@ -152,8 +152,8 @@
         android:text="Close"
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:backgroundTint="#000"
-        android:textColor="#9ca0b0"
+        android:backgroundTint="#070707"
+        android:textColor="#C08497"
 
         />
 
@@ -180,7 +180,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/camera"
-            android:background="#9ca0b0"
+            android:background="#985268"
             />
         <ImageView
             android:layout_width="5dp"
@@ -192,7 +192,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/trophy"
-            android:background="#9ca0b0"
+            android:background="#985268"
             />
         <ImageView
             android:layout_width="5dp"
@@ -204,7 +204,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/house"
-            android:background="#9ca0b0"
+            android:background="#985268"
             />
         <ImageView
             android:layout_width="5dp"
@@ -216,7 +216,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/map"
-            android:background="#9ca0b0"
+            android:background="#985268"
             />
         <ImageView
             android:layout_width="5dp"
@@ -228,7 +228,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/stare"
-            android:background="#9ca0b0"
+            android:background="#985268"
             />
         <ImageView
             android:layout_width="8.5dp"

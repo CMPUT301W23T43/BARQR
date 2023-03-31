@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="____'s Codes"
         android:textSize="25dp"
-        android:textColor="#000"
+        android:textColor="#1A237E"
         android:paddingBottom="50dp"
         android:paddingLeft="25dp"
         android:paddingTop="25dp"
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total Codes Scanned: "
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:textSize="15dp"
             />
         <TextView
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="_______"
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:textSize="15dp"
             />
     </LinearLayout>
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total Points Scanned: "
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:textSize="15dp"
             />
         <TextView
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="_______"
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:textSize="15dp"
             android:paddingBottom="5dp"
             />
@@ -109,7 +109,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/camera"
-            android:background="#9ca0b0"
+            android:background="#985268"
             />
         <ImageView
             android:layout_width="5dp"
@@ -121,7 +121,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/trophy"
-            android:background="#9ca0b0"
+            android:background="#985268"
             />
         <ImageView
             android:layout_width="5dp"
@@ -133,7 +133,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/house"
-            android:background="#9ca0b0"
+            android:background="#985268"
             />
         <ImageView
             android:layout_width="5dp"
@@ -145,7 +145,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/map"
-            android:background="#9ca0b0"
+            android:background="#985268"
             />
         <ImageView
             android:layout_width="5dp"
@@ -157,7 +157,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/stare"
-            android:background="#9ca0b0"
+            android:background="#985268"
             />
         <ImageView
             android:layout_width="8.5dp"

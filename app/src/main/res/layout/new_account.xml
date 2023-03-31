@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F8F0F8"
-    android:gravity="bottom"
-    android:paddingBottom="300dp"
+    android:gravity="center"
     >
     <TextView
         android:layout_width="wrap_content"
@@ -13,9 +12,10 @@
         android:paddingTop="5dp"
         android:paddingBottom="100dp"
         android:text="Create New Account"
-        android:textColor="#000"
+        android:textStyle="bold"
+        android:textColor="#1A237E"
         android:textSize="35sp"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
         />
 
     <LinearLayout
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="Username:"
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:textSize="20sp"
             android:paddingRight="10dp"
             />
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:maxLength="15"
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:hint="               "
             android:textSize="20sp"
             />
@@ -61,7 +61,7 @@
             android:layout_marginTop="2dp"
             android:text="Email:"
             android:textAlignment="viewStart"
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:textSize="20sp"
             android:paddingRight="20dp"
             />
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:hint="               "
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:maxLength="15"
             android:textSize="20sp"
             />
@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Terms and Services"
-            android:textColor="#000"
+            android:textColor="#1A237E"
             android:textSize="20sp"
             />
     </LinearLayout>
@@ -105,8 +105,8 @@
         android:layout_height="wrap_content"
         android:text="Submit"
         android:layout_gravity="center"
-        android:backgroundTint="#000"
-        android:textColor="#9ca0b0"
+        android:backgroundTint="#070707"
+        android:textColor="#C08497"
         android:textSize="15sp"
         />
 

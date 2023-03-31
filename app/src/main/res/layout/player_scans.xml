@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ccd0da"
+    android:background="#F8F0F8"
     android:gravity="bottom"
     >
     <LinearLayout
@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"
             android:text="Close"
             android:textSize="15dp"
-            android:fontFamily="monospace"
             android:backgroundTint="#000"
             android:textColor="#9ca0b0"
             android:layout_marginLeft="275dp"

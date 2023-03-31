@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ccd0da"
+    android:background="#F8F0F8"
     android:gravity="bottom"
     >
     <LinearLayout
@@ -16,17 +16,15 @@
             android:layout_height="wrap_content"
             android:text="Name :"
             android:textColor="#000"
-            android:fontFamily="monospace"
-            android:textSize="3mm"
-            android:paddingLeft="2mm"
+            android:textSize="20dp"
+            android:paddingLeft="15dp"
             />
         <TextView
             android:id="@+id/nameField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="2.5mm"
-            android:fontFamily="monospace"
-            android:layout_marginTop="2.5mm"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
             />
     </LinearLayout>
     <LinearLayout
@@ -39,17 +37,15 @@
             android:layout_height="wrap_content"
             android:text="Point Value :"
             android:textColor="#000"
-            android:fontFamily="monospace"
-            android:textSize="3mm"
-            android:paddingLeft="2mm"
+            android:textSize="20dp"
+            android:paddingLeft="15dp"
             />
         <TextView
             android:id="@+id/pointsField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="2.5mm"
-            android:fontFamily="monospace"
-            android:layout_marginTop="2.5mm"
+            android:textSize="20dp"
+            android:layout_marginTop="15dp"
             />
     </LinearLayout>
     <LinearLayout
@@ -62,16 +58,14 @@
             android:layout_height="wrap_content"
             android:text="Comment :"
             android:textColor="#000"
-            android:fontFamily="monospace"
-            android:textSize="3mm"
-            android:paddingLeft="2mm"
+            android:textSize="20dp"
+            android:paddingLeft="15dp"
             />
         <TextView
             android:id="@+id/commentField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="2.5mm"
-            android:fontFamily="monospace"
+            android:textSize="20dp"
             />
     </LinearLayout>
 
@@ -80,11 +74,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Player Scans"
-        android:layout_marginTop="2.5mm"
+        android:layout_marginTop="15dp"
         android:layout_gravity="center"
         android:backgroundTint="#000"
         android:textColor="#9ca0b0"
-        android:layout_marginBottom="5mm"
+        android:layout_marginBottom="30dp"
         />
     <LinearLayout
         android:layout_width="wrap_content"
@@ -97,16 +91,14 @@
             android:layout_height="wrap_content"
             android:text="Image :"
             android:textColor="#000"
-            android:fontFamily="monospace"
-            android:textSize="3mm"
+            android:textSize="20dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BARQR :"
             android:textColor="#000"
-            android:fontFamily="monospace"
-            android:textSize="3mm"
+            android:textSize="20dp"
             android:paddingLeft="120dp"
             />
     </LinearLayout>
@@ -136,7 +128,6 @@
         android:layout_height="wrap_content"
         android:text="Geolocation: "
         android:textColor="#000"
-        android:fontFamily="monospace"
         android:textSize="20dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
@@ -165,13 +156,7 @@
         android:textColor="#9ca0b0"
 
         />
-    <!-- below is the taskbar code -->
-    <LinearLayout
-        android:paddingTop="80dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-    </LinearLayout>
+
 
     <ImageView
         android:layout_width="match_parent"
@@ -242,7 +227,7 @@
             android:id="@+id/settingsButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:src="@drawable/setting"
+            android:src="@drawable/stare"
             android:background="#9ca0b0"
             />
         <ImageView

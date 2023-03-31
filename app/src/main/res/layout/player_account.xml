@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ccd0da"
+    android:background="#F8F0F8"
     android:gravity="bottom"
     >
 
@@ -12,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="____'s Codes"
-        android:fontFamily="monospace"
         android:textSize="25dp"
         android:textColor="#000"
         android:paddingBottom="50dp"
@@ -43,7 +42,6 @@
             android:layout_height="wrap_content"
             android:text="Total Codes Scanned: "
             android:textColor="#000"
-            android:fontFamily="monospace"
             android:textSize="15dp"
             />
         <TextView
@@ -52,7 +50,6 @@
             android:layout_height="wrap_content"
             android:text="_______"
             android:textColor="#000"
-            android:fontFamily="monospace"
             android:textSize="15dp"
             />
     </LinearLayout>
@@ -60,7 +57,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="50dp"
         android:paddingLeft="25dp"
         >
         <TextView
@@ -68,7 +64,6 @@
             android:layout_height="wrap_content"
             android:text="Total Points Scanned: "
             android:textColor="#000"
-            android:fontFamily="monospace"
             android:textSize="15dp"
             />
         <TextView
@@ -77,8 +72,8 @@
             android:layout_height="wrap_content"
             android:text="_______"
             android:textColor="#000"
-            android:fontFamily="monospace"
             android:textSize="15dp"
+            android:paddingBottom="5dp"
             />
 
     </LinearLayout>
@@ -161,7 +156,7 @@
             android:id="@+id/settingsButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:src="@drawable/setting"
+            android:src="@drawable/stare"
             android:background="#9ca0b0"
             />
         <ImageView

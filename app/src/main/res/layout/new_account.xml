@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ccd0da"
+    android:background="#F8F0F8"
     android:gravity="bottom"
     android:paddingBottom="300dp"
     >
@@ -14,7 +14,6 @@
         android:paddingBottom="100dp"
         android:text="Create New Account"
         android:textColor="#000"
-        android:fontFamily="monospace"
         android:textSize="35sp"
         android:layout_gravity="center"
         />
@@ -31,7 +30,6 @@
             android:layout_marginTop="2dp"
             android:text="Username:"
             android:textColor="#000"
-            android:fontFamily="monospace"
             android:textSize="20sp"
             android:paddingRight="10dp"
             />
@@ -42,7 +40,6 @@
             android:layout_marginTop="2dp"
             android:maxLength="15"
             android:textColor="#000"
-            android:fontFamily="monospace"
             android:hint="               "
             android:textSize="20sp"
             />
@@ -65,7 +62,6 @@
             android:text="Email:"
             android:textAlignment="viewStart"
             android:textColor="#000"
-            android:fontFamily="monospace"
             android:textSize="20sp"
             android:paddingRight="20dp"
             />
@@ -75,8 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:fontFamily="monospace"
-            android:text="               "
+            android:hint="               "
             android:textColor="#000"
             android:maxLength="15"
             android:textSize="20sp"
@@ -100,7 +95,6 @@
             android:layout_height="wrap_content"
             android:text="Terms and Services"
             android:textColor="#000"
-            android:fontFamily="monospace"
             android:textSize="20sp"
             />
     </LinearLayout>
@@ -113,7 +107,6 @@
         android:layout_gravity="center"
         android:backgroundTint="#000"
         android:textColor="#9ca0b0"
-        android:fontFamily="monospace"
         android:textSize="15sp"
         />
 

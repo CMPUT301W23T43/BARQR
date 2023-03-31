@@ -67,16 +67,22 @@ public class PlayerAccount extends AppCompatActivity {
                             //if the user does not exist exit from the player activity and log the issue
                             if(!document.exists()) {
                                 Log.d(TAG, "username in intent does not exist");
-                                finish();
+                                return;
                             }
 
                             User player = document.toObject(User.class);
+
+                            if(player == null) {
+                                Log.d(TAG,"error creating user object from database");
+                                return;
+                            }
 
                             //setup player's list of codes
                             CodeDataList = new ArrayList<>();
                             CodeAdapter = new CodeArrayAdapter(PlayerAccount.this, CodeDataList);
                             CodesList = findViewById(R.id.playerCodesDisplay);
                             CodesList.setAdapter(CodeAdapter);
+                            assert player != null;
                             ArrayList<String> playerCodes = new ArrayList<>(player.getCodes().keySet());
 
                             //add all codes to the listview

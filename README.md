@@ -24,10 +24,13 @@ How to grab a query from the database in a sorted order by specific field: [stac
 
 How to convert from a HashMap to an Array for ListView: [stackoverflow.com](https://stackoverflow.com/questions/19466757/hashmap-to-listview)
 
-##### [Camera and Qr Scanner]
+##### [Camera and Qr Scanner ]
 How to implement the QR scanner: [youtube.com](https://www.youtube.com/watch?v=jtT60yFPelI&t=18s), by [Cambo Tutorial](https://www.youtube.com/@CamboTutorial)
 
 How to Take the image of the surrounding: [youtube.com](https://www.youtube.com/watch?v=JMdHMMEO8ZQ&t=400s), by [Muhammad Saad](https://www.youtube.com/@Muhammad_SaadAhmed)
+
+##### [Geolocation ]
+How to Take the Geolocation: [youtube.com](https://www.youtube.com/watch?v=qY-xFxZ7HKY), by [Coding with Dev](https://www.youtube.com/@CodingwithDev)
 
 ##### Other citations
 How to create an Intent Launcher [@DailyCoding](https://www.youtube.com/@DailyCoding), [Video here](https://www.youtube.com/watch?v=DfDj9EadOLk

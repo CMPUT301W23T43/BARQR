@@ -75,12 +75,8 @@ public class CameraActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this);
-
-
         scanCode();
-
 
     }
 
@@ -97,22 +93,18 @@ public class CameraActivity extends AppCompatActivity  {
         options.setCaptureActivity(CaptureAct.class);
         barLauncher.launch(options);
 
-
-
     }
 
     /**
      * The activity for Scanning QR code.
-     * Has two Alert Dialog, one for scanning QR code and  one for taking picture of surrounding location
+     * Has three Alert Dialog, one for scanning QR code and  one for taking picture of surrounding location and
+     * one for taking geolocation.
      * User can take surrounding Picture after having successfully scanning an QR code.
      */
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result-> {
         if(result.getContents() !=null) {
-
-
             AlertDialog.Builder surroundingBuilder = new AlertDialog.Builder(CameraActivity.this);
             surroundingBuilder.setTitle("Do you want to take a picture of the surrounding?");
-
             surroundingBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -158,9 +150,7 @@ public class CameraActivity extends AppCompatActivity  {
             dataBytes=result.getRawBytes();
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i)
-                {
-
+                public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                 }
             }).show();
@@ -242,12 +232,10 @@ public class CameraActivity extends AppCompatActivity  {
                 if (result.getResultCode() == RESULT_OK && result.getData()!= null){
                     Bundle bundle = result.getData().getExtras();
                     bitmapOfLocation=(Bitmap) bundle.get("data");
-
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmapOfLocation.compress(Bitmap.CompressFormat.JPEG,50,stream);
                     compressedBytes=stream.toByteArray();
                     compBitmap= BitmapFactory.decodeByteArray(compressedBytes,0,compressedBytes.length);
-
                     getBackToMain();
 
 
@@ -261,7 +249,15 @@ public class CameraActivity extends AppCompatActivity  {
     public Bitmap getBitmap(){
         return bitmapOfLocation;
     }
-    @SuppressLint("DefaultLocale")
+
+    /**
+     * This method takes the output of camera activity and passes them to the main activity.
+     * @return :
+     * the generated bitmap of the image of surrounding location .
+     * the compressed byte array of the image.
+     * the string representation of the qr code.
+     * the string output of geolocation.
+     */
     public void getBackToMain(){
         Intent backToMain = new Intent(CameraActivity.this, MainActivity.class);
         String qrData = "codeData";

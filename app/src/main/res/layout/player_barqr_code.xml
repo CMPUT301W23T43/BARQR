@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F8F0F8"
+    android:background="@drawable/darkerwaves"
     android:gravity="bottom"
     >
     <LinearLayout
@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name :"
-            android:textColor="#1A237E"
+            android:textColor="#150578"
             android:textSize="20dp"
             android:paddingLeft="15dp"
             />
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Point Value :"
-            android:textColor="#1A237E"
+            android:textColor="#150578"
             android:textSize="20dp"
             android:paddingLeft="15dp"
             />
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Comment :"
-            android:textColor="#1A237E"
+            android:textColor="#150578"
             android:textSize="20dp"
             android:paddingLeft="15dp"
             />
@@ -77,7 +77,7 @@
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
         android:backgroundTint="#070707"
-        android:textColor="#C08497"
+        android:textColor="#81D4FA"
         android:layout_marginBottom="30dp"
         />
     <LinearLayout
@@ -90,14 +90,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Image :"
-            android:textColor="#1A237E"
+            android:textColor="#150578"
             android:textSize="20dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BARQR :"
-            android:textColor="#1A237E"
+            android:textColor="#150578"
             android:textSize="20dp"
             android:paddingLeft="120dp"
             />
@@ -127,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Geolocation: "
-        android:textColor="#1A237E"
+        android:textColor="#150578"
         android:textSize="20dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
@@ -140,7 +140,7 @@
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:backgroundTint="#070707"
-        android:textColor="#C08497"
+        android:textColor="#81D4FA"
         android:layout_marginBottom="10dp"
         />
 
@@ -153,7 +153,7 @@
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:backgroundTint="#070707"
-        android:textColor="#C08497"
+        android:textColor="#81D4FA"
 
         />
 
@@ -161,7 +161,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="8.5dp"
-        android:background="#000"
         />
 
 
@@ -173,73 +172,66 @@
         <ImageView
             android:layout_width="8.5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/newCodeButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/camera"
-            android:background="#985268"
+            android:background="#81D4FA"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/leaderBoardButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/trophy"
-            android:background="#985268"
+            android:background="#81D4FA"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/homeButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/house"
-            android:background="#985268"
+            android:background="#81D4FA"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/mapButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/map"
-            android:background="#985268"
+            android:background="#81D4FA"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/settingsButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/stare"
-            android:background="#985268"
+            android:background="#81D4FA"
             />
         <ImageView
             android:layout_width="8.5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
     </LinearLayout>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="8.5dp"
-        android:background="#000"
         />
 
 

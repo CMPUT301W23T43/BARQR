@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradient"
+    android:background="@drawable/waves"
     android:gravity="bottom"
     >
     <LinearLayout
@@ -19,7 +19,7 @@
             android:textStyle="bold"
             android:paddingTop="25dp"
             android:text="Your Codes"
-            android:textColor="#1A237E"
+            android:textColor="#150578"
             android:textSize="35dp"/>
 
 
@@ -39,7 +39,7 @@
             android:textSize="13dp"
             android:layout_gravity="center"
             android:backgroundTint="#070707"
-            android:textColor="#C08497"
+            android:textColor="#81D4FA"
             android:layout_marginRight="5dp"
             >
         </Button>
@@ -51,7 +51,7 @@
             android:textSize="13dp"
             android:layout_gravity="center"
             android:backgroundTint="#070707"
-            android:textColor="#C08497"
+            android:textColor="#81D4FA"
             >
         </Button>
     </LinearLayout>
@@ -65,6 +65,7 @@
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:paddingBottom="25dp"
+        android:textColor="#150578"
         />
 
     <!-- totals display -->
@@ -126,7 +127,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="8.5dp"
-        android:background="#000"
         />
 
 
@@ -138,73 +138,66 @@
         <ImageView
             android:layout_width="8.5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/newCodeButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/camera"
-            android:background="#985268"
+            android:background="#E1F5FE"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/leaderBoardButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/trophy"
-            android:background="#985268"
+            android:background="#E1F5FE"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/homeButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/house"
-            android:background="#985268"
+            android:background="#E1F5FE"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/mapButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/map"
-            android:background="#985268"
+            android:background="#E1F5FE"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/settingsButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/stare"
-            android:background="#985268"
+            android:background="#E1F5FE"
             />
         <ImageView
             android:layout_width="8.5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
     </LinearLayout>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="8.5dp"
-        android:background="#000"
         />
 
 </LinearLayout>

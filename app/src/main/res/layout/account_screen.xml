@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F8F0F8"
+    android:background="@drawable/darkerwaves"
     android:gravity="bottom"
     >
 
@@ -21,7 +21,7 @@
         android:padding="30dp"
         android:text="My Account"
         android:textStyle="bold"
-        android:textColor="#1A237E"
+        android:textColor="#150578"
         android:textSize="30dp"
         android:layout_gravity="center"
         />
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Username :"
-            android:textColor="#1A237E"
+            android:textColor="#150578"
             android:textSize="20dp"
             android:paddingLeft="70dp"
             />
@@ -43,7 +43,7 @@
             android:id="@+id/usernameMyAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#1A237E"
+            android:textColor="#150578"
             android:textSize="20dp"
             />
     </LinearLayout>
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email :"
-            android:textColor="#1A237E"
+            android:textColor="#150578"
             android:textSize="20dp"
             android:paddingLeft="70dp"
             />
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textColor="#1A237E"
+            android:textColor="#150578"
             android:textSize="20dp"
             />
     </LinearLayout>
@@ -78,7 +78,7 @@
         android:text="Close"
         android:layout_gravity="center"
         android:backgroundTint="#070707"
-        android:textColor="#C08497"
+        android:textColor="#81D4FA"
         android:layout_marginBottom="100dp"
         />
 </LinearLayout>

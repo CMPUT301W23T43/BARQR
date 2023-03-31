@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F8F0F8"
+    android:background="@drawable/waves"
     android:gravity="bottom"
     >
     <LinearLayout
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:hint="Search Code Location ..."
             android:textSize="16dp"
-            android:textColor="#1A237E"
+            android:textColor="#150578"
             />
 
         <Button
@@ -28,7 +28,7 @@
             android:text="Close"
             android:textSize="15dp"
             android:backgroundTint="#070707"
-            android:textColor="#C08497"
+            android:textColor="#81D4FA"
             android:layout_marginLeft="25dp"
             >
         </Button>

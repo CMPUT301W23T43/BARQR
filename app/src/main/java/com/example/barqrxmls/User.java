@@ -28,12 +28,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
  */
 
 public class User implements Serializable {
-    private String userName;
-    private HashMap<String,HashMap<String,Object>> codes;
-    private int totalPoints;
-    private String email;
-    private String id;
-    private int numCodes;
+    protected String userName;
+    protected HashMap<String,HashMap<String,Object>> codes;
+    protected int totalPoints;
+    protected String email;
+    protected String id;
+    protected int numCodes;
 
     /**
      * stores information related to the user's account
@@ -41,7 +41,6 @@ public class User implements Serializable {
      * @param id is a String of the player's id
      * @param email is a String of the user's email
      *
-
      */
     User(String userName, String id, String email) {
         this.userName = userName;
@@ -50,7 +49,7 @@ public class User implements Serializable {
         this.email = email;
         this.numCodes = 0;
         this.codes = new HashMap<>();
-        updateInDatabase();
+        //updateInDatabase();
     }
 
     /**
@@ -130,7 +129,7 @@ public class User implements Serializable {
         codes.put(codeHash,codeInfo);
         totalPoints = totalPoints + codePoints;
         numCodes = numCodes + 1;
-        updateInDatabase();
+        //updateInDatabase();
     }
 
     /**
@@ -156,9 +155,8 @@ public class User implements Serializable {
         codes.put(codeHash,codeInfo);
         totalPoints = totalPoints + codePoints;
         numCodes = numCodes + 1;
-        updateInDatabase();
+        //updateInDatabase();
     }
-
 
     /**
      * removes a code from the user's list of codes
@@ -173,7 +171,7 @@ public class User implements Serializable {
         codes.remove(removeCode);
         totalPoints = totalPoints - codePoints;
         numCodes = numCodes - 1;
-        updateInDatabase();
+        //updateInDatabase();
     }
 
     /**
@@ -186,7 +184,7 @@ public class User implements Serializable {
             return;
         }
         codes.get(codeHash).put("comment",codeComment);
-        updateInDatabase();
+        //updateInDatabase();
     }
 
     /**
@@ -198,7 +196,7 @@ public class User implements Serializable {
             return;
         }
         codes.get(codeHash).put("comment","");
-        updateInDatabase();
+        //updateInDatabase();
     }
 
     /**
@@ -222,39 +220,39 @@ public class User implements Serializable {
             return;
         }
         codes.get(codeHash).put("image",image);
-        updateInDatabase();
+        //updateInDatabase();
     }
 
     /**
      * updates the database when a change is made to the user
      */
-    private void updateInDatabase() {
-        if(this.getClass().getSuperclass() == User.class) {
-            return;
-        }
-        // get database
-        FirebaseFirestore dataBase = FirebaseFirestore.getInstance();
-        CollectionReference usersRef;
-        usersRef = dataBase.collection("Users");
-
-        // overwrite old user with new information based on this user
-        String TAG = "User.updateInDatabase";
-        User update = this;
-        usersRef.document(userName)
-                .set(update)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
-    }
+//    private void updateInDatabase() {
+//        if(this.getClass().getSuperclass() == User.class) {
+//            return;
+//        }
+//        // get database
+//        FirebaseFirestore dataBase = FirebaseFirestore.getInstance();
+//        CollectionReference usersRef;
+//        usersRef = dataBase.collection("Users");
+//
+//        // overwrite old user with new information based on this user
+//        String TAG = "User.updateInDatabase";
+//        User update = this;
+//        usersRef.document(userName)
+//                .set(update)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Log.d(TAG, "DocumentSnapshot successfully written!");
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w(TAG, "Error writing document", e);
+//                    }
+//                });
+//    }
 
     /**
      *

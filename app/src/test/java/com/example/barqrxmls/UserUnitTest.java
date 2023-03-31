@@ -23,16 +23,6 @@ import java.util.Objects;
 ////            }
 ////        });
 
-class mockUser extends User {
-
-    public mockUser(String userName, String id, String email) {
-        super();
-    }
-
-    private void updateInDatabase() {
-        return;
-    }
-}
 
 public class UserUnitTest {
 
@@ -40,7 +30,7 @@ public class UserUnitTest {
     static Code myCode;
     @BeforeAll
     static void setup() {
-        myUser = new mockUser("me","2","email");
+        myUser = new User("me","2","email");
         myCode = new Code("0c372b92d060f83c2af3a938b8ddd8ed8fc6cf8f20a9a23849e4ed7bc3a94f5f");
      }
 

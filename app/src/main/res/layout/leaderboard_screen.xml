@@ -25,31 +25,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
         >
         <Button
             android:id="@+id/playerSearchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Number of Codes"
+            android:text="View All Codes"
             android:layout_gravity="center"
             android:fontFamily="monospace"
             android:backgroundTint="#000"
             android:textColor="#9ca0b0"
-            android:layout_marginRight="20dp"
+
             >
         </Button>
-        <Button
-            android:id="@+id/codeSearchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Individual Codes"
-            android:layout_gravity="center"
-            android:fontFamily="monospace"
-            android:backgroundTint="#000"
-            android:textColor="#9ca0b0"
-            >
-        </Button>
+
     </LinearLayout>
 
     <LinearLayout
@@ -62,6 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Player Ranking:"
+            android:textSize="20dp"
             android:fontFamily="monospace"
             >
         </TextView>
@@ -70,32 +61,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
+            android:textSize="20dp"
             android:text="_____"
             >
         </TextView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:width="@android:dimen/notification_large_icon_height"
-            >
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Code Ranking:"
-            android:fontFamily="monospace"
-            >
-        </TextView>
-        <TextView
-            android:id="@+id/codeRanking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:text="_____"
-            >
-        </TextView>
 
     </LinearLayout>
 

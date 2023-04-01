@@ -145,6 +145,33 @@
             android:autoSizeMinTextSize="18dp"
             android:autoSizeStepGranularity="2dp"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18dp"
+                android:text="Your highest scoring code is ranked "/>
+            <TextView
+                android:id="@+id/highCodeHash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18dp"
+                />
+
+
+        </LinearLayout>
+
+
+
+
     </LinearLayout>
 
     <Button
@@ -155,6 +182,8 @@
         android:layout_gravity="center"
         android:backgroundTint="#000"
         android:textColor="#9ca0b0"
-        android:layout_marginBottom="180dp"
+        android:layout_marginBottom="50dp"
         />
+
+
 </LinearLayout>

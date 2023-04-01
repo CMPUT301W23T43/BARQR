@@ -35,6 +35,7 @@ public class SearchQrCodeGeo extends AppCompatActivity {
         Longitude = findViewById(R.id.Longitude);
         String lat = Latitude.getText().toString();
         String lon = Longitude.getText().toString();
+        Search = findViewById(R.id.Search);
 
         Search.setOnClickListener(v -> {
             codesRef.whereEqualTo("latitude", lat).whereEqualTo("longitude", lon).get().addOnCompleteListener(task -> {

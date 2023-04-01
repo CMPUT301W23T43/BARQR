@@ -42,6 +42,7 @@ public class Map extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationProviderClient;
     double latitude, longitude;
 
+    GeoPoint lastCenterLocation = new GeoPoint(53.534444,  -113.490278);
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Map settings, like User Agent for internet and loading osmdroid configuration
@@ -83,14 +84,14 @@ public class Map extends AppCompatActivity {
         this.mLocationOverlay.enableMyLocation();
         map.getOverlays().add(this.mLocationOverlay);
         GeoPoint myLocation = this.mLocationOverlay.getMyLocation();
-        GeoPoint testLocation = new GeoPoint(53.534444,  -113.490278);
         if (myLocation == null) {
             System.out.println("myLocation is null");
         } else {
             System.out.println("myLocation is not null! It is" + myLocation);
+            lastCenterLocation = myLocation;
         }
 
-        mapController.setCenter(testLocation);
+        mapController.setCenter(lastCenterLocation);
     }
 
     @Override

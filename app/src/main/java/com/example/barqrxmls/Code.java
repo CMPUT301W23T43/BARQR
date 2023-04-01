@@ -15,6 +15,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Comment;
+import android.util.Pair;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -28,6 +29,7 @@ public class Code {
     private String hash;
     private Integer points;
     private String name;
+    private ArrayList<Pair<Double, Double>> latLongPairs;
 
     private String comment;
     private HashMap<String, String> code_comments;
@@ -89,6 +91,7 @@ public class Code {
 
         name = generateName(nameParts);
         points = calculateScore();
+        latLongPairs = new ArrayList<>();
     }
 
     /**
@@ -97,6 +100,20 @@ public class Code {
     public Code() {
 
     }
+
+    public void setLatLongPairs(ArrayList<Pair<Double, Double>> latLongPairs) {
+        this.latLongPairs = latLongPairs;
+    }
+
+    public void appendLatLongPairs(Double latitude, Double longitude) {
+        latLongPairs.add(new Pair<>(latitude, longitude));
+    }
+
+    public ArrayList<Pair<Double, Double>> getLatLongPairs() {
+        return latLongPairs;
+    }
+
+
 
     /**
      * Take the hash and convert it into a relatively unique name.

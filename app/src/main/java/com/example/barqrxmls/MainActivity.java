@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -58,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
 
     Code testScannedCode;
     Bitmap testScannedCodeImage;
+    String testScannedCity,testScannedCountry,testScannedAddress;
+    Double testScannedLatitude,testScannedLongitude;
+    byte[] testScannedCompressedByteArray;
+
 
     ActivityResultLauncher<Intent> loginLauncher;
     ActivityResultLauncher<Intent> cameraLauncher;
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
+
 
         // Citation: https://www.youtube.com/watch?v=DfDj9EadOLk
         // from youtube channel https://www.youtube.com/@DailyCoding Daily Coding.
@@ -81,7 +88,20 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                                 Bundle cameraResults = camResultIntent.getExtras();
                                 Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("codeData").toString()));
                                 testScannedCode = new Code(cameraResults.get("codeData").toString());
-                                testScannedCodeImage = (Bitmap) cameraResults.get("codeImage");
+                                testScannedCodeImage = (Bitmap) cameraResults.get("codeBitmap");
+                                // All this stuff below us might be NULL if the User declines
+                                // Geolocation tagging.
+                                testScannedCountry = cameraResults.getString("codeCountry");
+                                testScannedAddress = cameraResults.getString("codeAddress");
+                                testScannedLatitude = cameraResults.getDouble("codeLatitude");
+                                testScannedLongitude = cameraResults.getDouble("codeLongitude");
+                                testScannedCompressedByteArray = (byte[]) cameraResults.getByteArray("codeByteArray");
+
+
+                                ArrayList<Pair<Double, Double>> existingPairs = testScannedCode.getLatLongPairs();
+                                Pair<Double, Double> myLatLongPair = new Pair<>(testScannedLatitude, testScannedLongitude);
+                                existingPairs.add(myLatLongPair);
+                                testScannedCode.setLatLongPairs(existingPairs);
                                 currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
                                 codesRef.document(testScannedCode.getHash()).set(testScannedCode);
                                 CodeDataList.add(testScannedCode);
@@ -96,14 +116,14 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
         usersRef = dataBase.collection("Users");
         CodesList = findViewById(R.id.myCodesDisplay);
         Code testCode1 = new Code("/usr/code1");
-                Code testCode2 = new Code(";lkajsdf");
-                Code testCode3 = new Code("Smithy");
-                currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
-                currentTestUser.addCode(testCode2.getHash(), testCode2.getPoints());
-                currentTestUser.addCode(testCode3.getHash(), testCode3.getPoints());
-                CodeDataList = new ArrayList<Code>();
-                CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
-                CodesList.setAdapter(CodeAdapter);
+        Code testCode2 = new Code(";lkajsdf");
+        Code testCode3 = new Code("Smithy");
+        currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
+        currentTestUser.addCode(testCode2.getHash(), testCode2.getPoints());
+        currentTestUser.addCode(testCode3.getHash(), testCode3.getPoints());
+        CodeDataList = new ArrayList<Code>();
+        CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
+        CodesList.setAdapter(CodeAdapter);
         doStuff(currentTestUser);
 
     }

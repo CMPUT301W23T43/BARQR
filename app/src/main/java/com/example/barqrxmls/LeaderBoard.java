@@ -6,9 +6,12 @@
 
 package com.example.barqrxmls;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,6 +49,7 @@ public class LeaderBoard extends AppCompatActivity {
     LinkedHashMap<Object, Object> rankings;
 
     TextView userRank;
+    Button ShowAllCodes;
 
     /**
      * Upon creation the users are grabbed from the database and sorted by their player scores.
@@ -105,6 +109,7 @@ public class LeaderBoard extends AppCompatActivity {
          */
         ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
         account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
+        ShowAllCodes = findViewById(R.id.playerSearchButton);
 
         usersRef = FirebaseFirestore.getInstance().collection("Users");
         leaderBoard = findViewById(R.id.leaderBoardList);
@@ -132,6 +137,15 @@ public class LeaderBoard extends AppCompatActivity {
                     updateList();
                     userRank.setText(rankings.get(currentUser.getId()).toString());
                 }
+            }
+        });
+        ShowAllCodes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent object to start the next activity
+                Intent intent = new Intent(LeaderBoard.this, ShowAllQrCodes.class);
+                // Start the next activity
+                startActivity(intent);
             }
         });
     }

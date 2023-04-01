@@ -57,9 +57,22 @@ public class Account extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_screen);
 
-        CurrentUser currentUser = CurrentUser.getInstance();
+        User user = CurrentUser.getInstance().getUser();
 
-        User thisUser = currentUser.getUser();
+        TextView username = findViewById(R.id.usernameField);
+        TextView email = findViewById(R.id.emailField);
+
+        username.setText(user.getUserName());
+        email.setText(user.getEmail());
+
+
+        Button close = findViewById(R.id.close_button);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         username = findViewById(R.id.usernameMyAccount);
 
@@ -72,7 +85,7 @@ public class Account extends AppCompatActivity {
         highCodeName.setVisibility(View.INVISIBLE);
         lowCodeName.setVisibility(View.INVISIBLE);
 
-        Button closeButton = (Button) findViewById(R.id.closeButton);
+        Button closeButton = (Button) findViewById(R.id.close_button);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,17 +93,18 @@ public class Account extends AppCompatActivity {
             }
         });
 
-        usernameValue = thisUser.getUserName();
+        usernameValue = user.getUserName();
         username.setText(usernameValue);
-        email.setText(thisUser.getEmail());
+        email.setText(user.getEmail());
 
-        userInDatabase = usersRef.document(thisUser.getUserName());
+        userInDatabase = usersRef.document(user.getUserName());
 
         Query codesByScores = codesRef.orderBy("points", Query.Direction.DESCENDING);
         getCodeRank(codesByScores);
 
         highCodeName.setVisibility(View.VISIBLE);
         lowCodeName.setVisibility(View.VISIBLE);
+
     }
 
     private void getPolarCodes(DocumentReference docRef, LinkedHashMap<String, Integer> codesRank) {

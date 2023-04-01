@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -97,8 +98,10 @@ public class MainActivity extends AppCompatActivity {
                                 testScannedCompressedByteArray = (byte[]) cameraResults.getByteArray("codeByteArray");
 
 
-                                testScannedCode.setLatitude(testScannedLatitude);
-                                testScannedCode.setLongitude(testScannedLongitude);
+                                ArrayList<Pair<Double, Double>> existingPairs = testScannedCode.getLatLongPairs();
+                                Pair<Double, Double> myLatLongPair = new Pair<>(testScannedLatitude, testScannedLongitude);
+                                existingPairs.add(myLatLongPair);
+                                testScannedCode.setLatLongPairs(existingPairs);
                                 currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
                                 codesRef.document(testScannedCode.getHash()).set(testScannedCode);
                                 CodeDataList.add(testScannedCode);

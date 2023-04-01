@@ -1,5 +1,7 @@
 package com.example.barqrxmls;
 
+import android.util.Pair;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,7 +14,7 @@ public class Code {
     private String hash;
     private Integer points;
     private String name;
-    private double latitude, longitude;
+    private ArrayList<Pair<Double, Double>> latLongPairs;
 
     // Access like nameParts['suffix']
 
@@ -69,6 +71,7 @@ public class Code {
 
         name = generateName(nameParts);
         points = calculateScore();
+        latLongPairs = new ArrayList<>();
     }
 
     /**
@@ -78,39 +81,19 @@ public class Code {
 
     }
 
-    /***
-     * Set the code's Latitude.
-     * Can be NULL, if the user declined permission or didn't take it in this instance
-     * @param latitude The latitude of the code. Should be passed from Camera.
-     */
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setLatLongPairs(ArrayList<Pair<Double, Double>> latLongPairs) {
+        this.latLongPairs = latLongPairs;
     }
 
-    /***
-     * Set the code's Longitude.
-     * Can be NULL, if the user declined permission or didn't take it in this instance.
-     * @param longitude The longitude of the code. Should be passed from Camera.
-     */
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void appendLatLongPairs(Double latitude, Double longitude) {
+        latLongPairs.add(new Pair<>(latitude, longitude));
     }
 
-    /***
-     * Get the code's Latitude.
-     * @return Latitude, a double.
-     */
-    public double getLatitude() {
-        return latitude;
+    public ArrayList<Pair<Double, Double>> getLatLongPairs() {
+        return latLongPairs;
     }
 
-    /***
-     * Get the codes Longitude
-     * @return longitude, a double
-     */
-    public double getLongitude() {
-        return longitude;
-    }
+
 
     /**
      * Take the hash and convert it into a relatively unique name.

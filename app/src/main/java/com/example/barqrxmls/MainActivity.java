@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddCommentFragment.AddCommentDialogueListener {
     final String TAG = "Sample";
     FirebaseFirestore dataBase = FirebaseFirestore.getInstance();;
     CollectionReference usersRef = dataBase.collection("Users");
@@ -174,7 +174,20 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        CodesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Code code = CodeDataList.get(position);
+                new AddCommentFragment(code).show(getSupportFragmentManager(), "Add a comment");
+
+
+            }
+        });
     }
+
+
+
 
     public void updateCountTextViews(User currentUserTest, ArrayList<Code> codeDataList) {
         TextView codeCountTV = findViewById(R.id.codeTotal);
@@ -262,6 +275,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(playerSearchPage);
             }
         });
+
+    }
+
+
+
+    @Override
+    public void addComment(Code code) {
 
     }
 }

@@ -21,6 +21,9 @@
             android:name=".PlayerAccount"
             android:exported="false" />
         <activity
+            android:name=".ShowAllQrCodes"
+            android:exported="false" />
+        <activity
             android:name=".NewAccount"
             android:exported="true">
             <meta-data

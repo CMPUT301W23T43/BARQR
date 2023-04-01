@@ -12,6 +12,8 @@ public class Code {
     private String hash;
     private Integer points;
     private String name;
+    private ArrayList<String> countries;
+    private ArrayList<String> cities;
 
     // Access like nameParts['suffix']
 
@@ -184,6 +186,22 @@ public class Code {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ArrayList<String> getCountries() {
+        return countries;
+    }
+
+    public void setCountries(ArrayList<String> countries) {
+        this.countries = countries;
+    }
+
+    public ArrayList<String> getCities() {
+        return cities;
+    }
+
+    public void setCities(ArrayList<String> cities) {
+        this.cities = cities;
     }
 
     public int compareName(Object o) {

@@ -27,7 +27,7 @@ public class NewCode extends AppCompatActivity {
         // get code and user
         Bundle bundle = getIntent().getExtras();
         Code code = (Code)bundle.get("code");
-        User user = CurrentUser.getInstance().getUser();
+        CurrentUser user = CurrentUser.getInstance();
 
         // set Name field
         TextView codeName = findViewById(R.id.code_name);
@@ -35,7 +35,7 @@ public class NewCode extends AppCompatActivity {
 
         // set comment field
         if(user.hasComment(code.getHash())) {
-            String comment = user.getCodes().get(code.getHash());
+            String comment = (String)user.getCodes().get(code.getHash()).get("comment");
             TextView codeComment = findViewById(R.id.commentField);
             codeComment.setText(comment);
         }
@@ -47,10 +47,10 @@ public class NewCode extends AppCompatActivity {
         // set geolocation (UNFINISHED AS USER DOES NOT STOre CODE GEOLOCATION YET, CURRENTLY
         // USING PLACEHOLDER VALUE
         TextView geolocation = findViewById(R.id.code_geolocation);
-        String STANDIN = "stand-in for geolocation";
-        geolocation.setText(String.format(Locale.CANADA,"Geolocation: %s",STANDIN));
+        String location = (String)user.getCodes().get(code.getHash()).get("geolocation");
+        geolocation.setText(String.format(Locale.CANADA,"Geolocation: %s",location));
 
-        //TODO: add proper geolocation, unique image, and surroundings image, setup edit feature for comment
+        //TODO setup get geolocation, get image, and get comment in user, setup imageView
 
         // setup close button
         Button close = findViewById(R.id.close_button);

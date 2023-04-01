@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     ListView CodesList;
-    User currentTestUser;
+    CurrentUser currentTestUser;
 
     Code testScannedCode;
     Bitmap testScannedCodeImage;
@@ -72,40 +72,40 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
         setContentView(R.layout.main_screen);
 
 
-        // Citation: https://www.youtube.com/watch?v=DfDj9EadOLk
-        // from youtube channel https://www.youtube.com/@DailyCoding Daily Coding.
-        cameraLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        // Use the camera data to build a new Code object.
-                        if (result.getResultCode() == 15) {
-                            Intent camResultIntent = result.getData();
+//        // Citation: https://www.youtube.com/watch?v=DfDj9EadOLk
+//        // from youtube channel https://www.youtube.com/@DailyCoding Daily Coding.
+//        cameraLauncher = registerForActivityResult(
+//                new ActivityResultContracts.StartActivityForResult(),
+//                new ActivityResultCallback<ActivityResult>() {
+//                    @Override
+//                    public void onActivityResult(ActivityResult result) {
+//                        // Use the camera data to build a new Code object.
+//                        if (result.getResultCode() == 15) {
+//                            Intent camResultIntent = result.getData();
 
-                            if (camResultIntent != null) {
-                                Bundle cameraResults = camResultIntent.getExtras();
-                                Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("codeData").toString()));
-                                testScannedCode = new Code(cameraResults.get("codeData").toString());
-                                testScannedCodeImage = (Bitmap) cameraResults.get("codeBitmap");
-                                testScannedCountry = cameraResults.get("codeCountry").toString();
-                                testScannedAddress = cameraResults.get("codeAddress").toString();
-                                testScannedLatitude = (Double) cameraResults.get("codeLatitude");
-                                testScannedLongitude = (Double) cameraResults.get("codeLongitude");
-                                testScannedGeoLocation =cameraResults.get("codeGeoLocation").toString();
-                                testScannedCompressedByteArray = (byte[]) cameraResults.get("codeByteArray");
-
-
-
-                                currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
-                                codesRef.document(testScannedCode.getHash()).set(testScannedCode);
-                                CodeDataList.add(testScannedCode);
-                                CodeAdapter.notifyDataSetChanged();
-                                updateCountTextViews(currentTestUser, CodeDataList);
-                            }
-                        }
-                    }
-                });
+//                            if (camResultIntent != null) {
+//                                Bundle cameraResults = camResultIntent.getExtras();
+//                                Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("codeData").toString()));
+//                                testScannedCode = new Code(cameraResults.get("codeData").toString());
+//                                testScannedCodeImage = (Bitmap) cameraResults.get("codeBitmap");
+//                                testScannedCountry = cameraResults.get("codeCountry").toString();
+//                                testScannedAddress = cameraResults.get("codeAddress").toString();
+//                                testScannedLatitude = (Double) cameraResults.get("codeLatitude");
+//                                testScannedLongitude = (Double) cameraResults.get("codeLongitude");
+//                                testScannedGeoLocation =cameraResults.get("codeGeoLocation").toString();
+//                                testScannedCompressedByteArray = (byte[]) cameraResults.get("codeByteArray");
+//
+//
+//
+//                                currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
+//                                codesRef.document(testScannedCode.getHash()).set(testScannedCode);
+//                                CodeDataList.add(testScannedCode);
+//                                CodeAdapter.notifyDataSetChanged();
+//                                updateCountTextViews(currentTestUser, CodeDataList);
+//                            }
+//                        }
+//                    }
+//                });
         currentTestUser = CurrentUser.getInstance();
         codesRef = dataBase.collection("Codes");
         usersRef = dataBase.collection("Users");
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                 CodeDataList = new ArrayList<Code>();
                 CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
                 CodesList.setAdapter(CodeAdapter);
-        doStuff(currentTestUser);
+        
 
     }
 
@@ -213,6 +213,8 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
 
     public void onResume() {
         super.onResume();
+        currentTestUser=CurrentUser.getInstance();
+        doStuff(currentTestUser);
         //setContentView(R.layout.main_screen);
         System.out.print("Inside onResume");
 //        dataBase = FirebaseFirestore.getInstance();
@@ -249,13 +251,8 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
          * @return opens NewCode which is linked to barqr_code.xml
          */
         ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
-        newCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cameraIntent = new Intent(MainActivity.this, CameraActivity.class);
-                cameraLauncher.launch(cameraIntent);
-            }
-        });
+        newCode.setOnClickListener(taskbar.getSwitchActivityMap().get("NewCode"));
+
 
         /**
          * Map Button implementation

@@ -6,12 +6,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Code {
 
     private String hash;
     private Integer points;
     private String name;
+
+    private HashMap<String,List>location=null;
 
     // Access like nameParts['suffix']
 
@@ -68,6 +71,7 @@ public class Code {
 
         name = generateName(nameParts);
         points = calculateScore();
+
     }
 
     /**
@@ -201,7 +205,13 @@ public class Code {
         return this.hash.compareTo(code.getHash());
     }
 
-
-
-
+    public void setLocation(String city, String country, double latitude, double longitude) {
+        this.location = new HashMap<>();
+        List<List<Double>> latlong = new ArrayList<>();
+        List <Double> l = new ArrayList<>();
+        l.add(longitude);
+        l.add(latitude);
+        latlong.add(l);
+        location.put(city+"_"+country,latlong);
+    }
 }

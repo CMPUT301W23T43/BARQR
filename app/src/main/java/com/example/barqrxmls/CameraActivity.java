@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +24,8 @@ import android.provider.MediaStore;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
@@ -34,7 +35,6 @@ import java.util.List;
 import java.util.Locale;
 
 import android.Manifest;
-import android.util.Log;
 import android.widget.Toast;
 
 
@@ -43,14 +43,6 @@ import android.widget.Toast;
  * @author Shafayat Sadman
  * @version 1
  * Has no Unit and UI tests as the QR code have to be scanned manually after opening camera.
- * @return
- *      String data: Data of the QR code that is scanned.
- *      Bitmap bitmapOfLocation: The bitmap of the image of the surrounding Location.
- * Citations:
- *              SCANCODE = "https://www.youtube.com/watch?v=jtT60yFPelI&t=18s"
- *              Take Image = "https://www.youtube.com/watch?v=JMdHMMEO8ZQ&t=400s"
- *
- *
  */
 public class CameraActivity extends AppCompatActivity  {
     String data="";
@@ -65,7 +57,11 @@ public class CameraActivity extends AppCompatActivity  {
     byte[] compressedBytes=null;
 
     Bitmap compBitmap;
-
+    FirebaseFirestore dataBase = FirebaseFirestore.getInstance();
+    CollectionReference usersRef = dataBase.collection("Users");
+    CollectionReference codesRef = dataBase.collection("Codes");
+    CurrentUser currentUser = CurrentUser.getInstance();
+    Code newCode=null;
 
 
 
@@ -79,6 +75,7 @@ public class CameraActivity extends AppCompatActivity  {
         scanCode();
 
     }
+
 
 
     /**
@@ -103,6 +100,7 @@ public class CameraActivity extends AppCompatActivity  {
      */
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result-> {
         if(result.getContents() !=null) {
+
             AlertDialog.Builder surroundingBuilder = new AlertDialog.Builder(CameraActivity.this);
             surroundingBuilder.setTitle("Do you want to take a picture of the surrounding?");
             surroundingBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -110,35 +108,34 @@ public class CameraActivity extends AppCompatActivity  {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     getBackToMain();
                     dialogInterface.dismiss();
-
                 }
             });
-            surroundingBuilder.setPositiveButton("Take", new DialogInterface.OnClickListener()
-            {
+            surroundingBuilder.setPositiveButton("Take", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     captureImage();
-
+                    currentUser.addImage(newCode.getHash(), compressedBytes);
                     dialogInterface.dismiss();
                     getBackToMain();
                 }
             }).show();
+
+
             AlertDialog.Builder geoLocationBuilder = new AlertDialog.Builder(CameraActivity.this);
             geoLocationBuilder.setTitle("Do you want to take a Geolocation of surrounding?");
             geoLocationBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-
+                    currentUser.addCode(newCode.getHash(), newCode.getPoints());
                     dialogInterface.dismiss();
                 }
-
             });
-            geoLocationBuilder.setPositiveButton("Take Location", new DialogInterface.OnClickListener()
-            {
+            geoLocationBuilder.setPositiveButton("Take Location", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     geoLocation();
-
+                    currentUser.addCode(newCode.getHash(),userGeoLocation, newCode.getPoints());
+                    newCode.setLocation(city,country,latitude,longitude);
                     dialogInterface.dismiss();
                 }
             }).show();
@@ -147,6 +144,7 @@ public class CameraActivity extends AppCompatActivity  {
             builder.setTitle("QR Code Successfully Scanned!");
             builder.setMessage(result.getContents());
             data= result.getContents();
+            newCode=new Code(data.toString());
             dataBytes=result.getRawBytes();
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -162,29 +160,26 @@ public class CameraActivity extends AppCompatActivity  {
      * Launches the activity for taking the Geolocation.
      */
     public void geoLocation() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            fusedLocationProviderClient.getLastLocation()
-                    .addOnSuccessListener(new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            if (location !=null){
-                                Geocoder geocoder=new Geocoder(CameraActivity.this, Locale.getDefault());
-                                List<Address> addresses= null;
-                                try {
-                                    addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
-                                    latitude=addresses.get(0).getLatitude();
-                                    longitude=(addresses.get(0).getLongitude());
-                                    address=(addresses.get(0).getAddressLine(0)).toString();
-                                    city=(addresses.get(0).getLocality()).toString();
-                                    country=(addresses.get(0).getCountryName()).toString();
-                                    userGeoLocation=String.format("Longitude: %s Latitude: %s Address: %s" , longitude,latitude,address);}
-                                catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    });
-        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+        @Override
+        public void onSuccess(Location location) {
+            if (location !=null){
+                Geocoder geocoder=new Geocoder(CameraActivity.this, Locale.getDefault());
+                List<Address> addresses= null;
+                try {
+                    addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+                    latitude=addresses.get(0).getLatitude();
+                    longitude=(addresses.get(0).getLongitude());
+                    address=(addresses.get(0).getAddressLine(0)).toString();
+                    city=(addresses.get(0).getLocality()).toString();
+                    country=(addresses.get(0).getCountryName()).toString();
+                    userGeoLocation=String.format("Longitude: %s Latitude: %s Address: %s" , longitude,latitude,address);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }});}
         else {
             askPermission();
         }
@@ -196,7 +191,6 @@ public class CameraActivity extends AppCompatActivity  {
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
         if (requestCode==REQUEST_CODE){
             if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 geoLocation();
@@ -205,7 +199,6 @@ public class CameraActivity extends AppCompatActivity  {
                 Toast.makeText(this, "Required Permission", Toast.LENGTH_SHORT).show();
             }
         }
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
@@ -218,13 +211,8 @@ public class CameraActivity extends AppCompatActivity  {
         activitySurroundingResultLauncher.launch(intent);
     }
 
-
-
-
-
     /**
      * The activity for the image of surrounding location and compresses the image.
-     * @return the generated bitmap of the image of surrounding location .
      */
     ActivityResultLauncher<Intent> activitySurroundingResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -236,7 +224,7 @@ public class CameraActivity extends AppCompatActivity  {
                     bitmapOfLocation.compress(Bitmap.CompressFormat.JPEG,50,stream);
                     compressedBytes=stream.toByteArray();
                     compBitmap= BitmapFactory.decodeByteArray(compressedBytes,0,compressedBytes.length);
-                    getBackToMain();
+
 
 
                 }
@@ -252,37 +240,13 @@ public class CameraActivity extends AppCompatActivity  {
 
     /**
      * This method takes the output of camera activity and passes them to the main activity.
-     * @return :
-     * the generated bitmap of the image of surrounding location .
-     * the compressed byte array of the image.
-     * the string representation of the qr code.
-     * the string output of geolocation.
      */
     public void getBackToMain(){
         Intent backToMain = new Intent(CameraActivity.this, MainActivity.class);
-        String qrData = "codeData";
-        String bitmap="codeBitmap";
-        String mAddress = "codeAddress";
-        String mCountry="codeCountry";
-        String mLongitude = "codeLongitude";
-        String mLatitude="codeLatitude";
-        String mCity="codeCity";
-        String mByteArray="codeByteArray";
-        String mGeoLocation="codeGeoLocation";
-
-        backToMain.putExtra(qrData,data);
-        backToMain.putExtra(bitmap,compBitmap);
-        backToMain.putExtra(mAddress,address);
-        backToMain.putExtra(mCountry,country);
-        backToMain.putExtra(mLongitude,longitude);
-        backToMain.putExtra(mGeoLocation,userGeoLocation);
-        backToMain.putExtra(mLatitude,latitude);
-        backToMain.putExtra(mCity,city);
-        backToMain.putExtra(mByteArray,compressedBytes);
-
-
-        setResult(15, backToMain);
+        DataBaseUpdater.getInstance().updateCode(newCode);
         finish();
+
+
     }
 
 

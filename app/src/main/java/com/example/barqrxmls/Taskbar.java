@@ -30,7 +30,7 @@ public class Taskbar {
 
     public void setupDefaultTaskbar(Context context) {
         makeTaskbar(context,
-                new ArrayList<>(Arrays.asList(MainActivity.class, LeaderBoard.class, Map.class, NewCode.class, Account.class)),
+                new ArrayList<>(Arrays.asList(MainActivity.class, LeaderBoard.class, Map.class, CameraActivity.class, Account.class)),
                 new ArrayList<>(Arrays.asList("MainActivity", "LeaderBoard", "Map", "NewCode", "Account"))
         );
     }

@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                         setPositiveButton("Yes", (dialog, which) -> {
 
                             Code CodeToDelete = CodeDataList.get(position);
-                            currentUserTest.removeCode(CodeToDelete.getHash(), CodeToDelete.getPoints());
+                            currentTestUser.removeCode(CodeToDelete.getHash(), CodeToDelete.getPoints());
                             CodeDataList.remove(position);
                             CodeAdapter.notifyDataSetChanged();
                             updateCountTextViews(currentUserTest, CodeDataList);
@@ -264,8 +264,13 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
 
 
 
+
+
     @Override
-    public void addComment(Code code) {
+    public void addComment(Code code , String comment){
+        currentTestUser.addComment(code.getHash(),comment);
+        CodeAdapter.notifyDataSetChanged();
 
     }
 }
+

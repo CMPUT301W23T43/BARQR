@@ -89,8 +89,6 @@ public class Account extends AppCompatActivity {
         Query codesByScores = codesRef.orderBy("points", Query.Direction.DESCENDING);
         getCodeRank(codesByScores);
 
-
-
         highCodeName.setVisibility(View.VISIBLE);
         lowCodeName.setVisibility(View.VISIBLE);
     }
@@ -149,7 +147,6 @@ public class Account extends AppCompatActivity {
                         }
                         codesRank.put((String) document.get("hash"), i);
                         }
-                    System.out.println(codesRank.entrySet());
                     getPolarCodes(userInDatabase, codesRank);
                     }
 

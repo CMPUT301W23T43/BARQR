@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ccd0da"
+    android:background="@drawable/waves"
     android:gravity="bottom"
     >
 
@@ -15,9 +15,8 @@
         android:layout_height="wrap_content"
         android:text="Close"
         android:textSize="15dp"
-        android:fontFamily="monospace"
-        android:backgroundTint="#000"
-        android:textColor="#9ca0b0"
+        android:backgroundTint="#070707"
+        android:textColor="#81D4FA"
         android:layout_marginLeft="5dp"
 
         >
@@ -34,21 +33,22 @@
             android:id="@+id/search_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
             android:hint="Search Account Username ..."
-            android:textColor="#000"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:textColor="#150578"
+            />
 
         <Button
             android:id="@+id/search_button"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:backgroundTint="#000"
-            android:fontFamily="monospace"
             android:text="Search"
-            android:textColor="#9ca0b0"
-            android:textSize="15dp"></Button>
+            android:textSize="15dp"
+            android:backgroundTint="#070707"
+            android:textColor="#81D4FA"
+            android:layout_marginLeft="25dp"
+            >
+        </Button>
 
     </LinearLayout>
 

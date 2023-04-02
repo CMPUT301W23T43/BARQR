@@ -26,16 +26,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ *
+ * @Author Anjelica Marianicz and Kannan Khosla
+ * @Version 2
+ *
+ */
 public class SearchQrCodeGeo extends AppCompatActivity {
-    FirebaseFirestore dataBase = FirebaseFirestore.getInstance();;
-    CollectionReference usersRef = dataBase.collection("Users");
+    FirebaseFirestore dataBase = FirebaseFirestore.getInstance();
     CollectionReference codesRef = dataBase.collection("Codes");
     private CodeArrayAdapter CodeAdapter;
     private ArrayList<Code> GeoCodeDataList;
     ListView GeoCodesList;
     EditText searchCity;
     Button Search;
-
     String location;
 
 
@@ -48,7 +52,6 @@ public class SearchQrCodeGeo extends AppCompatActivity {
         searchCity = findViewById(R.id.cityCountry);
         Search = findViewById(R.id.Search);
 
-
         Search.setOnClickListener(v -> {
             GeoCodeDataList.clear();
             CodeAdapter = new CodeArrayAdapter(SearchQrCodeGeo.this, GeoCodeDataList);
@@ -56,8 +59,6 @@ public class SearchQrCodeGeo extends AppCompatActivity {
             CodeAdapter.notifyDataSetChanged();
             Geocoder geocoder = new Geocoder(SearchQrCodeGeo.this, Locale.getDefault());
             List<Address> addresses= null;
-
-            List<Address> addresses2= null;
             location =  searchCity.getText().toString();
 
             if (location.length() != 0) {
@@ -67,8 +68,6 @@ public class SearchQrCodeGeo extends AppCompatActivity {
                     double latitude = addresses.get(0).getLatitude();
                     double longitude = (addresses.get(0).getLongitude());
                     SearchDatabase(location);
-                    System.out.println(latitude);
-                    System.out.println(longitude);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -79,55 +78,37 @@ public class SearchQrCodeGeo extends AppCompatActivity {
                 Toast toast = Toast.makeText(context, error, Toast.LENGTH_LONG);
                 toast.show();
             }
-
-//            codesRef.whereEqualTo("latitude", lat).whereEqualTo("longitude", lon).get().addOnCompleteListener(task -> {
-//                if (task.isSuccessful()) {
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        // Access the document data
-//                        Code obj = document.toObject(Code.class);
-//                        Log.d("MyActivity", obj.toString());
-//                        GeoCodeDataList.add(obj);
-//                        CodeAdapter = new CodeArrayAdapter(SearchQrCodeGeo.this, GeoCodeDataList);
-//                        GeoCodesList.setAdapter(CodeAdapter);
-//                        CodeAdapter.notifyDataSetChanged();
-//                    }
-//                } else {
-//                    // Handle errors here
-//                    Log.e("MyActivity", "Error getting documents: " + task.getException().getMessage());
-//                }
-//            });
         });
 
 
     }
-
+    /**
+     *
+     * This queries the database to lok through every code to find which match geolocation.
+     * @param location
+     *      This is the location which the code must match.
+     */
     private void SearchDatabase(String location){
 
         Query getCodesByLocation = codesRef.orderBy("points", Query.Direction.DESCENDING);
 
         Geocoder geocoder = new Geocoder(SearchQrCodeGeo.this, Locale.getDefault());
-        List<Address> addresses2 = null;
 
         getCodesByLocation.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                 if (task.isSuccessful()) {
-
-                    int i = 1;
-                    System.out.println("Hi"+task.getResult().getDocuments());
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         ArrayList<HashMap<Object,Object>> latLongPairs = (ArrayList<HashMap<Object,Object>>) document.get("latLongPairs");
                         for (HashMap<Object, Object> latLong : latLongPairs) {
                                 List<Address> addresses2 = null;
                                 try {
-                                    System.out.println("inTRY");
                                     addresses2 = geocoder.getFromLocation((Double) latLong.get("first"), (Double) latLong.get("second"), 1);
                                     System.out.println(addresses2.get(0).getLocality().toLowerCase());
                                     System.out.println(location.toLowerCase());
                                     if (addresses2.get(0).getLocality().toLowerCase().equalsIgnoreCase(location) || addresses2.get(0).getCountryName().equalsIgnoreCase(location) ||
                                             addresses2.get(0).getAdminArea().equalsIgnoreCase(location)) {
-                                        System.out.println("match");
                                         GeoCodeDataList.add(new Code((String) document.get("hash")));
                                         CodeAdapter = new CodeArrayAdapter(SearchQrCodeGeo.this, GeoCodeDataList);
                                         GeoCodesList.setAdapter(CodeAdapter);

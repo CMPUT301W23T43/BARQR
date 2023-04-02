@@ -35,6 +35,9 @@ android {
         unitTests.all {
             useJUnitPlatform()
         }
+        testOptions {
+            unitTests.returnDefaultValues = true
+        }
     }
 }
 
@@ -46,14 +49,13 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
 
-    //testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
+    testImplementation 'junit:junit:4.12'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.1'
-
 
     implementation 'com.android.support:multidex:1.0.3'
     implementation platform('com.google.firebase:firebase-bom:31.2.2')
@@ -61,9 +63,11 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.2.3') //for authentication
     implementation 'com.google.firebase:firebase-auth' // ^^
 
+    implementation 'com.google.firebase:firebase-analytics:17.2.1'
+    implementation 'com.google.firebase:firebase-database:19.2.0'
+
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 
-
-
-    
+    implementation 'org.osmdroid:osmdroid-android:6.1.14'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
 }

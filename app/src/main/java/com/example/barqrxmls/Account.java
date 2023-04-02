@@ -59,13 +59,6 @@ public class Account extends AppCompatActivity {
 
         User user = CurrentUser.getInstance().getUser();
 
-        TextView username = findViewById(R.id.usernameField);
-        TextView email = findViewById(R.id.emailField);
-
-        username.setText(user.getUserName());
-        email.setText(user.getEmail());
-
-
         Button close = findViewById(R.id.close_button);
         close.setOnClickListener(new View.OnClickListener() {
             @Override

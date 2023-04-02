@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +26,7 @@ public class ShowAllQrCodes extends AppCompatActivity {
     private CodeArrayAdapter CodeAdapter;
     private ArrayList<Code> AllCodeDataList;
     ListView AllCodesList;
+    Button returnPage;
 
 
     @Override
@@ -33,6 +36,13 @@ public class ShowAllQrCodes extends AppCompatActivity {
         setContentView(R.layout.activity_show_all_qr_codes);
         AllCodesList = findViewById(R.id.codesList);
         AllCodeDataList = new ArrayList<>();
+        returnPage = findViewById(R.id.returnToLeaderboard);
+        returnPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         Query getUsersByScores = codesRef.orderBy("points", Query.Direction.DESCENDING);
 
             // Retrieve all documents in the collection

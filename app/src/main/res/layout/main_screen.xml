@@ -1,43 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="#ccd0da"
+    android:background="@drawable/waves"
     android:gravity="bottom"
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
         >
+
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Your Codes"
-            android:fontFamily="monospace"
-            android:textSize="25dp"
-            android:textColor="#000"
-            android:paddingRight="125dp"
-            android:paddingBottom="50dp"
-            android:paddingLeft="25dp"
+            android:layout_height="74dp"
+            android:textStyle="bold"
             android:paddingTop="25dp"
-            />
+            android:text="Your Codes"
+            android:textColor="#150578"
+            android:textSize="35dp"/>
 
-
-        <Button
-            android:id="@+id/accountButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Account"
-            android:textSize="15dp"
-            android:fontFamily="monospace"
-            android:backgroundTint="#000"
-            android:textColor="#9ca0b0"
-            >
-        </Button>
 
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -45,27 +33,27 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
+
         <Button
             android:id="@+id/playerSearchButton"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="Search Username"
+            android:textSize="13dp"
             android:layout_gravity="center"
-            android:fontFamily="monospace"
-            android:backgroundTint="#000"
-            android:textColor="#9ca0b0"
-            android:layout_marginRight="5dp"
-            >
-        </Button>
+            android:backgroundTint="#070707"
+            android:textColor="#81D4FA">
+    </Button>
+
         <Button
             android:id="@+id/codeSearchButton"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="Search Code"
+            android:textSize="13dp"
             android:layout_gravity="center"
-            android:fontFamily="monospace"
-            android:backgroundTint="#000"
-            android:textColor="#9ca0b0"
+            android:backgroundTint="#070707"
+            android:textColor="#81D4FA"
             >
         </Button>
     </LinearLayout>
@@ -79,6 +67,7 @@
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:paddingBottom="25dp"
+        android:textColor="#150578"
         />
 
     <!-- totals display -->
@@ -91,8 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total Codes Scanned: "
-            android:textColor="#000"
-            android:fontFamily="monospace"
+            android:textColor="#1A237E"
             android:textSize="15dp"
             />
         <TextView
@@ -100,8 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="_______"
-            android:textColor="#000"
-            android:fontFamily="monospace"
+            android:textColor="#1A237E"
             android:textSize="15dp"
             />
     </LinearLayout>
@@ -116,8 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total Points Scanned: "
-            android:textColor="#000"
-            android:fontFamily="monospace"
+            android:textColor="#1A237E"
             android:textSize="15dp"
             />
         <TextView
@@ -125,8 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="_______"
-            android:textColor="#000"
-            android:fontFamily="monospace"
+            android:textColor="#1A237E"
             android:textSize="15dp"
             />
 
@@ -144,7 +129,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="8.5dp"
-        android:background="#000"
         />
 
 
@@ -156,73 +140,66 @@
         <ImageView
             android:layout_width="8.5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/newCodeButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/camera"
-            android:background="#9ca0b0"
+            android:background="#E1F5FE"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/leaderBoardButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/trophy"
-            android:background="#9ca0b0"
+            android:background="#E1F5FE"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/homeButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/house"
-            android:background="#9ca0b0"
+            android:background="#E1F5FE"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/mapButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/map"
-            android:background="#9ca0b0"
+            android:background="#E1F5FE"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
         <ImageButton
             android:id="@+id/settingsButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:src="@drawable/setting"
-            android:background="#9ca0b0"
+            android:src="@drawable/stare"
+            android:background="#E1F5FE"
             />
         <ImageView
             android:layout_width="8.5dp"
             android:layout_height="75dp"
-            android:background="#000"
             />
     </LinearLayout>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="8.5dp"
-        android:background="#000"
         />
 
 </LinearLayout>

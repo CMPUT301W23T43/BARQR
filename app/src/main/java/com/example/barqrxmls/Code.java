@@ -1,20 +1,7 @@
 package com.example.barqrxmls;
 
-import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FieldPath;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Comment;
+import android.util.Pair;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -28,6 +15,7 @@ public class Code {
     private String hash;
     private Integer points;
     private String name;
+    private ArrayList<LatLongPair> latLongPairs;
 
     private String comment;
     private HashMap<String, String> code_comments;
@@ -89,6 +77,7 @@ public class Code {
 
         name = generateName(nameParts);
         points = calculateScore();
+        latLongPairs = new ArrayList<>();
     }
 
     /**
@@ -96,6 +85,18 @@ public class Code {
      */
     public Code() {
 
+    }
+
+    public void setLatLongPairs(ArrayList<LatLongPair> latLongPairs) {
+        this.latLongPairs = latLongPairs;
+    }
+
+    public void appendLatLongPairs(Double latitude, Double longitude) {
+        latLongPairs.add(new LatLongPair(latitude, longitude));
+    }
+
+    public ArrayList<LatLongPair> getLatLongPairs() {
+        return latLongPairs;
     }
 
     /**

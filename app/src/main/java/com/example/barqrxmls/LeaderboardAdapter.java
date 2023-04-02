@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
+
 
 /**
  * This class converts from a HashMap where the keys are userNames and the values are the
@@ -18,10 +20,13 @@ import java.util.Map;
  * URL: https://stackoverflow.com/questions/19466757/hashmap-to-listview
  * Website: https://stackoverflow.com
  * Author: https://stackoverflow.com/user/1981118/oleksii-k
+ *
+ * Code changes to maintain proper order from:
+ * URL: https://stackoverflow.com/questions/9061689/how-to-sort-hashmap-as-added-in-android-with-arrayadapter
+ * Website: https://stackoverflow.com
+ * Author: https://stackoverflow.com/user/1103682/jeet
  */
 public class LeaderboardAdapter extends BaseAdapter {
-
-
 
     private final ArrayList leaderboard;
 
@@ -29,7 +34,7 @@ public class LeaderboardAdapter extends BaseAdapter {
      *
      * @param map - the hashmap storing the play usernames with their associated totalScore
      */
-    public LeaderboardAdapter(Map<Object, Object> map) {
+    public LeaderboardAdapter(LinkedHashMap<Object, Object> map) {
         leaderboard = new ArrayList();
         leaderboard.addAll(map.entrySet());
 

@@ -22,6 +22,14 @@
             android:fontFamily="monospace"
             android:textColor="#000"
             />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/returnToLeaderboard"
+            android:backgroundTint="#070707"
+            android:text="Return"
+            android:textColor="#81D4FA">
+        </Button>
 
 
     </LinearLayout>

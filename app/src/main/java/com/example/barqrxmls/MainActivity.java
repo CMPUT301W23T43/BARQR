@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -60,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
     Code testScannedCode;
     Bitmap testScannedCodeImage;
     Button SearchButton;
+    String testScannedCity,testScannedCountry,testScannedAddress;
+    Double testScannedLatitude,testScannedLongitude;
+    byte[] testScannedCompressedByteArray;
 
     ActivityResultLauncher<Intent> loginLauncher;
     ActivityResultLauncher<Intent> cameraLauncher;
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
+
 
         // Citation: https://www.youtube.com/watch?v=DfDj9EadOLk
         // from youtube channel https://www.youtube.com/@DailyCoding Daily Coding.
@@ -83,7 +89,20 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                                 Bundle cameraResults = camResultIntent.getExtras();
                                 Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("codeData").toString()));
                                 testScannedCode = new Code(cameraResults.get("codeData").toString());
-                                testScannedCodeImage = (Bitmap) cameraResults.get("codeImage");
+                                testScannedCodeImage = (Bitmap) cameraResults.get("codeBitmap");
+                                // All this stuff below us might be NULL if the User declines
+                                // Geolocation tagging.
+                                testScannedCountry = cameraResults.getString("codeCountry");
+                                testScannedAddress = cameraResults.getString("codeAddress");
+                                testScannedLatitude = cameraResults.getDouble("codeLatitude");
+                                testScannedLongitude = cameraResults.getDouble("codeLongitude");
+                                testScannedCompressedByteArray = (byte[]) cameraResults.getByteArray("codeByteArray");
+
+
+                                ArrayList<LatLongPair> existingPairs = testScannedCode.getLatLongPairs();
+                                LatLongPair myLatLongPair = new LatLongPair(testScannedLatitude, testScannedLongitude);
+                                existingPairs.add(myLatLongPair);
+                                testScannedCode.setLatLongPairs(existingPairs);
                                 currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
                                 codesRef.document(testScannedCode.getHash()).set(testScannedCode);
                                 CodeDataList.add(testScannedCode);
@@ -93,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                         }
                     }
                 });
-        currentTestUser = CurrentUser.getInstance().getUser();
+        currentTestUser = CurrentUser.getInstance();
         codesRef = dataBase.collection("Codes");
         usersRef = dataBase.collection("Users");
         CodesList = findViewById(R.id.myCodesDisplay);
@@ -211,30 +230,16 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
         // setting screen changes from taskbar
         // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
 
-        /**
-         * Home Button implementation
-         * @author Noah Jeans
-         * @version 1
-         * @return opens MainActivity which is linked to main_screen.xml
-         */
+       
         ImageButton home = (ImageButton) findViewById(R.id.homeButton);
 //        home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
 
-        /**
-         * LeaderBoard Button implementation
-         * @author Noah Jeans
-         * @version 1
-         * @return opens LeaderBoard which is linked to leaderboard_screen.xml
-         */
+        
+        
         ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
         leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
 
-        /**
-         * NewCode Button implementation
-         * @author Noah Jeans, Tyler Pollom
-         * @version 2
-         * @return opens NewCode which is linked to barqr_code.xml
-         */
+        
         ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
         newCode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,44 +249,24 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
             }
         });
 
-        /**
-         * Map Button implementation
-         * @author Noah Jeans, Tyler Pollom
-         * @version 2
-         * @return opens Map which is linked to map.xml
-         */
+        
         ImageButton map = (ImageButton) findViewById(R.id.mapButton);
         map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));
 
-        /**
-         * Account Button implementation
-         * @author Noah Jeans, Tyler Pollom
-         * @version 2
-         * @return opens Account which is linked to account_screen.xml
-         */
+        
         ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
         account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
-
-        SearchButton = findViewById(R.id.codeSearchButton);
-        SearchButton.setOnClickListener(new View.OnClickListener() {
+        
+        Button playerSearch = (Button) findViewById(R.id.playerSearchButton);
+        playerSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-
-
-            /**
-             Starts a new activity, SearchQrCodeGeo, to allow the user to search for QR codes by location.
-             @param v The View that was clicked
-             */
             public void onClick(View v) {
-                Intent searchIntent = new Intent(MainActivity.this, SearchQrCodeGeo.class);
-                startActivity(searchIntent);
+                Intent playerSearchPage = new Intent(MainActivity.this, PlayerSearch.class);
+                startActivity(playerSearchPage);
             }
         });
 
-
-
-
     }
-
 
 
 

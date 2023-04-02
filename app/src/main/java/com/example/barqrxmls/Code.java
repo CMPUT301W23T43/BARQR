@@ -1,6 +1,9 @@
 package com.example.barqrxmls;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
+
+import androidx.annotation.ColorInt;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -101,14 +104,15 @@ public class Code {
 
     public Bitmap generateImage() {
         int width = 80, height = 80;
-        Bitmap img = Bitmap.createBitmap(width, height, Bitmap.Config.ALPHA_8);
+        Bitmap img = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int a = (int)(Math.random() * 256);
                 int r = (int)(Math.random() * 256);
                 int g = (int)(Math.random() * 256);
                 int b = (int)(Math.random() * 256);
-                int pixel = (a<<24) | (r<<16) | (g<<8) | b;
+                @ColorInt
+                int pixel = Color.argb(a, r, g, b);
                 img.setPixel(x, y, pixel);
             }
         }

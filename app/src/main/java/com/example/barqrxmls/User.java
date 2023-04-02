@@ -114,6 +114,16 @@ public class User implements Serializable {
         return numCodes;
     }
 
+    public String getGeoLocation(String codeHash) {
+        if(!codes.containsKey(codeHash)) {
+            return null;
+        }
+        else {
+            return codes.get(codeHash).get("geolocation");
+        }
+
+    }
+
     /**
      * adds a code to the user's list of codes without a geolocation
      * @param codeHash is a String of the hash of the code
@@ -214,6 +224,13 @@ public class User implements Serializable {
     public boolean hasComment(String codeHash) {
         return codes.get(codeHash) != null && !Objects.equals(codes.get(codeHash).get("comment"), "");
 
+    }
+
+    public String getComment(String codeHash) {
+        if(!codes.containsKey(codeHash) || codes.get(codeHash) == null) {
+            return null;
+        }
+        return codes.get(codeHash).get("comment");
     }
 
     /**

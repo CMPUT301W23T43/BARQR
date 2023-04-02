@@ -1,7 +1,13 @@
 package com.example.barqrxmls;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -9,12 +15,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Code {
+public class Code implements Serializable {
 
     private String hash;
     private Integer points;
     private String name;
     private ArrayList<LatLongPair> latLongPairs;
+
+    private ArrayList<String> users = new ArrayList<>();
 
     // Access like nameParts['suffix']
 
@@ -74,6 +82,7 @@ public class Code {
         latLongPairs = new ArrayList<>();
     }
 
+
     /**
      * Empty constructor, for use with the Database.
      */
@@ -129,6 +138,20 @@ public class Code {
         return generatedName.toString();
     }
 
+    public void addUser(String user) {
+        users.add(user);
+    }
+
+    public void combineUsers(ArrayList<String> toCombine) {
+        for (String user : toCombine) {
+            if(!users.contains(user)) {
+                users.add(user);
+            }
+        }
+    }
+    public ArrayList<String> getUsers() {
+        return users;
+    }
     /**
      *
      * @return hash
@@ -219,8 +242,4 @@ public class Code {
         Code code = (Code) o;
         return this.hash.compareTo(code.getHash());
     }
-
-
-
-
 }

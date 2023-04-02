@@ -34,7 +34,6 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
@@ -59,6 +58,10 @@
             android:textSize="20sp"
             />
     </LinearLayout>
+
+
+
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -92,20 +95,21 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_gravity="center"
-        android:orientation="horizontal">
-
+        >
         <RadioButton
             android:id="@+id/terms_and_services"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true" />
-
+            android:clickable="true"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Terms and Services"
-            android:textColor="#150578"
+            android:textColor="#000"
+            android:fontFamily="monospace"
             android:textSize="20sp"
             />
     </LinearLayout>
@@ -114,9 +118,11 @@
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Submit"
         android:layout_gravity="center"
-        android:backgroundTint="#070707"
-        android:textColor="#81D4FA"
+        android:backgroundTint="#000"
+        android:textColor="#9ca0b0"
+        android:fontFamily="monospace"
         android:textSize="15sp"
         />
 

@@ -39,6 +39,12 @@ public class AddCommentFragment extends DialogFragment {
     CollectionReference codesRef = dataBase.collection("Codes");
 
     @Override
+    /**
+     Called when the fragment is attached to its context. This method sets the listener for the fragment
+     to the activity hosting it, and throws a ClassCastException if the activity does not implement the
+     AddCommentDialogueListener interface.
+     @param context The context to attach the fragment to
+     */
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
@@ -51,6 +57,11 @@ public class AddCommentFragment extends DialogFragment {
 
     @NonNull
     @Override
+    /**
+     Creates and returns a new instance of a dialog to add a comment.
+     @param savedInstanceState The saved state of the fragment, or null if there is no saved state
+     @return A new instance of a dialog to add a comment
+     */
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.add_comment_fragment, null);
         addComment = view.findViewById(R.id.AddComment);

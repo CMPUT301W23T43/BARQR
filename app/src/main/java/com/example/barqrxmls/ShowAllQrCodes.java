@@ -27,6 +27,7 @@ public class ShowAllQrCodes extends AppCompatActivity {
 
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all_qr_codes);
@@ -37,6 +38,16 @@ public class ShowAllQrCodes extends AppCompatActivity {
             // Retrieve all documents in the collection
         getUsersByScores.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
+                /**
+                 This method is called when the query for retrieving all documents from the collection has completed.
+                 If the query was successful, this method loops through the documents, access the data of each document,
+                 and creates a Code object using the document data. It then adds the object to the AllCodeDataList and
+                 notifies the adapter of the data change. Finally, the adapter is set on the list view to display the data.
+                 If the query was not successful, an error message is logged.
+                 @param task A Task object representing the result of the query operation.
+                 If the operation is successful, the task will contain the QuerySnapshot object with the retrieved data.
+                 If the operation is not successful, the task will contain an exception with details of the error.
+                 */
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {

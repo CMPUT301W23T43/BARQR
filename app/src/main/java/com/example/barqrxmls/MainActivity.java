@@ -265,6 +265,12 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
         SearchButton = findViewById(R.id.codeSearchButton);
         SearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
+
+
+            /**
+             Starts a new activity, SearchQrCodeGeo, to allow the user to search for QR codes by location.
+             @param v The View that was clicked
+             */
             public void onClick(View v) {
                 Intent searchIntent = new Intent(MainActivity.this, SearchQrCodeGeo.class);
                 startActivity(searchIntent);
@@ -280,6 +286,11 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
 
 
 
+    /**
+     Adds a comment to a given code and updates the list of codes.
+     @param code The code to add a comment to.
+     @param comment The comment to add.
+     */
     @Override
     public void addComment(Code code , String comment){
         currentTestUser.addComment(code.getHash(),comment);

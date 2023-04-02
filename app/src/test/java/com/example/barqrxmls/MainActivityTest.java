@@ -5,4 +5,5 @@ public class MainActivityTest {
     onLongClick method which is tested in UI tests.
     Other than that it just calls other activities and retrieves data from database.
      */
+
 }

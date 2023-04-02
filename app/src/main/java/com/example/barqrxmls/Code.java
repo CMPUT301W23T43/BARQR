@@ -86,8 +86,36 @@ public class Code {
 
     }
 
+    /**
+     * Constructor that takes a hashContainer, which is a wrapper class around String, and uses
+     * the contents as the hash for this class. This allows a code object to be constructed from
+     * a pre-existing hash since all of its attributes (name, points, image etc) are calculated
+     * based on the hash in a deterministic fashion.
+     * @param hashContainer A CodeHashContainer object, which wraps around a String.
+     */
     public Code(CodeHashContainer hashContainer) {
+        hash = hashContainer.getCodeHashString();
+        HashMap<Integer, ArrayList<String>> nameParts = new HashMap<>();
+        // Format will be like "Doctor James Smith the Fat"
+        ArrayList<String> prefixes = new ArrayList<>((Arrays.asList("Doctor", "Professor",
+                "Teacher", "King", "Queen", "The Honourable", "The", "Sir", "Madam", "Dog", "Guy",
+                "That", "Mr", "Mrs", "Ms", "Real G")));
+        ArrayList<String> names = new ArrayList<>(Arrays.asList("Tyler", "Anjelica", "Danielle",
+                "James", "Gregory", "Greg", "Robin", "Richard", "Peter", "Joe", "Joseph", "Kannan",
+                "Sarah", "Morgan"));
+        ArrayList<String> suffixArticles = new ArrayList<>(Arrays.asList(", the", ", a", ", an",
+                ", PhD in", ", MD in"));
+        ArrayList<String> suffixes = new ArrayList<>(Arrays.asList("Tall", "Fat",
+                "Tiny", "Strange", "Round", "Stupid", "Smart", "Courageous", "Cowardly"));
+        nameParts.put(0, prefixes);
+        nameParts.put(1, names);
+        nameParts.put(2, suffixArticles);
+        nameParts.put(3, suffixes);
 
+        name = generateName(nameParts);
+        points = calculateScore();
+        latLongPairs = new ArrayList<>();
+        myImageRepresentation = generateImage();
     }
 
     /**

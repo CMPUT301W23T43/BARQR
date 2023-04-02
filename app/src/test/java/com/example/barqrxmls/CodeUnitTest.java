@@ -64,4 +64,19 @@ public class CodeUnitTest {
         String expectedName = "Doctor Robin, an Tall";
         assertEquals(expectedName, myCode.getName());
     }
+
+    @Test
+    public void recreateObjectTest() {
+        Code myCode = new Code("This is a test object!");
+        String myCodeHash = myCode.getHash();
+        String myCodeName = myCode.getName();
+        Integer myCodePoints = myCode.getPoints();
+
+        CodeHashContainer container = new CodeHashContainer(myCodeHash);
+        Code recreatedCode = new Code(container);
+
+        assertEquals(myCodeHash, recreatedCode.getHash());
+        assertEquals(myCodeName, recreatedCode.getName());
+        assertEquals(myCodePoints, recreatedCode.getPoints());
+    }
 }

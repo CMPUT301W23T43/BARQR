@@ -49,9 +49,11 @@ public class SearchQrCodeGeo extends AppCompatActivity {
         Search = findViewById(R.id.Search);
 
 
-
         Search.setOnClickListener(v -> {
-
+            GeoCodeDataList.clear();
+            CodeAdapter = new CodeArrayAdapter(SearchQrCodeGeo.this, GeoCodeDataList);
+            GeoCodesList.setAdapter(CodeAdapter);
+            CodeAdapter.notifyDataSetChanged();
             Geocoder geocoder = new Geocoder(SearchQrCodeGeo.this, Locale.getDefault());
             List<Address> addresses= null;
 
@@ -64,15 +66,9 @@ public class SearchQrCodeGeo extends AppCompatActivity {
                     System.out.println(addresses);
                     double latitude = addresses.get(0).getLatitude();
                     double longitude = (addresses.get(0).getLongitude());
-                    String address = (addresses.get(0).getAddressLine(0)).toString();
-                    String city = (addresses.get(0).getLocality()).toString();
-                    String country = (addresses.get(0).getCountryName()).toString();
                     SearchDatabase(location);
                     System.out.println(latitude);
                     System.out.println(longitude);
-
-
-
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -136,13 +132,11 @@ public class SearchQrCodeGeo extends AppCompatActivity {
                                         CodeAdapter = new CodeArrayAdapter(SearchQrCodeGeo.this, GeoCodeDataList);
                                         GeoCodesList.setAdapter(CodeAdapter);
                                         CodeAdapter.notifyDataSetChanged();
-
                                     }
 
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-
 
                         }
                     }

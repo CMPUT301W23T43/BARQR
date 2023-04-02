@@ -18,16 +18,24 @@ import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
@@ -50,16 +58,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+/***
+ * The map activity. Show the map. It's a Map.
+ */
+// Most of this class not related directly to Code objects comes from the OSMdroid documentation
+// In particular https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java)
 public class Map extends AppCompatActivity {
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map;
 
+    FirebaseFirestore dataBase = FirebaseFirestore.getInstance();;
+    CollectionReference codesRef = dataBase.collection("Codes");
+    private ArrayList<Code> codeList;
     private MyLocationNewOverlay mLocationOverlay;
     private IMapController mapController;
     private FusedLocationProviderClient fusedLocationProviderClient;
     double latitude, longitude;
     String country, city, address;
     GeoPoint lastCenterLocation = new GeoPoint(53.534444,  -113.490278);
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Map settings, like User Agent for internet and loading osmdroid configuration
@@ -78,8 +95,8 @@ public class Map extends AppCompatActivity {
                 Manifest.permission.ACCESS_FINE_LOCATION
         ).toArray());
 
-
-
+        codesRef = dataBase.collection("Codes");
+        codeList = new ArrayList<>();
 
     }
 
@@ -92,28 +109,22 @@ public class Map extends AppCompatActivity {
         mapController.setZoom(10.5);
         mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(Map.this), map);
         // TODO: We have to make sure the location permission is enabled and stuff
-        //ActivityCompat.requestPermissions(Map.this, Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION).toArray(new String[0]), REQUEST_PERMISSIONS_REQUEST_CODE);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Map.this);
-        System.out.println("MAP: Before doing anything regarding map permissions and location...");
         getGeoLocation();
 
-        List<IGeoPoint> points = new ArrayList<>();
-        Code testCode1 = new Code("This is a Map Test Code!");
-        testCode1.appendLatLongPairs(53.534444,-113.490278);
-        points.add(new LabelledGeoPoint(testCode1.getLatLongPairs().get(0).first,  testCode1.getLatLongPairs().get(0).second, testCode1.getName()));
-        SimplePointTheme pt = new SimplePointTheme(points, true);
-        Paint textStyle = new Paint();
-        textStyle.setStyle(Paint.Style.FILL);
-        textStyle.setColor(Color.parseColor("#000ff0"));
-        textStyle.setTextAlign(Paint.Align.CENTER);
-        textStyle.setTextSize(36);
-
-        SimpleFastPointOverlayOptions opt = SimpleFastPointOverlayOptions.getDefaultStyle()
-                .setAlgorithm(SimpleFastPointOverlayOptions.RenderingAlgorithm.MAXIMUM_OPTIMIZATION)
-                .setRadius(7).setIsClickable(true).setCellSize(24).setTextStyle(textStyle);
-
-        final SimpleFastPointOverlay sfpo = new SimpleFastPointOverlay(pt, opt);
-        map.getOverlays().add(sfpo);
+        codesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot codeDocument : task.getResult()) {
+                        Code codeToAdd = codeDocument.toObject(Code.class);
+                        Log.d("MAP AddMarkers", "onComplete: Adding object " + codeToAdd.getName() + " to our list");
+                        codeList.add(codeToAdd);
+                    }
+                    showCodesOnMap();
+                }
+            }
+        });
     }
 
     @Override
@@ -123,15 +134,45 @@ public class Map extends AppCompatActivity {
         map.onPause();
     }
 
+    /***
+     * Show the codes on the map, by placing identical looking markers at the geocoordinates of the
+     * Code object.
+     */
+    private void showCodesOnMap() {
+        List<IGeoPoint> points = new ArrayList<>();
+        for (Code code : codeList) {
+            ArrayList<LatLongPair> latLongPairs = code.getLatLongPairs();
+            for (LatLongPair latLongPair : latLongPairs) {
+                LabelledGeoPoint codeLocation = new LabelledGeoPoint(latLongPair.first, latLongPair.second, code.getName());
+                double MAX_RANGE = 20000;
+                if (lastCenterLocation.distanceToAsDouble(codeLocation) <= MAX_RANGE) {
+                    points.add(new LabelledGeoPoint(latLongPair.first, latLongPair.second, code.getName()));
+                }
+            }
+        }
+        SimplePointTheme pt = new SimplePointTheme(points, true);
+        Paint textStyle = new Paint();
+        textStyle.setStyle(Paint.Style.FILL);
+        textStyle.setColor(Color.parseColor("#000ff0"));
+        textStyle.setTextAlign(Paint.Align.CENTER);
+        textStyle.setTextSize(36);
+
+        SimpleFastPointOverlayOptions opt = SimpleFastPointOverlayOptions.getDefaultStyle()
+                .setAlgorithm(SimpleFastPointOverlayOptions.RenderingAlgorithm.MAXIMUM_OPTIMIZATION)
+                .setRadius(20).setIsClickable(true).setCellSize(24).setTextStyle(textStyle);
+
+        final SimpleFastPointOverlay sfpo = new SimpleFastPointOverlay(pt, opt);
+        map.getOverlays().add(sfpo);
+    }
+
+    /***
+     * Get the Geolocation of the user, if possible.
+     */
     private void getGeoLocation() {
-        System.out.println("GET GEOLOCATION CALLED");
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            System.out.println("getGeoLocation: About to try using Fused...");
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
-                System.out.println("getGeoLocation Fused: About to check if location is null");
                 if (location != null) {
-                    System.out.println("getGeoLocation Fused: Location is not null; continuing.");
                     Geocoder geocoder = new Geocoder(Map.this, Locale.getDefault());
                     List<Address> addresses;
                     try {
@@ -169,6 +210,13 @@ public class Map extends AppCompatActivity {
                     {Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
         }
     }
+
+    /***
+     * Request the required permissions for the map, if we need them.
+     * @param permissions String array of the permissions we want to ask for.
+     */
+    // Source: OSMDroid documentation
+    // Link: https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java)
     private void requestPermissionsIfNecessary(String[] permissions) {
         ArrayList<String> permissionsToRequest = new ArrayList<>();
         for (String permission : permissions) {

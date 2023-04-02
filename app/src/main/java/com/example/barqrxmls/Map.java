@@ -85,7 +85,7 @@ public class Map extends AppCompatActivity {
         map.onResume();
         map.setMultiTouchControls(true);
         mapController = map.getController();
-        mapController.setZoom(10.5);
+        mapController.setZoom(11.5);
         mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(Map.this), map);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Map.this);
         getGeoLocation();

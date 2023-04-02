@@ -83,40 +83,4 @@ public class CurrentUser extends User{
 
     }
 
-
-    /***
-     * Get the CurrentUser's User object
-     * @return User -- the current user object
-     */
-    //public User getUser() {
-        //return user;
-    //}
-
-//    private void updateInDatabase() {
-//        if(this.getClass().getSuperclass() == User.class) {
-//            return;
-//        }
-//        // get database
-//        FirebaseFirestore dataBase = FirebaseFirestore.getInstance();
-//        CollectionReference usersRef;
-//        usersRef = dataBase.collection("Users");
-//
-//        // overwrite old user with new information based on this user
-//        String TAG = "User.updateInDatabase";
-//        User update = this;
-//        usersRef.document(userName)
-//                .set(update)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        Log.d(TAG, "DocumentSnapshot successfully written!");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error writing document", e);
-//                    }
-//                });
-//    }
 }

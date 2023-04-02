@@ -99,48 +99,23 @@ public class PlayerAccount extends AppCompatActivity {
                             totalScanned.setText(Integer.toString(player.getNumCodes()));
 
                             //Taskbar
-                            /**
-                             * Home Button implementation
-                             * @author Noah Jeans
-                             * @version 1
-                             * @return opens MainActivity which is linked to main_screen.xml
-                             */
+                            
                             ImageButton home = (ImageButton) findViewById(R.id.homeButton);
                             home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
 
-                            /**
-                             * LeaderBoard Button implementation
-                             * @author Noah Jeans
-                             * @version 1
-                             * @return opens LeaderBoard which is linked to leaderboard_screen.xml
-                             */
+                            
                             ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
                             leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
 
-                            /**
-                             * NewCode Button implementation
-                             * @author Noah Jeans, Tyler Pollom
-                             * @version 2
-                             * @return opens NewCode which is linked to barqr_code.xml
-                             */
+                            
                             ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
                             newCode.setOnClickListener(taskbar.getSwitchActivityMap().get("NewCode"));
 
-                            /**
-                             * Map Button implementation
-                             * @author Noah Jeans, Tyler Pollom
-                             * @version 2
-                             * @return opens Map which is linked to map.xml
-                             */
+                            
                             ImageButton map = (ImageButton) findViewById(R.id.mapButton);
                             map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));
 
-                            /**
-                             * Account Button implementation
-                             * @author Noah Jeans, Tyler Pollom
-                             * @version 2
-                             * @return opens Account which is linked to account_screen.xml
-                             */
+                            
                             ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
                             account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
 

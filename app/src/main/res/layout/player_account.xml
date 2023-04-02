@@ -19,13 +19,22 @@
         android:id="@+id/playerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="____'s Codes"
+        android:text="_______"
         android:textSize="25dp"
         android:textColor="#150578"
         android:paddingBottom="50dp"
         android:paddingLeft="5dp"
         android:paddingTop="25dp"
         />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="'s Codes"
+            android:textSize="25dp"
+            android:textColor="#150578"
+            android:paddingBottom="50dp"
+            android:paddingTop="25dp"
+            />
 
         <Button
             android:id="@+id/closeButton"

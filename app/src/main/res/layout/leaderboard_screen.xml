@@ -14,10 +14,23 @@
 
         <ImageView
             android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_height="150dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="90dp"
-            android:background="#000" />
+            android:background="@drawable/trophy_view"
+            />
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#150578"
+            android:text="Player Leaderboard">
+
+        </TextView>
 
         <Button
             android:id="@+id/closeButton"
@@ -42,18 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="Number of Codes"
-            android:layout_gravity="center"
-            android:backgroundTint="#070707"
-            android:textColor="#81D4FA"
-            android:layout_marginRight="20dp"
-            >
-        </Button>
-        <Button
-            android:id="@+id/codeSearchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Individual Codes"
+            android:text="View All Codes"
             android:layout_gravity="center"
             android:backgroundTint="#070707"
             android:textColor="#81D4FA"
@@ -63,50 +65,28 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="147dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        >
+        android:layout_gravity="center|center_horizontal"
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Player Ranking:"
+            android:textColor="#150578"></TextView>
 
-            android:textColor="#150578"
-            >
-        </TextView>
         <TextView
             android:id="@+id/playerRanking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="_____"
-            android:textColor="#150578"
-            >
-        </TextView>
+            android:textColor="#150578"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:width="@android:dimen/notification_large_icon_height"
-            >
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Code Ranking:"
-            android:textColor="#150578"
-            >
-        </TextView>
-        <TextView
-            android:id="@+id/codeRanking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="_____"
-            android:textColor="#150578"
-            >
-        </TextView>
+            android:width="@android:dimen/notification_large_icon_height"></TextView>
 
     </LinearLayout>
 
@@ -184,7 +164,7 @@
             android:id="@+id/settingsButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:src="@drawable/setting"
+            android:src="@drawable/stare"
             android:background="#E1F5FE"
             />
         <ImageView

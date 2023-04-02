@@ -29,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class User implements Serializable {
     protected String userName;
-    protected HashMap<String,HashMap<String,Object>> codes;
+    protected HashMap<String,HashMap<String,String>> codes;
     protected int totalPoints;
     protected String email;
     protected String id;
@@ -79,7 +79,7 @@ public class User implements Serializable {
      * return's a hashmap of the user's code hashes and code comments
      * @return a hashmap of the user's code hashes and code comments
      */
-    public HashMap<String, HashMap<String,Object>> getCodes() {
+    public HashMap<String, HashMap<String,String>> getCodes() {
         return codes;
     }
 
@@ -122,7 +122,7 @@ public class User implements Serializable {
             return;
         }
         // add code without comment to user codes, update points and total codes
-        HashMap<String,Object> codeInfo = new HashMap<>();
+        HashMap<String,String> codeInfo = new HashMap<>();
         codeInfo.put("geolocation","");
         codeInfo.put("image","");
         codeInfo.put("comment","");
@@ -148,7 +148,7 @@ public class User implements Serializable {
             return;
         }
         // add code with comment to user codes, update points and total codes
-        HashMap<String,Object> codeInfo = new HashMap<>();
+        HashMap<String,String> codeInfo = new HashMap<>();
         codeInfo.put("geolocation",geolocation);
         codeInfo.put("image","");
         codeInfo.put("comment","");
@@ -215,12 +215,30 @@ public class User implements Serializable {
      * @param image is the byte array representing the image
      */
 
+    // how to convert a String to a byte Array and vice versa:
+    // website: Baeldung https://www.baeldung.com/java-string-to-byte-array
+    // author: Chandra Prakash https://www.baeldung.com/author/chandra-prakash
+
     public void addImage(String codeHash, byte[] image) {
         if(!codes.containsKey(codeHash)) {
             return;
         }
-        codes.get(codeHash).put("image",image);
+        String convert = new String(image);
+        codes.get(codeHash).put("image",convert);
         //updateInDatabase();
+    }
+
+    public byte[] getImage(String codeHash) {
+        if(!codes.containsKey(codeHash)) {
+            return null;
+        }
+        String convert = codes.get(codeHash).get("image");
+
+        if(convert == null) {
+            return null;
+        }
+        return convert.getBytes();
+
     }
 
     /**

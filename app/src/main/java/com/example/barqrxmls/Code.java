@@ -7,6 +7,7 @@ import android.util.Pair;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,6 +21,8 @@ public class Code implements Serializable {
     private Integer points;
     private String name;
     private ArrayList<LatLongPair> latLongPairs;
+
+    private ArrayList<String> users = new ArrayList<>();
 
     // Access like nameParts['suffix']
 
@@ -79,30 +82,6 @@ public class Code implements Serializable {
         latLongPairs = new ArrayList<>();
     }
 
-    public Code(String hash, int num) {
-        this.hash = hash;
-
-        HashMap<Integer, ArrayList<String>> nameParts = new HashMap<>();
-        // Format will be like "Doctor James Smith the Fat"
-        ArrayList<String> prefixes = new ArrayList<>((Arrays.asList("Doctor", "Professor",
-                "Teacher", "King", "Queen", "The Honourable", "The", "Sir", "Madam", "Dog", "Guy",
-                "That", "Mr", "Mrs", "Ms", "Real G")));
-        ArrayList<String> names = new ArrayList<>(Arrays.asList("Tyler", "Anjelica", "Danielle",
-                "James", "Gregory", "Greg", "Robin", "Richard", "Peter", "Joe", "Joseph", "Kannan",
-                "Sarah", "Morgan"));
-        ArrayList<String> suffixArticles = new ArrayList<>(Arrays.asList(", the", ", a", ", an",
-                ", PhD in", ", MD in"));
-        ArrayList<String> suffixes = new ArrayList<>(Arrays.asList("Tall", "Fat",
-                "Tiny", "Strange", "Round", "Stupid", "Smart", "Courageous", "Cowardly"));
-        nameParts.put(0, prefixes);
-        nameParts.put(1, names);
-        nameParts.put(2, suffixArticles);
-        nameParts.put(3, suffixes);
-
-        name = generateName(nameParts);
-        points = calculateScore();
-        latLongPairs = new ArrayList<>();
-    }
 
     /**
      * Empty constructor, for use with the Database.
@@ -159,6 +138,20 @@ public class Code implements Serializable {
         return generatedName.toString();
     }
 
+    public void addUser(String user) {
+        users.add(user);
+    }
+
+    public void combineUsers(ArrayList<String> toCombine) {
+        for (String user : toCombine) {
+            if(!users.contains(user)) {
+                users.add(user);
+            }
+        }
+    }
+    public ArrayList<String> getUsers() {
+        return users;
+    }
     /**
      *
      * @return hash

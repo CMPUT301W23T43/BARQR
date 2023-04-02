@@ -61,7 +61,6 @@ public class NewCode extends AppCompatActivity {
             codeComment.setText(comment);
         }
 
-
         // set point value
         TextView pointValue = findViewById(R.id.point_value);
         pointValue.setText(String.format(Locale.CANADA,"Point Value: %d",code.getPoints()));
@@ -79,6 +78,18 @@ public class NewCode extends AppCompatActivity {
             Bitmap image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             imageBlock.setImageBitmap(image);
         }
+
+        // setup player scans button
+        Button playerScans = findViewById(R.id.playerScansButton);
+        playerScans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println(code.getHash());
+                Intent scans = new Intent(NewCode.this,PlayerScans.class);
+                scans.putExtra("code",code);
+                startActivity(scans);
+            }
+        });
 
         // setup close button
         Button close = findViewById(R.id.close_button);

@@ -59,7 +59,7 @@ android:paddingBottom="100dp"
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Comment : (click to edit)"
+        android:text="Comment :"
         android:textColor="#150578"
         android:textSize="20dp"
         android:paddingLeft="10dp"
@@ -75,12 +75,14 @@ android:paddingBottom="100dp"
             android:id="@+id/commentField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:clickable="true"
             android:gravity="center"
-            android:hint="                        "
-            android:fontFamily="monospace"
-            />
+            android:hint="(click to edit)"
+            android:textSize="18sp"
+            android:maxHeight="40dp"
+            android:maxWidth="200dp"
+            android:maxLength="35"
+            android:focusable="true" />
     </LinearLayout>
 </LinearLayout>
 

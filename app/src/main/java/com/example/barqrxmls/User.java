@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -173,6 +174,18 @@ public class User implements Serializable {
         totalPoints = totalPoints + codePoints;
         numCodes = numCodes + 1;
         //updateInDatabase();
+    }
+
+    protected void setCodes(HashMap<String,HashMap<String,String>> codes) {
+        this.codes = codes;
+    }
+
+    protected void setTotalPoints(int points) {
+        this.totalPoints = points;
+    }
+
+    protected void setNumCodes(int numCodes) {
+        this.numCodes = numCodes;
     }
 
     /**

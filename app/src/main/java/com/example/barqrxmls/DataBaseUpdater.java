@@ -29,6 +29,12 @@ public class DataBaseUpdater {
         return instance;
     }
 
+    public void addCode(Code code, User user) {
+        code.addUser(user.getUserName());
+        updateCode(code);
+        updateUser(user);
+    }
+
     public void updateCode(Code code) {
         FirebaseFirestore dataBase = FirebaseFirestore.getInstance();
         CollectionReference codesRef;

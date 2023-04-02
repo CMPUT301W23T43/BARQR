@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     ListView CodesList;
-    User currentTestUser;
+    CurrentUser currentTestUser;
 
     Code testScannedCode;
     Bitmap testScannedCodeImage;
@@ -119,9 +119,9 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
         Code testCode1 = new Code("/usr/code1");
         Code testCode2 = new Code(";lkajsdf");
         Code testCode3 = new Code("Smithy");
-        currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
-        currentTestUser.addCode(testCode2.getHash(), testCode2.getPoints());
-        currentTestUser.addCode(testCode3.getHash(), testCode3.getPoints());
+        //currentTestUser.addCode(testCode1);
+        //currentTestUser.addCode(testCode2,"edmonton");
+        //currentTestUser.addCode(testCode3);
         CodeDataList = new ArrayList<Code>();
         CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
         CodesList.setAdapter(CodeAdapter);
@@ -195,15 +195,27 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
             }
         });
 
+
         CodesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Code code = CodeDataList.get(position);
-                new AddCommentFragment(code).show(getSupportFragmentManager(), "Add a comment");
-
-
-            }
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Code code = CodeDataList.get(i);
+                Intent newCodeSwitch = new Intent(MainActivity.this,NewCode.class);
+                newCodeSwitch.putExtra("code",code);
+                startActivity(newCodeSwitch);
+              }
         });
+//
+//        CodesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Code code = CodeDataList.get(position);
+//                new AddCommentFragment(code).show(getSupportFragmentManager(), "Add a comment");
+//
+//
+//            }
+//        });
+
     }
 
 

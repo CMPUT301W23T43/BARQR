@@ -49,8 +49,8 @@ public class NewCode extends AppCompatActivity {
         CurrentUser user = CurrentUser.getInstance();
 
         // set Name field
-        TextView codeName = findViewById(R.id.code_name);
-        codeName.setText(String.format("Name: %s",code.getName()));
+        TextView codeName = findViewById(R.id.nameField);
+        codeName.setText(code.getName());
 
         EditText codeComment = findViewById(R.id.commentField);
         // set comment field
@@ -60,8 +60,8 @@ public class NewCode extends AppCompatActivity {
         }
 
         // set point value
-        TextView pointValue = findViewById(R.id.point_value);
-        pointValue.setText(String.format(Locale.CANADA,"Point Value: %d",code.getPoints()));
+        TextView pointValue = findViewById(R.id.pointsField);
+        pointValue.setText(code.getPoints().toString());
 
         // set geolocation
         TextView geolocation = findViewById(R.id.code_geolocation);
@@ -89,7 +89,7 @@ public class NewCode extends AppCompatActivity {
         });
 
         // setup close button
-        Button close = findViewById(R.id.close_button);
+        Button close = findViewById(R.id.closeButton);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +103,7 @@ public class NewCode extends AppCompatActivity {
         });
 
         // setup delete button
-        Button delete = findViewById(R.id.delete_code_button);
+        Button delete = findViewById(R.id.deleteCodeButton);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

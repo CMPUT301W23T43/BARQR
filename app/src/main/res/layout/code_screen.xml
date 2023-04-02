@@ -1,94 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/darkerwaves"
-    android:gravity="bottom"
-    android:paddingBottom="100dp"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="@drawable/darkerwaves"
+android:gravity="bottom"
+android:paddingBottom="100dp"
     >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name :"
-            android:textColor="#150578"
-            android:textSize="20dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:id="@+id/code_name"
-            />
-        <TextView
-            android:id="@+id/nameField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textColor="#150578"
-
-            />
-    </LinearLayout>
-    <LinearLayout
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Point Value :"
-            android:textColor="#150578"
-            android:textSize="20dp"
-            android:paddingLeft="10dp"
-            android:id="@+id/point_value"
-            />
-        <TextView
-            android:id="@+id/pointsField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textColor="#150578"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Comment : (click to edit)"
-            android:textColor="#150578"
-            android:textSize="20dp"
-            android:paddingLeft="10dp"
-            android:id="@+id/code_comment"
-            />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        >
-    <EditText
-        android:id="@+id/commentField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:clickable="true"
-        android:gravity="center"
-        android:hint="                        "
-        android:fontFamily="monospace"
+        android:text="Name :"
+        android:textColor="#150578"
+        android:textSize="20dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
         />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/playerScansButton"
+    <TextView
+        android:id="@+id/nameField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player Scans"
-        android:layout_gravity="center"
-        android:backgroundTint="#070707"
-        android:textColor="#81D4FA"
-        android:layout_marginBottom="50dp"
+        android:textSize="20dp"
+        android:textColor="#150578"
+
+        />
+</LinearLayout>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Point Value :"
+        android:textColor="#150578"
+        android:textSize="20dp"
+        android:paddingLeft="10dp"
+        />
+    <TextView
+        android:id="@+id/pointsField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="#150578"
+        />
+</LinearLayout>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comment : (click to edit)"
+        android:textColor="#150578"
+        android:textSize="20dp"
+        android:paddingLeft="10dp"
+        android:id="@+id/code_comment"
         />
     <LinearLayout
         android:layout_width="wrap_content"
@@ -96,6 +71,35 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
+        <EditText
+            android:id="@+id/commentField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:clickable="true"
+            android:gravity="center"
+            android:hint="                        "
+            android:fontFamily="monospace"
+            />
+    </LinearLayout>
+</LinearLayout>
+
+<Button
+    android:id="@+id/playerScansButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Player Scans"
+    android:layout_gravity="center"
+    android:backgroundTint="#070707"
+    android:textColor="#81D4FA"
+    android:layout_marginBottom="50dp"
+    />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="center"
+    >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -111,78 +115,70 @@
         android:textSize="20dp"
         android:paddingLeft="120dp"
         />
-    </LinearLayout>
+</LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        >
-        <ImageView
-            android:id="@+id/myImage"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            />
-        <ImageView
-            android:id="@+id/barQRImage"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginLeft="70dp"
-            android:background="#000"
-            />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Geolocation: "
-        android:textColor="#150578"
-        android:textSize="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    >
+    <ImageView
+        android:id="@+id/myImage"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:background="#000"
         />
+    <ImageView
+        android:id="@+id/barQRImage"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginLeft="70dp"
+        android:background="#000"
+        />
+</LinearLayout>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Geolocation: "
+    android:textColor="#150578"
+    android:textSize="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_gravity="center"
+    android:id="@+id/code_geolocation"
+    />
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+
     <Button
-        android:id="@+id/code_geolocation"
+        android:id="@+id/closeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Geolocation ..."
+        android:layout_gravity="center"
+        android:layout_marginLeft="75dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#070707"
+        android:text="Close"
+        android:textColor="#81D4FA" />
+
+    <Button
+        android:id="@+id/deleteCodeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="75dp"
         android:layout_gravity="center"
         android:backgroundTint="#070707"
         android:textColor="#81D4FA"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="30dp"
         />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <Button
-            android:id="@+id/close_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Close"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="75dp"
-            android:layout_gravity="center"
-            android:backgroundTint="#070707"
-            android:textColor="#81D4FA"
-            android:layout_marginBottom="30dp"
-            />
-
-        <Button
-            android:id="@+id/delete_code_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#070707"
-            android:textColor="#81D4FA"
-            android:layout_marginBottom="30dp"
-            android:backgroundTint="#000"
-            android:text="Delete"
-            android:textColor="#9ca0b0" />
-    </LinearLayout>
+</LinearLayout>
 
 
 

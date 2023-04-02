@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -76,22 +77,31 @@ public class Map extends AppCompatActivity {
         ).toArray());
 
         mapLogician = new MapLogic(lastCenterLocation, 20000);
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
         map.onResume();
+
         map.setMultiTouchControls(true);
         mapController = map.getController();
-        mapController.setZoom(11.5);
+        mapController.setZoom(15.5);
         mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(Map.this), map);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Map.this);
-        getGeoLocation();
-
-        mapLogician.populateCodeList();
-        map.getOverlays().add(mapLogician.showCodesOnMap());
+        final Handler handler = new Handler();
+        Runnable drawMarkersSecond = () -> {
+            mapLogician.populateCodeList();
+            map.getOverlays().add(mapLogician.showCodesOnMap());
+            getGeoLocation();
+        };
+        Runnable drawMarkersFirst = () -> {
+            mapLogician.populateCodeList();
+            map.getOverlays().add(mapLogician.showCodesOnMap());
+            getGeoLocation();
+            handler.postDelayed(drawMarkersSecond, 500);
+        };
+        handler.post(drawMarkersFirst);
     }
 
     @Override
@@ -123,15 +133,15 @@ public class Map extends AppCompatActivity {
                         //lastCenterLocation = new GeoPoint(latitude, longitude);
                         this.mLocationOverlay.enableMyLocation();
                         map.getOverlays().add(this.mLocationOverlay);
-//                        System.out.println("The OSMDroid method gives us " + mLocationOverlay.getMyLocation());
-//                        GeoPoint myLocation = new GeoPoint(latitude, longitude);//this.mLocationOverlay.getMyLocation();
-//                        System.out.println("After all the map finding stuff...");
-//                        if (myLocation.equals(new GeoPoint(0.0, 0.0))) {
-//                            System.out.println("myLocation is null, get last fix is " + this.mLocationOverlay.getMyLocationProvider().getLastKnownLocation());
-//                        } else {
-//                            System.out.println("myLocation is not null! It is" + myLocation);
-//                            lastCenterLocation = myLocation;
-//                        }
+                        System.out.println("The OSMDroid method gives us " + mLocationOverlay.getMyLocation());
+                        GeoPoint myLocation = new GeoPoint(latitude, longitude);//this.mLocationOverlay.getMyLocation();
+                        System.out.println("After all the map finding stuff...");
+                        if (myLocation.equals(new GeoPoint(0.0, 0.0))) {
+                            System.out.println("myLocation is null, get last fix is " + this.mLocationOverlay.getMyLocationProvider().getLastKnownLocation());
+                        } else {
+                            System.out.println("myLocation is not null! It is" + myLocation);
+                            lastCenterLocation = myLocation;
+                        }
 
                         Log.d("Map", "onResume: Setting center location to " + lastCenterLocation);
                         mapController.setCenter(lastCenterLocation);

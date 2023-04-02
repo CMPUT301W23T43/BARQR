@@ -8,9 +8,14 @@ package com.example.barqrxmls;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,26 +24,43 @@ import org.w3c.dom.Text;
 
 import java.util.Locale;
 
+//PUT IN MAIN
+//
+//        CodesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//              @Override
+//          public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//        Code code = CodeDataList.get(i);
+//        Intent newCodeSwitch = new Intent(MainActivity.this,NewCode.class);
+//        newCodeSwitch.putExtra("code",code);
+//
+//        }
+//        });
+
 public class NewCode extends AppCompatActivity {
+
+    String comment = "";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.code_screen);
 
         // get code and user
         Bundle bundle = getIntent().getExtras();
-        Code code = (Code)bundle.get("code");
+        Code code = (Code) bundle.getSerializable("code");
         CurrentUser user = CurrentUser.getInstance();
+        System.out.println(user.getCodes());
+        System.out.println(code.getHash());
 
         // set Name field
         TextView codeName = findViewById(R.id.code_name);
         codeName.setText(String.format("Name: %s",code.getName()));
 
+        EditText codeComment = findViewById(R.id.commentField);
         // set comment field
         if(user.hasComment(code.getHash())) {
-            String comment = (String)user.getCodes().get(code.getHash()).get("comment");
-            TextView codeComment = findViewById(R.id.commentField);
+            comment = user.getComment(code.getHash());
             codeComment.setText(comment);
         }
+
 
         // set point value
         TextView pointValue = findViewById(R.id.point_value);
@@ -47,17 +69,28 @@ public class NewCode extends AppCompatActivity {
         // set geolocation (UNFINISHED AS USER DOES NOT STOre CODE GEOLOCATION YET, CURRENTLY
         // USING PLACEHOLDER VALUE
         TextView geolocation = findViewById(R.id.code_geolocation);
-        String location = (String)user.getCodes().get(code.getHash()).get("geolocation");
+        String location = user.getGeoLocation(code.getHash());
         geolocation.setText(String.format(Locale.CANADA,"Geolocation: %s",location));
 
-        //TODO setup get geolocation, get image, and get comment in user, setup imageView
+        // set up the image
+        ImageView imageBlock = findViewById(R.id.myImage);
+        byte[] bytes = user.getImage(code.getHash());
+        if(bytes != null) {
+            Bitmap image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            imageBlock.setImageBitmap(image);
+        }
 
         // setup close button
         Button close = findViewById(R.id.close_button);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                // check if the code comment has changed
+                if(!codeComment.getText().toString().equals(comment)) {
+                    user.addComment(code.getHash(),codeComment.getText().toString());
+                }
+                Intent newIntent = new Intent(NewCode.this,MainActivity.class);
+                startActivity(newIntent);
             }
         });
 
@@ -71,7 +104,8 @@ public class NewCode extends AppCompatActivity {
                         setMessage("Are you sure you want to delete this Code?").
                         setPositiveButton("Yes", (dialog, which) -> {
                             user.removeCode(code.getHash(), code.getPoints());
-                            finish();
+                            Intent newIntent = new Intent(NewCode.this,MainActivity.class);
+                            startActivity(newIntent);
                         }).
                         setNegativeButton("No", (dialog, which) -> {
                         }).

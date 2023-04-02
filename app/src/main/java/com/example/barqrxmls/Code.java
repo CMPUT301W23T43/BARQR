@@ -1,7 +1,12 @@
 package com.example.barqrxmls;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -9,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Code {
+public class Code implements Serializable {
 
     private String hash;
     private Integer points;
@@ -51,6 +56,31 @@ public class Code {
 
         hash = hexStr.toString();
 
+
+        HashMap<Integer, ArrayList<String>> nameParts = new HashMap<>();
+        // Format will be like "Doctor James Smith the Fat"
+        ArrayList<String> prefixes = new ArrayList<>((Arrays.asList("Doctor", "Professor",
+                "Teacher", "King", "Queen", "The Honourable", "The", "Sir", "Madam", "Dog", "Guy",
+                "That", "Mr", "Mrs", "Ms", "Real G")));
+        ArrayList<String> names = new ArrayList<>(Arrays.asList("Tyler", "Anjelica", "Danielle",
+                "James", "Gregory", "Greg", "Robin", "Richard", "Peter", "Joe", "Joseph", "Kannan",
+                "Sarah", "Morgan"));
+        ArrayList<String> suffixArticles = new ArrayList<>(Arrays.asList(", the", ", a", ", an",
+                ", PhD in", ", MD in"));
+        ArrayList<String> suffixes = new ArrayList<>(Arrays.asList("Tall", "Fat",
+                "Tiny", "Strange", "Round", "Stupid", "Smart", "Courageous", "Cowardly"));
+        nameParts.put(0, prefixes);
+        nameParts.put(1, names);
+        nameParts.put(2, suffixArticles);
+        nameParts.put(3, suffixes);
+
+        name = generateName(nameParts);
+        points = calculateScore();
+        latLongPairs = new ArrayList<>();
+    }
+
+    public Code(String hash, int num) {
+        this.hash = hash;
 
         HashMap<Integer, ArrayList<String>> nameParts = new HashMap<>();
         // Format will be like "Doctor James Smith the Fat"
@@ -219,6 +249,4 @@ public class Code {
         Code code = (Code) o;
         return this.hash.compareTo(code.getHash());
     }
-
-
 }

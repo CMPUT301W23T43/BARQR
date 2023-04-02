@@ -28,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Account extends AppCompatActivity {
@@ -57,7 +58,7 @@ public class Account extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_screen);
 
-        User user = CurrentUser.getInstance().getUser();
+        CurrentUser user = CurrentUser.getInstance();
 
         Button close = findViewById(R.id.close_button);
         close.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +91,7 @@ public class Account extends AppCompatActivity {
         username.setText(usernameValue);
         email.setText(user.getEmail());
 
-        userInDatabase = usersRef.document(user.getUserName());
+        userInDatabase = usersRef.document(user.getUserName().toLowerCase(Locale.ROOT));
 
         Query codesByScores = codesRef.orderBy("points", Query.Direction.DESCENDING);
         getCodeRank(codesByScores);

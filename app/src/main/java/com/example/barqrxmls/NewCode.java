@@ -63,8 +63,7 @@ public class NewCode extends AppCompatActivity {
         TextView pointValue = findViewById(R.id.point_value);
         pointValue.setText(String.format(Locale.CANADA,"Point Value: %d",code.getPoints()));
 
-        // set geolocation (UNFINISHED AS USER DOES NOT STOre CODE GEOLOCATION YET, CURRENTLY
-        // USING PLACEHOLDER VALUE
+        // set geolocation
         TextView geolocation = findViewById(R.id.code_geolocation);
         String location = user.getGeoLocation(code.getHash());
         geolocation.setText(String.format(Locale.CANADA,"Geolocation: %s",location));

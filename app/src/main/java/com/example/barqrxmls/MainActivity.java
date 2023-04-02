@@ -8,6 +8,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -280,9 +281,16 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
         ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
         account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
 
+        Button codeSearch = (Button) findViewById(R.id.codeSearchButton);
+        codeSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent codeSearchPage = new Intent(MainActivity.this, SearchQrCodeGeo.class);
+                startActivity(codeSearchPage);
+            }
+        });
+
     }
-
-
 
 
 

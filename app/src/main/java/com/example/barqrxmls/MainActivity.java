@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                         }
                     }
                 });
-        currentTestUser = CurrentUser.getInstance().getUser();
+        currentTestUser = CurrentUser.getInstance();
         codesRef = dataBase.collection("Codes");
         usersRef = dataBase.collection("Users");
         CodesList = findViewById(R.id.myCodesDisplay);

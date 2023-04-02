@@ -1,5 +1,6 @@
 package com.example.barqrxmls;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import android.widget.EditText;
@@ -28,14 +29,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
  */
 
 public class User implements Serializable {
-    private String userName;
 
-    private String searchUser;
-    private HashMap<String,String> codes;
-    private int totalPoints;
-    private String email;
-    private String id;
-    private int numCodes;
+    protected String userName;
+    protected HashMap<String,HashMap<String,String>> codes;
+    protected int totalPoints;
+    protected String email;
+    protected String id;
+    protected int numCodes;
+    protected String searchUser;
+
 
     /**
      * stores information related to the user's account
@@ -43,7 +45,6 @@ public class User implements Serializable {
      * @param id is a String of the player's id
      * @param email is a String of the user's email
      *
-
      */
     User(String userName, String id, String email) {
         this.userName = userName;
@@ -52,7 +53,6 @@ public class User implements Serializable {
         this.email = email;
         this.numCodes = 0;
         this.codes = new HashMap<>();
-        updateInDatabase();
         searchUser = userName.toLowerCase();
     }
 
@@ -86,7 +86,7 @@ public class User implements Serializable {
      * return's a hashmap of the user's code hashes and code comments
      * @return a hashmap of the user's code hashes and code comments
      */
-    public HashMap<String, String> getCodes() {
+    public HashMap<String, HashMap<String,String>> getCodes() {
         return codes;
     }
 
@@ -115,36 +115,70 @@ public class User implements Serializable {
     }
 
     /**
-     * adds a code to the user's list of codes without a comment
+     * adds a code to the user's list of codes without a geolocation
      * @param codeHash is a String of the hash of the code
      * @param codePoints is an int of the number of points the code is worth
      */
     public void addCode(String codeHash, int codePoints) {
-        // add code without comment to user codes, update points and total codes
+        // re-init codes if null
+        if(codes == null) {
+            this.codes = new HashMap<>();
+        }
+        // return if user already has the code
         if(codes.containsKey(codeHash)) {
             return;
         }
-        codes.put(codeHash,"");
+        // add code without comment to user codes, update points and total codes
+        HashMap<String,String> codeInfo = new HashMap<>();
+        codeInfo.put("geolocation","");
+        codeInfo.put("image","");
+        codeInfo.put("comment","");
+        codes.put(codeHash,codeInfo);
         totalPoints = totalPoints + codePoints;
         numCodes = numCodes + 1;
-        updateInDatabase();
+        //updateInDatabase();
     }
 
     /**
-     * adds a code to the user's list of codes with a comment
+     * adds a code to the user's list of codes with a geolocation
      * @param codeHash is a String of the hash of the code
-     * @param comment is a String of the user's comment on their code
+     * @param geolocation is a String of the geolocation where the code was found
      * @param codePoints is an int of the number of points the code is worth
      */
-    public void addCode(String codeHash, String comment, int codePoints) {
-        // add code with comment to user codes, update points and total codes
+    public void addCode(String codeHash, String geolocation, int codePoints) {
+        // re-init codes if null
+        if(codes == null) {
+            this.codes = new HashMap<>();
+        }
+        // return if user already has the code
         if(codes.containsKey(codeHash)) {
             return;
         }
-        codes.put(codeHash,comment);
+        // add code with comment to user codes, update points and total codes
+        HashMap<String,String> codeInfo = new HashMap<>();
+        codeInfo.put("geolocation",geolocation);
+        codeInfo.put("image","");
+        codeInfo.put("comment","");
+        codes.put(codeHash,codeInfo);
         totalPoints = totalPoints + codePoints;
         numCodes = numCodes + 1;
-        updateInDatabase();
+        //updateInDatabase();
+    }
+
+    /**
+     * removes a code from the user's list of codes
+     * @param removeCode is the hash of the code to remove from the user's code list
+     * @param codePoints is the number of points the code to remove is worth
+     */
+    public void removeCode(String removeCode, int codePoints) {
+        if(codes == null || !codes.containsKey(removeCode)) {
+            return;
+        }
+        // remove code from user codes, update points and total codes
+        codes.remove(removeCode);
+        totalPoints = totalPoints - codePoints;
+        numCodes = numCodes - 1;
+        //updateInDatabase();
     }
 
     /**
@@ -156,8 +190,8 @@ public class User implements Serializable {
         if(!codes.containsKey(codeHash)) {
             return;
         }
-        codes.put(codeHash, codeComment);
-        updateInDatabase();
+        codes.get(codeHash).put("comment",codeComment);
+        //updateInDatabase();
     }
 
     /**
@@ -168,8 +202,8 @@ public class User implements Serializable {
         if(!codes.containsKey(codeHash) || codes.get(codeHash) == null) {
             return;
         }
-        codes.put(codeHash,"");
-        updateInDatabase();
+        codes.get(codeHash).put("comment","");
+        //updateInDatabase();
     }
 
     /**
@@ -178,55 +212,40 @@ public class User implements Serializable {
      * @return true if the code has a comment, false otherwise
      */
     public boolean hasComment(String codeHash) {
-        if (Objects.equals(codes.get(codeHash), "") || codes.get(codeHash) == null) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return codes.get(codeHash) != null && !Objects.equals(codes.get(codeHash).get("comment"), "");
 
     }
 
     /**
-     * removes a code from the user's list of codes
-     * @param removeCode is the hash of the code to remove from the user's code list
-     * @param codePoints is the number of points the code to remove is worth
+     * adds an image represented as a byte array to a code
+     * @param codeHash is the hash of the code to add the image to
+     * @param image is the byte array representing the image
      */
-    public void removeCode(String removeCode, int codePoints) {
-        // remove code from user codes, update points and total codes
-        codes.remove(removeCode);
-        totalPoints = totalPoints - codePoints;
-        numCodes = numCodes - 1;
-        updateInDatabase();
-        return;
+
+    // how to convert a String to a byte Array and vice versa:
+    // website: Baeldung https://www.baeldung.com/java-string-to-byte-array
+    // author: Chandra Prakash https://www.baeldung.com/author/chandra-prakash
+
+    public void addImage(String codeHash, byte[] image) {
+        if(!codes.containsKey(codeHash)) {
+            return;
+        }
+        String convert = new String(image);
+        codes.get(codeHash).put("image",convert);
+        //updateInDatabase();
     }
 
-    /**
-     * updates the database when a change is made to the user
-     */
-    private void updateInDatabase() {
-        // get database
-        FirebaseFirestore dataBase = FirebaseFirestore.getInstance();
-        CollectionReference usersRef;
-        usersRef = dataBase.collection("Users");
+    public byte[] getImage(String codeHash) {
+        if(!codes.containsKey(codeHash)) {
+            return null;
+        }
+        String convert = codes.get(codeHash).get("image");
 
-        // overwrite old user with new information based on this user
-        String TAG = "User.updateInDatabase";
-        User update = this;
-        usersRef.document(userName.toLowerCase(Locale.ROOT))
-                .set(update)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
+        if(convert == null) {
+            return null;
+        }
+        return convert.getBytes();
+
     }
 
     /**

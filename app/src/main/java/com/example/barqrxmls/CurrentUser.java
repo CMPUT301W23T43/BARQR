@@ -51,13 +51,13 @@ public class CurrentUser extends User{
     }
 
 
-    public void addCode(String codeHash, int codePoints) {
-        super.addCode(codeHash,codePoints);
+    public void addCode(Code code) {
+        super.addCode(code.getHash(),code.getPoints());
         updater.updateUser((User)this);
     }
 
-    public void addCode(String codeHash, String geolocation, int codePoints) {
-        super.addCode(codeHash,geolocation,codePoints);
+    public void addCode(Code code,String geolocation) {
+        super.addCode(code.getHash(),geolocation,code.getPoints());
         updater.updateUser((User)this);
     }
 

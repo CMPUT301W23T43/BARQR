@@ -28,6 +28,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.units.qual.C;
 
+import java.util.Locale;
+
 
 //Acknowledgements:
 
@@ -85,7 +87,20 @@ public class NewAccount extends AppCompatActivity {
 
                             // creating variables for new username and email
                             EditText newUserName = findViewById(R.id.usernameField);
+                            newUserName.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    newUserName.setText("");
+                                }
+                            });
+
                             EditText newEmail = findViewById(R.id.emailField);
+                            newEmail.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    newEmail.setText("");
+                                }
+                            });
 
                             // creating submit button functionality
                             Button submit = (Button) findViewById(R.id.submitButton);
@@ -98,7 +113,7 @@ public class NewAccount extends AppCompatActivity {
                                     String TAG = "NewAccount username";
 
                                     //check if user with chosen username already exists
-                                    usersRef.document(username)
+                                    usersRef.document(username.toLowerCase(Locale.ROOT))
                                             .get()
                                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override

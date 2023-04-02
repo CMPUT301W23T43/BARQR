@@ -29,6 +29,12 @@
             android:name=".SearchQrCodeGeo"
             android:exported="false" />
         <activity
+            android:name=".PlayerSearch"
+            android:exported="false" />
+        <activity
+            android:name=".PlayerAccount"
+            android:exported="false" />
+        <activity
             android:name=".ShowAllQrCodes"
             android:exported="false" />
         <activity

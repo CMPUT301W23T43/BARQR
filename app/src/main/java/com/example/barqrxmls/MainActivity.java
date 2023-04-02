@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                         }
                     }
                 });
-        currentTestUser = CurrentUser.getInstance().getUser();
+        currentTestUser = CurrentUser.getInstance();
         codesRef = dataBase.collection("Codes");
         usersRef = dataBase.collection("Users");
         CodesList = findViewById(R.id.myCodesDisplay);
@@ -231,30 +231,16 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
         // setting screen changes from taskbar
         // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
 
-        /**
-         * Home Button implementation
-         * @author Noah Jeans
-         * @version 1
-         * @return opens MainActivity which is linked to main_screen.xml
-         */
+       
         ImageButton home = (ImageButton) findViewById(R.id.homeButton);
 //        home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
 
-        /**
-         * LeaderBoard Button implementation
-         * @author Noah Jeans
-         * @version 1
-         * @return opens LeaderBoard which is linked to leaderboard_screen.xml
-         */
+        
+        
         ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
         leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
 
-        /**
-         * NewCode Button implementation
-         * @author Noah Jeans, Tyler Pollom
-         * @version 2
-         * @return opens NewCode which is linked to barqr_code.xml
-         */
+        
         ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
         newCode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,21 +250,11 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
             }
         });
 
-        /**
-         * Map Button implementation
-         * @author Noah Jeans, Tyler Pollom
-         * @version 2
-         * @return opens Map which is linked to map.xml
-         */
+        
         ImageButton map = (ImageButton) findViewById(R.id.mapButton);
         map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));
 
-        /**
-         * Account Button implementation
-         * @author Noah Jeans, Tyler Pollom
-         * @version 2
-         * @return opens Account which is linked to account_screen.xml
-         */
+        
         ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
         account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
 
@@ -293,6 +269,17 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
 
     }
 
+        
+        Button playerSearch = (Button) findViewById(R.id.playerSearchButton);
+        playerSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playerSearchPage = new Intent(MainActivity.this, PlayerSearch.class);
+                startActivity(playerSearchPage);
+            }
+        });
+
+    }
 
 
     @Override

@@ -1,6 +1,6 @@
 package com.example.barqrxmls;
 
-import android.util.Pair;
+import android.graphics.Bitmap;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -16,6 +16,7 @@ public class Code {
     private String name;
     private ArrayList<LatLongPair> latLongPairs;
 
+    private Bitmap myImageRepresentation;
     // Access like nameParts['suffix']
 
     // Hashes are uniquely identified by their sha256sum
@@ -72,6 +73,7 @@ public class Code {
         name = generateName(nameParts);
         points = calculateScore();
         latLongPairs = new ArrayList<>();
+        myImageRepresentation = generateImage();
     }
 
     /**
@@ -81,6 +83,9 @@ public class Code {
 
     }
 
+    public Bitmap getMyImageRepresentation() {
+        return myImageRepresentation;
+    }
     public void setLatLongPairs(ArrayList<LatLongPair> latLongPairs) {
         this.latLongPairs = latLongPairs;
     }
@@ -94,6 +99,21 @@ public class Code {
     }
 
 
+    public Bitmap generateImage() {
+        int width = 80, height = 80;
+        Bitmap img = Bitmap.createBitmap(width, height, Bitmap.Config.ALPHA_8);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int a = (int)(Math.random() * 256);
+                int r = (int)(Math.random() * 256);
+                int g = (int)(Math.random() * 256);
+                int b = (int)(Math.random() * 256);
+                int pixel = (a<<24) | (r<<16) | (g<<8) | b;
+                img.setPixel(x, y, pixel);
+            }
+        }
+        return img;
+    }
 
     /**
      * Take the hash and convert it into a relatively unique name.

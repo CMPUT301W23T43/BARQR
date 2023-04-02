@@ -55,12 +55,14 @@ public class AddCommentFragment extends DialogFragment {
     }
 
 
+
+    
     @NonNull
     @Override
     /**
      Creates and returns a new instance of a dialog to add a comment.
      @param savedInstanceState The saved state of the fragment, or null if there is no saved state
-     @return A new instance of a dialog to add a comment
+     @return A new instance of a dialog to add a comment.
      */
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.add_comment_fragment, null);

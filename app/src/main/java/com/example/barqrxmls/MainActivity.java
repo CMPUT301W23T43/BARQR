@@ -98,14 +98,14 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
         usersRef = dataBase.collection("Users");
         CodesList = findViewById(R.id.myCodesDisplay);
         Code testCode1 = new Code("/usr/code1");
-                Code testCode2 = new Code(";lkajsdf");
-                Code testCode3 = new Code("Smithy");
-                currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
-                currentTestUser.addCode(testCode2.getHash(), testCode2.getPoints());
-                currentTestUser.addCode(testCode3.getHash(), testCode3.getPoints());
-                CodeDataList = new ArrayList<Code>();
-                CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
-                CodesList.setAdapter(CodeAdapter);
+        Code testCode2 = new Code(";lkajsdf");
+        Code testCode3 = new Code("Smithy");
+        currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
+        currentTestUser.addCode(testCode2.getHash(), testCode2.getPoints());
+        currentTestUser.addCode(testCode3.getHash(), testCode3.getPoints());
+        CodeDataList = new ArrayList<Code>();
+        CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
+        CodesList.setAdapter(CodeAdapter);
         doStuff(currentTestUser);
 
     }

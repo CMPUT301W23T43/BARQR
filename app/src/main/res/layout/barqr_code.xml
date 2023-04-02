@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ccd0da"
+    android:background="@drawable/darkerwaves"
     android:gravity="bottom"
     android:paddingBottom="100dp"
     >
@@ -16,9 +16,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name :"
-            android:textColor="#000"
-            android:fontFamily="monospace"
+            android:textColor="#150578"
             android:textSize="20dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             />
         <TextView
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:fontFamily="monospace"
+            android:textColor="#150578"
 
             />
     </LinearLayout>
@@ -39,8 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Point Value :"
-            android:textColor="#000"
-            android:fontFamily="monospace"
+            android:textColor="#150578"
             android:textSize="20dp"
             android:paddingLeft="10dp"
             />
@@ -49,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:fontFamily="monospace"
+            android:textColor="#150578"
             />
     </LinearLayout>
     <LinearLayout
@@ -61,8 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Comment :"
-            android:textColor="#000"
-            android:fontFamily="monospace"
+            android:textColor="#150578"
             android:textSize="20dp"
             android:paddingLeft="10dp"
             />
@@ -71,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:fontFamily="monospace"
+            android:textColor="#150578"
             />
     </LinearLayout>
 
@@ -81,8 +79,8 @@
         android:layout_height="wrap_content"
         android:text="Player Scans"
         android:layout_gravity="center"
-        android:backgroundTint="#000"
-        android:textColor="#9ca0b0"
+        android:backgroundTint="#070707"
+        android:textColor="#81D4FA"
         android:layout_marginBottom="50dp"
         />
     <LinearLayout
@@ -95,16 +93,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Image :"
-        android:textColor="#000"
-        android:fontFamily="monospace"
+        android:textColor="#150578"
         android:textSize="20dp"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="BARQR :"
-        android:textColor="#000"
-        android:fontFamily="monospace"
+        android:textColor="#150578"
         android:textSize="20dp"
         android:paddingLeft="120dp"
         />
@@ -134,8 +130,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Geolocation: "
-        android:textColor="#000"
-        android:fontFamily="monospace"
+        android:textColor="#150578"
         android:textSize="20dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
@@ -147,8 +142,8 @@
         android:text="Add Geolocation ..."
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:backgroundTint="#000"
-        android:textColor="#9ca0b0"
+        android:backgroundTint="#070707"
+        android:textColor="#81D4FA"
         android:layout_marginBottom="10dp"
         />
 
@@ -165,8 +160,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="75dp"
             android:layout_gravity="center"
-            android:backgroundTint="#000"
-            android:textColor="#9ca0b0"
+            android:backgroundTint="#070707"
+            android:textColor="#81D4FA"
             android:layout_marginBottom="30dp"
             />
         <Button
@@ -177,8 +172,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="75dp"
             android:layout_gravity="center"
-            android:backgroundTint="#000"
-            android:textColor="#9ca0b0"
+            android:backgroundTint="#070707"
+            android:textColor="#81D4FA"
             android:layout_marginBottom="30dp"
             />
     </LinearLayout>

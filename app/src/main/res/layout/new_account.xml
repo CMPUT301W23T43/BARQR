@@ -3,20 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ccd0da"
-    android:gravity="bottom"
-    android:paddingBottom="300dp"
+    android:background="@drawable/darkwave1"
+    android:gravity="center"
     >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="100dp"
-        android:text="Create New Account"
-        android:textColor="#000"
-        android:fontFamily="monospace"
+        android:text="BARQR"
+        android:fontFamily="sans-serif-thin"
+        android:textStyle="bold"
+        android:textColor="#E1F5FE"
+        android:alpha="0.7"
         android:textSize="35sp"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:paddingBottom="50dp"
+        android:text="Create New Account"
+        android:textStyle="bold"
+        android:textColor="#150578"
+        android:textSize="35sp"
+        android:layout_gravity="center_horizontal"
         />
 
     <LinearLayout
@@ -30,8 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="Username:"
-            android:textColor="#000"
-            android:fontFamily="monospace"
+            android:textColor="#150578"
             android:textSize="20sp"
             android:paddingRight="10dp"
             />
@@ -41,8 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:maxLength="15"
-            android:textColor="#000"
-            android:fontFamily="monospace"
+            android:textColor="#150578"
             android:hint="               "
             android:textSize="20sp"
             />
@@ -64,8 +72,7 @@
             android:layout_marginTop="2dp"
             android:text="Email:"
             android:textAlignment="viewStart"
-            android:textColor="#000"
-            android:fontFamily="monospace"
+            android:textColor="#150578"
             android:textSize="20sp"
             android:paddingRight="20dp"
             />
@@ -75,9 +82,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:fontFamily="monospace"
-            android:text="               "
-            android:textColor="#000"
+            android:hint="               "
+            android:textColor="#150578"
             android:maxLength="15"
             android:textSize="20sp"
             />
@@ -99,8 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Terms and Services"
-            android:textColor="#000"
-            android:fontFamily="monospace"
+            android:textColor="#150578"
             android:textSize="20sp"
             />
     </LinearLayout>
@@ -111,9 +116,8 @@
         android:layout_height="wrap_content"
         android:text="Submit"
         android:layout_gravity="center"
-        android:backgroundTint="#000"
-        android:textColor="#9ca0b0"
-        android:fontFamily="monospace"
+        android:backgroundTint="#070707"
+        android:textColor="#81D4FA"
         android:textSize="15sp"
         />
 

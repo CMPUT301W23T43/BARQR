@@ -81,6 +81,10 @@ public class Code {
 
     }
 
+    public Code(CodeHashContainer hashContainer) {
+
+    }
+
     public void setLatLongPairs(ArrayList<LatLongPair> latLongPairs) {
         this.latLongPairs = latLongPairs;
     }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/waves"
+    android:background="#ccd0da"
     android:gravity="bottom"
     >
     <LinearLayout
@@ -13,23 +13,21 @@
         android:layout_marginTop="25dp"
         android:layout_marginLeft="25dp"
         >
-
-        <Button
-            android:id="@+id/closeButton"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Close"
-            android:textSize="15dp"
-            android:backgroundTint="#070707"
-            android:textColor="#81D4FA"
-            android:layout_marginLeft="275dp"
-            >
-        </Button>
+            android:text="All Codes Scanned "
+            android:textSize="25dp"
+            android:id="@+id/codeText"
+            android:fontFamily="monospace"
+            android:textColor="#000"
+            />
+
 
     </LinearLayout>
 
     <ListView
-        android:id="@+id/accountNameList"
+        android:id="@+id/codesList"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginTop="25dp"

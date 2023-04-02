@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ccd0da"
+    android:background="@drawable/waves"
     android:gravity="bottom"
     >
     <LinearLayout
@@ -18,8 +18,7 @@
             android:layout_height="wrap_content"
             android:hint="Search Account Username ..."
             android:textSize="16dp"
-            android:fontFamily="monospace"
-            android:textColor="#000"
+            android:textColor="#150578"
             />
 
         <Button
@@ -28,9 +27,8 @@
             android:layout_height="wrap_content"
             android:text="Close"
             android:textSize="15dp"
-            android:fontFamily="monospace"
-            android:backgroundTint="#000"
-            android:textColor="#9ca0b0"
+            android:backgroundTint="#070707"
+            android:textColor="#81D4FA"
             android:layout_marginLeft="25dp"
             >
         </Button>

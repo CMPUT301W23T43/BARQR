@@ -1,5 +1,7 @@
 package com.example.barqrxmls;
 
+import android.util.Pair;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,6 +14,7 @@ public class Code {
     private String hash;
     private Integer points;
     private String name;
+    private ArrayList<LatLongPair> latLongPairs;
 
     // Access like nameParts['suffix']
 
@@ -68,6 +71,7 @@ public class Code {
 
         name = generateName(nameParts);
         points = calculateScore();
+        latLongPairs = new ArrayList<>();
     }
 
     /**
@@ -76,6 +80,21 @@ public class Code {
     public Code() {
 
     }
+
+    public void setLatLongPairs(ArrayList<LatLongPair> latLongPairs) {
+        this.latLongPairs = latLongPairs;
+    }
+
+    public void appendLatLongPairs(Double latitude, Double longitude) {
+        latLongPairs.add(new LatLongPair(latitude, longitude));
+    }
+
+    public ArrayList<LatLongPair> getLatLongPairs() {
+        return latLongPairs;
+    }
+
+
+
     /**
      * Take the hash and convert it into a relatively unique name.
      * This is achieved by consuming 'n' digits of the has, and adding them together.

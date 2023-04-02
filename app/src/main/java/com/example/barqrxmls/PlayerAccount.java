@@ -2,129 +2,140 @@ package com.example.barqrxmls;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Set;
 
 public class PlayerAccount extends AppCompatActivity {
 
     private ArrayList<Code> CodeDataList;
     private CodeArrayAdapter CodeAdapter;
 
-    FirebaseFirestore dataBase;
-    CollectionReference usersRef;
-    CollectionReference codesRef;
-    FirebaseAuth mAuth;
-    FirebaseUser currentUser;
-
+    FirebaseFirestore dataBase = FirebaseFirestore.getInstance();;
+    CollectionReference usersRef = dataBase.collection("Users");
 
     ListView CodesList;
 
+    Taskbar taskbar = Taskbar.getInstance(PlayerAccount.this);
 
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.player_account);
 
+        //get username from intent
+        Bundle bundle = getIntent().getExtras();
+        String username = bundle.getString("username");
 
+        //set username textview
+        TextView usernameView = findViewById(R.id.playerName);
 
+        //search for user in database
+        String TAG = "PlayerAccount";
+        usernameView.setText(username);
+        usersRef.document(username.toLowerCase(Locale.ROOT))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "successfully retrieved data");
 
+                            //get player account
+                            DocumentSnapshot document = task.getResult();
 
+                            //if the user does not exist exit from the player activity and log the issue
+                            if(!document.exists()) {
+                                Log.d(TAG, "username in intent does not exist");
+                                return;
+                            }
 
-//    public void onResume(Bundle savedInstanceState) {
-//        dataBase = FirebaseFirestore.getInstance();
-//        mAuth = FirebaseAuth.getInstance();
-//
-//        codesRef = dataBase.collection("Codes");
-//        usersRef = dataBase.collection("Users");
-//
-//
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.player_account);
-//
-//        CodesList = findViewById(R.id.playerCodesDisplay);
-//        if (currentUser != null) {
-//            // Get the current user's ID
-//            String currentUserId = currentUser.getUid();
-//            if (currentUser != null) {
-//                // Get the current user's ID
-//                //String currentUserEmail = currentUser.getEmail();
-//                //User user = new User(currentUser.toString(), currentUserId.toString(), currentUserEmail.toString());
-//
-//
-//
-//
-//
-//
-//                CodeDataList = new ArrayList<Code>();
-//                for (String key : user.getCodes().keySet()) {
-//                    CodeDataList.add(new Code(key));
-//                }
-//                CodeAdapter = new CodeArrayAdapter(this, CodeDataList);
-//                CodesList.setAdapter(CodeAdapter);
-//
-//
-//
-//
-//
-//                /**
-//                 Sets up an OnItemLongClickListener for the CodesList AdapterView in the PlayerAccount activity.
-//                 When a long click is detected on an item in the CodesList, an AlertDialog is displayed to confirm
-//                 if the user wants to delete the selected code. If the user confirms deletion, the corresponding code
-//                 is removed from the current user's codes collection in Firestore.
-//                 @param parent The AdapterView containing the list of codes.
-//                 @param view The View representing the selected code in the list.
-//                 @param position The position of the selected code in the list.
-//                 @param id The ID of the selected code.
-//                 @return true if the long click event is consumed, false otherwise.
-//                 */
-//                CodesList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//                    @Override
-//                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                        AlertDialog alertDialog = new AlertDialog.Builder(PlayerAccount.this).
-//                                setTitle("Delete Code").
-//                                setMessage("Are you sure you want to delete this Code?").
-//                                setPositiveButton("Yes", (dialog, which) -> {
-//                                    String CodeToDelete = (String) parent.getItemAtPosition(position);
-//                                    Code CodeDeleted = new Code(CodeToDelete);
-//                                    user.removeCode(CodeToDelete,CodeDeleted.getPoints());
-//                                }).
-//                                setNegativeButton("No", (dialog, which) -> {
-//                                }).
-//                                create();
-//                        alertDialog.show();
-//                        return true;
-//                    }
-//                });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+                            User player = document.toObject(User.class);
 
-//
-//            }
-//
-//
-//        }
-//    }
+                            if(player == null) {
+                                Log.d(TAG,"error creating user object from database");
+                                return;
+                            }
+
+                            //setup player's list of codes
+                            CodeDataList = new ArrayList<>();
+                            CodeAdapter = new CodeArrayAdapter(PlayerAccount.this, CodeDataList);
+                            CodesList = findViewById(R.id.playerCodesDisplay);
+                            CodesList.setAdapter(CodeAdapter);
+                            assert player != null;
+                            ArrayList<String> playerCodes = new ArrayList<>(player.getCodes().keySet());
+
+                            //add all codes to the listview
+                            for (int i = 0; i < playerCodes.size(); i++) {
+                                Code code = new Code(playerCodes.get(i));
+                                CodeDataList.add(code);
+                                CodeAdapter.notifyDataSetChanged();
+                            }
+
+                            //set codeTotal and pointTotal TextViews to the player's code and point totals
+                            TextView totalScanned = findViewById(R.id.codeTotal);
+                            TextView totalPoints = findViewById(R.id.pointTotal);
+                            totalPoints.setText(Integer.toString(player.getTotalPoints()));
+                            totalScanned.setText(Integer.toString(player.getNumCodes()));
+
+                            //Taskbar
+                            
+                            ImageButton home = (ImageButton) findViewById(R.id.homeButton);
+                            home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
+
+                            
+                            ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
+                            leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
+
+                            
+                            ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
+                            newCode.setOnClickListener(taskbar.getSwitchActivityMap().get("NewCode"));
+
+                            
+                            ImageButton map = (ImageButton) findViewById(R.id.mapButton);
+                            map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));
+
+                            
+                            ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
+                            account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
+
+                            //setup close button
+                            Button close = findViewById(R.id.closeButton);
+                            close.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    finish();
+                                }
+                            });
+
+                        }
+
+                        //if task was unsuccessful
+                        else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+
+    }
 }

@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -28,12 +29,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
  */
 
 public class User implements Serializable {
+
     protected String userName;
     protected HashMap<String,HashMap<String,String>> codes;
     protected int totalPoints;
     protected String email;
     protected String id;
     protected int numCodes;
+    protected String searchUser;
+
 
     /**
      * stores information related to the user's account
@@ -49,7 +53,7 @@ public class User implements Serializable {
         this.email = email;
         this.numCodes = 0;
         this.codes = new HashMap<>();
-        //updateInDatabase();
+        searchUser = userName.toLowerCase();
     }
 
     /**
@@ -67,6 +71,9 @@ public class User implements Serializable {
         return userName;
     }
 
+    public String getSearchUser() {
+        return searchUser;
+    }
     /**
      * return's user's id
      * @return the user's id
@@ -240,37 +247,6 @@ public class User implements Serializable {
         return convert.getBytes();
 
     }
-
-    /**
-     * updates the database when a change is made to the user
-     */
-//    private void updateInDatabase() {
-//        if(this.getClass().getSuperclass() == User.class) {
-//            return;
-//        }
-//        // get database
-//        FirebaseFirestore dataBase = FirebaseFirestore.getInstance();
-//        CollectionReference usersRef;
-//        usersRef = dataBase.collection("Users");
-//
-//        // overwrite old user with new information based on this user
-//        String TAG = "User.updateInDatabase";
-//        User update = this;
-//        usersRef.document(userName)
-//                .set(update)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        Log.d(TAG, "DocumentSnapshot successfully written!");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error writing document", e);
-//                    }
-//                });
-//    }
 
     /**
      *

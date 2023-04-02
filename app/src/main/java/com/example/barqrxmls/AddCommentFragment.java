@@ -66,4 +66,3 @@ public class AddCommentFragment extends DialogFragment {
                 .create();
     }
 }
-

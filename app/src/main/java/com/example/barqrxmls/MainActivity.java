@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
 
 
                                 String locationString = String.format("%s, %s -- %s, %s", testScannedCity, testScannedCountry, testScannedLatitude, testScannedLongitude);
+
                                 ArrayList<LatLongPair> existingPairs = testScannedCode.getLatLongPairs();
                                 LatLongPair myLatLongPair = new LatLongPair(testScannedLatitude, testScannedLongitude);
                                 existingPairs.add(myLatLongPair);
@@ -183,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                         setPositiveButton("Yes", (dialog, which) -> {
 
                             Code CodeToDelete = CodeDataList.get(position);
-                            currentUserTest.removeCode(CodeToDelete.getHash(), CodeToDelete.getPoints());
+                            currentTestUser.removeCode(CodeToDelete.getHash(), CodeToDelete.getPoints());
                             CodeDataList.remove(position);
                             CodeAdapter.notifyDataSetChanged();
                             updateCountTextViews(currentUserTest, CodeDataList);
@@ -271,6 +272,16 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
         ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
         account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
 
+        Button codeSearch = (Button) findViewById(R.id.codeSearchButton);
+        codeSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent codeSearchPage = new Intent(MainActivity.this, SearchQrCodeGeo.class);
+                startActivity(codeSearchPage);
+            }
+        });
+
+
 
         
         Button playerSearch = (Button) findViewById(R.id.playerSearchButton);
@@ -283,10 +294,9 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
         });
 
     }
-
-
     @Override
     public void addComment(Code code) {
 
     }
 }
+

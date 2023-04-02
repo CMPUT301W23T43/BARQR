@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ccd0da"
+    android:background="@drawable/waves"
     android:gravity="bottom"
     >
     <LinearLayout
@@ -19,8 +19,8 @@
             android:text="All Codes Scanned "
             android:textSize="25dp"
             android:id="@+id/codeText"
-            android:fontFamily="monospace"
-            android:textColor="#000"
+            android:textColor="#150578"
+            android:paddingRight="20dp"
             />
         <Button
             android:layout_width="wrap_content"

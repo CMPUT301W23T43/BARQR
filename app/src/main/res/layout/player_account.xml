@@ -41,10 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="75dp"
-            android:backgroundTint="#000"
-            android:fontFamily="monospace"
+            android:backgroundTint="#070707"
             android:text="Close"
-            android:textColor="#9ca0b0"
+            android:textColor="#81D4FA"
             android:textSize="15dp" />
     </LinearLayout>
 

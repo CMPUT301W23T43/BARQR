@@ -19,6 +19,7 @@
             android:hint="Search Code Location ..."
             android:textSize="16dp"
             android:textColor="#150578"
+            android:paddingRight="75dp"
             />
 
         <Button
@@ -29,7 +30,6 @@
             android:textSize="15dp"
             android:backgroundTint="#070707"
             android:textColor="#81D4FA"
-            android:layout_marginLeft="25dp"
             >
         </Button>
 

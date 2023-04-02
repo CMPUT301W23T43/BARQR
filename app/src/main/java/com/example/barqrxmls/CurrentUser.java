@@ -40,6 +40,7 @@ public class CurrentUser extends User{
 
     private CurrentUser() {
         super();
+        updater = DataBaseUpdater.getInstance();
     }
 
     /***

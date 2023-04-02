@@ -77,12 +77,21 @@ public class NewCodeUITest {
     }
 
 
-    // test dialog 
+    // how to test dialog
+    // website: StackOverflow https://stackoverflow.com/questions/21045509/check-if-a-dialog-is-displayed-with-espresso
+    // author: denys https://stackoverflow.com/users/2980933/denys
     @Test
     public void deleteButton() {
         onView(withId(R.id.delete_code_button)).check(matches(isClickable()));
         onView(withId((R.id.delete_code_button))).perform(click());
-        hasComponent()
+        onView(withText("Are you sure you want to delete this Code?"));
+        onView(withId(android.R.id.button2)).perform(click());
+        onView(withId(R.id.delete_code_button)).check(matches(isClickable()));
+        onView(withId((R.id.delete_code_button))).perform(click());
+        onView(withId(android.R.id.button1)).perform(click());
+        intended(hasComponent(MainActivity.class.getName()));
+        boolean check = CurrentUser.getInstance().hasComment(code.getHash());
+        assert(!check);
     }
 
     @AfterClass

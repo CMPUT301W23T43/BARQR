@@ -16,6 +16,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -30,6 +31,10 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.osmdroid.api.IGeoPoint;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -44,12 +49,21 @@ import org.osmdroid.views.overlay.simplefastpoint.SimpleFastPointOverlay;
 import org.osmdroid.views.overlay.simplefastpoint.SimpleFastPointOverlayOptions;
 import org.osmdroid.views.overlay.simplefastpoint.SimplePointTheme;
 
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+/***
+ * The map activity. Show the map. It's a Map.
+ */
+// Most of this class not related directly to Code objects comes from the OSMdroid documentation
+// In particular https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java)
 public class Map extends AppCompatActivity {
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map;
@@ -60,6 +74,8 @@ public class Map extends AppCompatActivity {
     double latitude, longitude;
     String country, city, address;
     GeoPoint lastCenterLocation = new GeoPoint(53.534444,  -113.490278);
+    MapLogic mapLogician;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Map settings, like User Agent for internet and loading osmdroid configuration
@@ -78,42 +94,34 @@ public class Map extends AppCompatActivity {
                 Manifest.permission.ACCESS_FINE_LOCATION
         ).toArray());
 
-
-
-
+        mapLogician = new MapLogic(lastCenterLocation, 20000);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         map.onResume();
+
         map.setMultiTouchControls(true);
         mapController = map.getController();
-        mapController.setZoom(10.5);
+        mapController.setZoom(15.5);
         mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(Map.this), map);
-        // TODO: We have to make sure the location permission is enabled and stuff
-        //ActivityCompat.requestPermissions(Map.this, Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION).toArray(new String[0]), REQUEST_PERMISSIONS_REQUEST_CODE);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Map.this);
-        System.out.println("MAP: Before doing anything regarding map permissions and location...");
-        getGeoLocation();
-
-        List<IGeoPoint> points = new ArrayList<>();
-        Code testCode1 = new Code("This is a Map Test Code!");
-        testCode1.appendLatLongPairs(53.534444,-113.490278);
-        points.add(new LabelledGeoPoint(testCode1.getLatLongPairs().get(0).first,  testCode1.getLatLongPairs().get(0).second, testCode1.getName()));
-        SimplePointTheme pt = new SimplePointTheme(points, true);
-        Paint textStyle = new Paint();
-        textStyle.setStyle(Paint.Style.FILL);
-        textStyle.setColor(Color.parseColor("#000ff0"));
-        textStyle.setTextAlign(Paint.Align.CENTER);
-        textStyle.setTextSize(36);
-
-        SimpleFastPointOverlayOptions opt = SimpleFastPointOverlayOptions.getDefaultStyle()
-                .setAlgorithm(SimpleFastPointOverlayOptions.RenderingAlgorithm.MAXIMUM_OPTIMIZATION)
-                .setRadius(7).setIsClickable(true).setCellSize(24).setTextStyle(textStyle);
-
-        final SimpleFastPointOverlay sfpo = new SimpleFastPointOverlay(pt, opt);
-        map.getOverlays().add(sfpo);
+        // This double runnable method is inspired by
+        // https://www.oreilly.com/library/view/head-first-android/9781449362171/ch04.html
+        final Handler handler = new Handler();
+        Runnable drawMarkersSecond = () -> {
+            mapLogician.populateCodeList();
+            map.getOverlays().add(mapLogician.showCodesOnMap());
+            getGeoLocation();
+        };
+        Runnable drawMarkersFirst = () -> {
+            mapLogician.populateCodeList();
+            map.getOverlays().add(mapLogician.showCodesOnMap());
+            getGeoLocation();
+            handler.postDelayed(drawMarkersSecond, 500);
+        };
+        handler.post(drawMarkersFirst);
     }
 
     @Override
@@ -122,16 +130,16 @@ public class Map extends AppCompatActivity {
         mLocationOverlay.disableMyLocation();
         map.onPause();
     }
-
+    
+    
+    /***
+     * Get the Geolocation of the user, if possible.
+     */
     private void getGeoLocation() {
-        System.out.println("GET GEOLOCATION CALLED");
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            System.out.println("getGeoLocation: About to try using Fused...");
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
-                System.out.println("getGeoLocation Fused: About to check if location is null");
                 if (location != null) {
-                    System.out.println("getGeoLocation Fused: Location is not null; continuing.");
                     Geocoder geocoder = new Geocoder(Map.this, Locale.getDefault());
                     List<Address> addresses;
                     try {
@@ -144,15 +152,15 @@ public class Map extends AppCompatActivity {
                         //lastCenterLocation = new GeoPoint(latitude, longitude);
                         this.mLocationOverlay.enableMyLocation();
                         map.getOverlays().add(this.mLocationOverlay);
-//                        System.out.println("The OSMDroid method gives us " + mLocationOverlay.getMyLocation());
-//                        GeoPoint myLocation = new GeoPoint(latitude, longitude);//this.mLocationOverlay.getMyLocation();
-//                        System.out.println("After all the map finding stuff...");
-//                        if (myLocation.equals(new GeoPoint(0.0, 0.0))) {
-//                            System.out.println("myLocation is null, get last fix is " + this.mLocationOverlay.getMyLocationProvider().getLastKnownLocation());
-//                        } else {
-//                            System.out.println("myLocation is not null! It is" + myLocation);
-//                            lastCenterLocation = myLocation;
-//                        }
+                        System.out.println("The OSMDroid method gives us " + mLocationOverlay.getMyLocation());
+                        GeoPoint myLocation = new GeoPoint(latitude, longitude);//this.mLocationOverlay.getMyLocation();
+                        System.out.println("After all the map finding stuff...");
+                        if (myLocation.equals(new GeoPoint(0.0, 0.0))) {
+                            System.out.println("myLocation is null, get last fix is " + this.mLocationOverlay.getMyLocationProvider().getLastKnownLocation());
+                        } else {
+                            System.out.println("myLocation is not null! It is" + myLocation);
+                            lastCenterLocation = myLocation;
+                        }
 
                         Log.d("Map", "onResume: Setting center location to " + lastCenterLocation);
                         mapController.setCenter(lastCenterLocation);
@@ -169,6 +177,13 @@ public class Map extends AppCompatActivity {
                     {Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
         }
     }
+
+    /***
+     * Request the required permissions for the map, if we need them.
+     * @param permissions String array of the permissions we want to ask for.
+     */
+    // Source: OSMDroid documentation
+    // Link: https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java)
     private void requestPermissionsIfNecessary(String[] permissions) {
         ArrayList<String> permissionsToRequest = new ArrayList<>();
         for (String permission : permissions) {

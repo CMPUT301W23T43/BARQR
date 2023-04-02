@@ -29,11 +29,11 @@ public class Code {
     private String hash;
     private Integer points;
     private String name;
-    private ArrayList<Pair<Double, Double>> latLongPairs;
 
     private String comment;
     private HashMap<String, String> code_comments;
 
+    private ArrayList<LatLongPair> latLongPairs;
 
     // Access like nameParts['suffix']
 
@@ -101,15 +101,15 @@ public class Code {
 
     }
 
-    public void setLatLongPairs(ArrayList<Pair<Double, Double>> latLongPairs) {
+    public void setLatLongPairs(ArrayList<LatLongPair> latLongPairs) {
         this.latLongPairs = latLongPairs;
     }
 
     public void appendLatLongPairs(Double latitude, Double longitude) {
-        latLongPairs.add(new Pair<>(latitude, longitude));
+        latLongPairs.add(new LatLongPair(latitude, longitude));
     }
 
-    public ArrayList<Pair<Double, Double>> getLatLongPairs() {
+    public ArrayList<LatLongPair> getLatLongPairs() {
         return latLongPairs;
     }
 

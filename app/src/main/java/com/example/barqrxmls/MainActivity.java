@@ -99,8 +99,9 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                                 testScannedCompressedByteArray = (byte[]) cameraResults.getByteArray("codeByteArray");
 
 
-                                ArrayList<Pair<Double, Double>> existingPairs = testScannedCode.getLatLongPairs();
-                                Pair<Double, Double> myLatLongPair = new Pair<>(testScannedLatitude, testScannedLongitude);
+
+                                ArrayList<LatLongPair> existingPairs = testScannedCode.getLatLongPairs();
+                                LatLongPair myLatLongPair = new LatLongPair(testScannedLatitude, testScannedLongitude);
                                 existingPairs.add(myLatLongPair);
                                 testScannedCode.setLatLongPairs(existingPairs);
                                 currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());

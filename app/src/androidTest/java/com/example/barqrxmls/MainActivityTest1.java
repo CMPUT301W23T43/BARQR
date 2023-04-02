@@ -7,6 +7,10 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+import android.content.ComponentName;
+
+import androidx.test.espresso.intent.rule.IntentsRule;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -24,7 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class MainActivityTest1{
 
     @Rule
     public ActivityScenarioRule<NewAccount> activityRule = new ActivityScenarioRule<>(NewAccount.class);
@@ -37,10 +41,12 @@ public class MainActivityTest {
         onView(withId(R.id.submitButton)).perform(click()).check(matches(isDisplayed()));
     }
 
-
-
-
-
+    @Test
+    public void testButtonClickSwitchesActivity2() {
+        onView(withId(R.id.usernameField)).check(matches(isDisplayed()));
+        onView(withId(R.id.emailField));
+        onView(withId(R.id.terms_and_services));
+    }
 }
 
 

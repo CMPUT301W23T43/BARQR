@@ -271,7 +271,6 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
     }
 
 
-
     @Override
     public void addComment(Code code) {
 

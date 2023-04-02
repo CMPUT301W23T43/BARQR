@@ -47,8 +47,6 @@ public class NewCode extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         Code code = (Code) bundle.getSerializable("code");
         CurrentUser user = CurrentUser.getInstance();
-        System.out.println(user.getCodes());
-        System.out.println(code.getHash());
 
         // set Name field
         TextView codeName = findViewById(R.id.code_name);

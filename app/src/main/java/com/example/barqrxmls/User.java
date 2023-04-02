@@ -39,7 +39,6 @@ public class User implements Serializable {
     protected String searchUser;
 
 
-
     /**
      * stores information related to the user's account
      * @param userName is a String of the player's Unique Username
@@ -114,8 +113,6 @@ public class User implements Serializable {
     public int getNumCodes() {
         return numCodes;
     }
-
-
 
     /**
      * adds a code to the user's list of codes without a geolocation

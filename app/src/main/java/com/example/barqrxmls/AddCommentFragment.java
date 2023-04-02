@@ -18,9 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddCommentFragment extends DialogFragment {
     private Code current_code;
-    User currentTestUser;
     interface AddCommentDialogueListener{
-        void addComment(Code code,String comment);
+        void addComment(Code code);
 
     }
 
@@ -61,9 +60,9 @@ public class AddCommentFragment extends DialogFragment {
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("Add", (dialog, which) -> {
                     String comment = addComment.getText().toString().trim();
-                    listener.addComment(current_code, comment);
+                    //current_code.setComment(comment);
+                    listener.addComment(current_code);
                 })
                 .create();
     }
 }
-

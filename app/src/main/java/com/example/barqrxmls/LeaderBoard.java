@@ -113,7 +113,7 @@ public class LeaderBoard extends AppCompatActivity {
         usersRef = FirebaseFirestore.getInstance().collection("Users");
         leaderBoard = findViewById(R.id.leaderBoardList);
 
-        Query getUsersByScores = usersRef.orderBy("points", Query.Direction.DESCENDING);
+        Query getUsersByScores = usersRef.orderBy("totalPoints", Query.Direction.DESCENDING);
 
         List<User> queryUsers = new ArrayList<>();
 

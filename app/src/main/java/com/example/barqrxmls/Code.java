@@ -1,20 +1,5 @@
 package com.example.barqrxmls;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FieldPath;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Comment;
 import android.util.Pair;
 
 import java.nio.charset.StandardCharsets;
@@ -29,10 +14,6 @@ public class Code {
     private String hash;
     private Integer points;
     private String name;
-
-    private String comment;
-    private HashMap<String, String> code_comments;
-
     private ArrayList<LatLongPair> latLongPairs;
 
     // Access like nameParts['suffix']
@@ -42,7 +23,6 @@ public class Code {
     /**
      * Constructor that builds the hash, which is a string representation of the
      * sha256sum of the scanned data.
-     *
      * @param data Scanned data from the Code
      */
     public Code(String data) {
@@ -119,7 +99,6 @@ public class Code {
      * Take the hash and convert it into a relatively unique name.
      * This is achieved by consuming 'n' digits of the has, and adding them together.
      * This gives a unique number; we can then modulo this number by the available bins.
-     *
      * @return the generated name
      */
     public String generateName(HashMap<Integer, ArrayList<String>> nameParts) {
@@ -130,7 +109,7 @@ public class Code {
         int step = 2;
         int idx;
         for (int k = 0; k < nameParts.size(); k++) {
-            end = start + step;
+            end = start+step;
             String slice = hash.substring(start, end);
             digRepr = Integer.parseInt(slice, 16);
             ArrayList<String> options = nameParts.get(k);
@@ -151,6 +130,7 @@ public class Code {
     }
 
     /**
+     *
      * @return hash
      */
     public String getHash() {
@@ -159,7 +139,6 @@ public class Code {
 
     /**
      * Setter for the unique hash corresponding to this object.
-     *
      * @param hash The base-16 hash for this code.
      */
     public void setHash(String hash) {
@@ -168,7 +147,6 @@ public class Code {
 
     /**
      * Getter for points
-     *
      * @return points
      */
     public Integer getPoints() {
@@ -177,10 +155,9 @@ public class Code {
 
     /**
      * Calculate the score, based on the following rules:
-     * 1. If the previous character is the same as the next character, +1 point
-     * 2. If the current character is the a digit under 9, add that digit
-     * 3. If the current letter is the first letter of a team member's name, add 50 points.
-     *
+     *  1. If the previous character is the same as the next character, +1 point
+     *  2. If the current character is the a digit under 9, add that digit
+     *  3. If the current letter is the first letter of a team member's name, add 50 points.
      * @return score
      */
     public Integer calculateScore() {
@@ -189,8 +166,8 @@ public class Code {
         int stop = 16;
         ArrayList<String> bonusLetters = new ArrayList<>(Arrays.asList("a", "t", "s", "d", "n", "k"));
         for (start = 0; start < stop; start++) {
-            String curr = hash.substring(start, start + 1);
-            String next = hash.substring(start + 1, start + 2);
+            String curr = hash.substring(start, start+1);
+            String next = hash.substring(start+1, start+2);
             if (curr.equals(next)) {
                 sum += 1;
             }
@@ -206,7 +183,6 @@ public class Code {
 
     /**
      * Setter for points
-     *
      * @param points the Integer value for points to become.
      */
     public void setPoints(Integer points) {
@@ -215,7 +191,6 @@ public class Code {
 
     /**
      * Getter for name.
-     *
      * @return name
      */
     public String getName() {
@@ -224,7 +199,6 @@ public class Code {
 
     /**
      * Setter for name
-     *
      * @param name the name to assume.
      */
     public void setName(String name) {
@@ -245,4 +219,8 @@ public class Code {
         Code code = (Code) o;
         return this.hash.compareTo(code.getHash());
     }
+
+
+
+
 }

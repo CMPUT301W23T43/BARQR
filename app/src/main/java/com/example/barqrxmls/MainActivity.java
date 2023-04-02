@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
             }
         });
 
-    }
+
 
         
         Button playerSearch = (Button) findViewById(R.id.playerSearchButton);
@@ -280,12 +280,8 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
         });
 
     }
-
-
     @Override
-    public void addComment(Code code , String comment){
-        currentTestUser.addComment(code.getHash(),comment);
-        CodeAdapter.notifyDataSetChanged();
+    public void addComment(Code code) {
 
     }
 }

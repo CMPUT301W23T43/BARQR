@@ -33,6 +33,7 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
+
         <Button
             android:id="@+id/playerSearchButton"
             android:layout_width="180dp"
@@ -41,10 +42,9 @@
             android:textSize="13dp"
             android:layout_gravity="center"
             android:backgroundTint="#070707"
-            android:textColor="#81D4FA"
-            android:layout_marginRight="5dp"
-            >
-        </Button>
+            android:textColor="#81D4FA">
+    </Button>
+
         <Button
             android:id="@+id/codeSearchButton"
             android:layout_width="180dp"

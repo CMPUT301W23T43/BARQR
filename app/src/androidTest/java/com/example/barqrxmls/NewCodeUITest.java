@@ -3,7 +3,9 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.Intents.intending;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -12,6 +14,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.test.espresso.intent.rule.IntentsRule;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -36,6 +39,8 @@ public class NewCodeUITest {
 
     @Rule
     public ActivityScenarioRule<NewCode> activityRule = new ActivityScenarioRule<>(NewCode.class,bundle);
+    @Rule
+    public IntentsRule intentsRule = new IntentsRule();
 
     @BeforeClass
     public static void setup() {
@@ -66,8 +71,18 @@ public class NewCodeUITest {
 
     @Test
     public void checkCloseButton() {
-        onView(withId(R.id.close_button)).
+        onView(withId(R.id.close_button)).check(matches(isClickable()));
         onView(withId(R.id.close_button)).perform(click());
+        intended(hasComponent(MainActivity.class.getName()));
+    }
+
+
+    // test dialog 
+    @Test
+    public void deleteButton() {
+        onView(withId(R.id.delete_code_button)).check(matches(isClickable()));
+        onView(withId((R.id.delete_code_button))).perform(click());
+        hasComponent()
     }
 
     @AfterClass

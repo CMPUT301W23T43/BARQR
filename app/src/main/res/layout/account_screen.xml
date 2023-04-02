@@ -39,8 +39,6 @@
             android:textColor="#150578"
             android:textSize="20dp"
             android:paddingLeft="70dp"
-            android:textColor="#000"
-            android:textSize="20sp"
             android:id="@+id/usernameField"/>
 
         <TextView

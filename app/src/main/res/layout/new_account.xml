@@ -7,19 +7,20 @@
     >
 
     <TextView
-        android:layout_width="wrap_content"
+         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="monospace"
-        android:paddingTop="5dp"
-        android:paddingBottom="100dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="100dp"
         android:text="Create New Account"
         android:textColor="#000"
-        android:textSize="35sp" />
+        android:fontFamily="monospace"
+        android:textSize="35sp"
+        android:layout_gravity="center" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
@@ -45,10 +46,6 @@
             android:textColor="#000"
             android:textSize="20sp" />
     </LinearLayout>
-
-
-
-
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -83,35 +80,31 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center"
-        >
+        android:orientation="horizontal">
+
         <RadioButton
             android:id="@+id/terms_and_services"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            />
+            android:clickable="true" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
             android:text="Terms and Services"
             android:textColor="#000"
-            android:fontFamily="monospace"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <Button
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
         android:layout_gravity="center"
         android:backgroundTint="#000"
-        android:textColor="#9ca0b0"
-        android:fontFamily="monospace"
-        android:textSize="15sp"
-        />
+        android:text="Submit"
+        android:textColor="#9ca0b0" />
 
 </LinearLayout>

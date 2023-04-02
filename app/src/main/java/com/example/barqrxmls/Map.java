@@ -89,6 +89,8 @@ public class Map extends AppCompatActivity {
         mapController.setZoom(15.5);
         mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(Map.this), map);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Map.this);
+        // This double runnable method is inspired by
+        // https://www.oreilly.com/library/view/head-first-android/9781449362171/ch04.html
         final Handler handler = new Handler();
         Runnable drawMarkersSecond = () -> {
             mapLogician.populateCodeList();

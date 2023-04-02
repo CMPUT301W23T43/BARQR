@@ -10,47 +10,28 @@ import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.util.Pair;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
-import org.osmdroid.views.overlay.simplefastpoint.LabelledGeoPoint;
-import org.osmdroid.views.overlay.simplefastpoint.SimpleFastPointOverlay;
-import org.osmdroid.views.overlay.simplefastpoint.SimpleFastPointOverlayOptions;
-import org.osmdroid.views.overlay.simplefastpoint.SimplePointTheme;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,15 +48,14 @@ public class Map extends AppCompatActivity {
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map;
 
-    FirebaseFirestore dataBase = FirebaseFirestore.getInstance();;
-    CollectionReference codesRef = dataBase.collection("Codes");
-    private ArrayList<Code> codeList;
     private MyLocationNewOverlay mLocationOverlay;
     private IMapController mapController;
     private FusedLocationProviderClient fusedLocationProviderClient;
     double latitude, longitude;
     String country, city, address;
     GeoPoint lastCenterLocation = new GeoPoint(53.534444,  -113.490278);
+
+    MapLogic mapLogician;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,8 +75,7 @@ public class Map extends AppCompatActivity {
                 Manifest.permission.ACCESS_FINE_LOCATION
         ).toArray());
 
-        codesRef = dataBase.collection("Codes");
-        codeList = new ArrayList<>();
+        mapLogician = new MapLogic(lastCenterLocation, 20000);
 
     }
 
@@ -108,23 +87,11 @@ public class Map extends AppCompatActivity {
         mapController = map.getController();
         mapController.setZoom(10.5);
         mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(Map.this), map);
-        // TODO: We have to make sure the location permission is enabled and stuff
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Map.this);
         getGeoLocation();
 
-        codesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot codeDocument : task.getResult()) {
-                        Code codeToAdd = codeDocument.toObject(Code.class);
-                        Log.d("MAP AddMarkers", "onComplete: Adding object " + codeToAdd.getName() + " to our list");
-                        codeList.add(codeToAdd);
-                    }
-                    showCodesOnMap();
-                }
-            }
-        });
+        mapLogician.populateCodeList();
+        map.getOverlays().add(mapLogician.showCodesOnMap());
     }
 
     @Override
@@ -134,36 +101,7 @@ public class Map extends AppCompatActivity {
         map.onPause();
     }
 
-    /***
-     * Show the codes on the map, by placing identical looking markers at the geocoordinates of the
-     * Code object.
-     */
-    private void showCodesOnMap() {
-        List<IGeoPoint> points = new ArrayList<>();
-        for (Code code : codeList) {
-            ArrayList<LatLongPair> latLongPairs = code.getLatLongPairs();
-            for (LatLongPair latLongPair : latLongPairs) {
-                LabelledGeoPoint codeLocation = new LabelledGeoPoint(latLongPair.first, latLongPair.second, code.getName());
-                double MAX_RANGE = 20000;
-                if (lastCenterLocation.distanceToAsDouble(codeLocation) <= MAX_RANGE) {
-                    points.add(new LabelledGeoPoint(latLongPair.first, latLongPair.second, code.getName()));
-                }
-            }
-        }
-        SimplePointTheme pt = new SimplePointTheme(points, true);
-        Paint textStyle = new Paint();
-        textStyle.setStyle(Paint.Style.FILL);
-        textStyle.setColor(Color.parseColor("#000ff0"));
-        textStyle.setTextAlign(Paint.Align.CENTER);
-        textStyle.setTextSize(36);
 
-        SimpleFastPointOverlayOptions opt = SimpleFastPointOverlayOptions.getDefaultStyle()
-                .setAlgorithm(SimpleFastPointOverlayOptions.RenderingAlgorithm.MAXIMUM_OPTIMIZATION)
-                .setRadius(20).setIsClickable(true).setCellSize(24).setTextStyle(textStyle);
-
-        final SimpleFastPointOverlay sfpo = new SimpleFastPointOverlay(pt, opt);
-        map.getOverlays().add(sfpo);
-    }
 
     /***
      * Get the Geolocation of the user, if possible.

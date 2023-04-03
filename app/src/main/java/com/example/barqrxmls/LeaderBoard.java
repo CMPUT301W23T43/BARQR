@@ -1,8 +1,3 @@
-/**
- * @author Noah Jeans
- * @version 1
- * This class connects to the leaderboard_screen.xml file
- */
 
 package com.example.barqrxmls;
 
@@ -36,6 +31,7 @@ import java.util.TreeMap;
 /**
  * This class displays the leaderboard along with the current player's (the app user)
  * ranking amongst all the other players in the database.
+ * @author Anjelica Marianicz
  */
 public class LeaderBoard extends AppCompatActivity {
     final String TAG = "Sample";
@@ -56,12 +52,6 @@ public class LeaderBoard extends AppCompatActivity {
      * The onCreate method below handles this
      * @param savedInstanceState
      *
-     * One outside source was referenced when writing this code:
-     *
-     * URL: https://stackoverflow.com/questions/57041298/android-studio-firestore-get-name-of-user-with-highest-points
-     * Website: https://stackoverflow.com
-     * Author: https://stackoverflow.com/user/52446885/alex-mamo
-     *
      */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,32 +62,17 @@ public class LeaderBoard extends AppCompatActivity {
         // setting screen changes from taskbar
         // <Praveenkumar, Gary> (<Nov. 9, 2016>) <How to switch between screens?> (<4>) [<source code>] https://stackoverflow.com/questions/7991393/how-to-switch-between-screens
 
-        /**
-         * Home Button implementation
-         * @author Noah Jeans
-         * @version 1
-         * @return opens MainActivity which is linked to main_screen.xml
-         */
+        // Button to return to homepage of application.
         ImageButton home = (ImageButton) findViewById(R.id.homeButton);
         home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
 
 
 
-        /**
-         * Map Button implementation
-         * @author Noah Jeans, Tyler Pollom
-         * @version 2
-         * @return opens Map which is linked to map.xml
-         */
+        // Button to change to the map of the application.
         ImageButton map = (ImageButton) findViewById(R.id.mapButton);
         map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));
 
-        /**
-         * Account Button implementation
-         * @author Noah Jeans, Tyler Pollom
-         * @version 2
-         * @return opens Account which is linked to account_screen.xml
-         */
+        // Button to view the current user's account information.
         ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
         account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
         ShowAllCodes = findViewById(R.id.playerSearchButton);
@@ -112,7 +87,7 @@ public class LeaderBoard extends AppCompatActivity {
         userRank = findViewById(R.id.playerRanking);
         leaders = new LinkedHashMap<>();
         rankings = new LinkedHashMap<>();
-
+        // Query to grab all users from the database, sorted by their total points (descending order)
         getUsersByScores.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -130,6 +105,7 @@ public class LeaderBoard extends AppCompatActivity {
                 }
             }
         });
+        // On click, switches to view all codes within the database.
         ShowAllCodes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,8 +118,9 @@ public class LeaderBoard extends AppCompatActivity {
     }
 
     /**
-     * This updates the HashMap adapter and notifies that the data has been changed.
-     *
+     * This method updates the HashMap adapter
+     * and notifies that the data has been changed.
+     * This is how the users get displayed on the leaderboard view.
      */
     private void updateList() {
         boardAdapter = new LeaderboardAdapter(leaders);

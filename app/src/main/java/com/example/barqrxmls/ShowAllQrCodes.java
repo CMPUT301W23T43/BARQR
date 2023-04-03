@@ -3,9 +3,11 @@ package com.example.barqrxmls;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -64,6 +66,16 @@ public class ShowAllQrCodes extends AppCompatActivity {
                     }
                 }
             });
+
+        AllCodesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Code code = AllCodeDataList.get(i);
+                Intent newCodeSwitch = new Intent(ShowAllQrCodes.this,CodeViewDatabase.class);
+                newCodeSwitch.putExtra("code",code);
+                startActivity(newCodeSwitch);
+            }
+        });
 
     }
 }

@@ -1,8 +1,3 @@
-/**
- * @author Noah Jeans
- * @version 1
- * This class connects to the account_screen.xml file
- */
 
 package com.example.barqrxmls;
 
@@ -32,7 +27,13 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * display's the user's account information
+ *  This class displays the information of the current user, including:
+ *  username, email, highest scoring code, lowest scoring code, and the rank of
+ *  the highest scoring code.
+ *
+ * @author Anjelica Marianicz
+ * @author Danielle Hopfe
+ *
  */
 public class Account extends AppCompatActivity {
 
@@ -100,11 +101,13 @@ public class Account extends AppCompatActivity {
     }
 
     /**
-     * gets the highest and lowest scoring codes of the user
-     * @param docRef a reference of the user
-     * @param codesRank a list of codes in order of point value
+     * This method queries the database to determine the highest and lowest
+     * scoring codes for the current user. The method sets the text for both
+     * TextView objects for display.
+     *
+     * @param docRef
+     * @param codesRank
      */
-
     private void getPolarCodes(DocumentReference docRef, LinkedHashMap<String, Integer> codesRank) {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -141,8 +144,9 @@ public class Account extends AppCompatActivity {
     }
 
     /**
-     * gets a ranking of all database codes
-     * @param query a database query listing the codes by point value
+     * This method retrieves the ranking of the highest code amongst
+     * all of the codes within the database.
+     * @param query this query retrieves all codes in order from highest to lowest points value.
      */
 
     private void getCodeRank(Query query){
@@ -156,8 +160,7 @@ public class Account extends AppCompatActivity {
                     int i = 0;
                     Double topScore = Double.POSITIVE_INFINITY;
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        //System.out.println(highCodeHash);
-                        //System.out.println((String) document.get("hash"));
+                        // Grabs all codes from the database, looks for the matching code and sets integer value to the rank display.
                         if (Long.valueOf((Long) document.get("points")).doubleValue() < topScore){
                             topScore = Long.valueOf((Long) document.get("points")).doubleValue();
                             i++;

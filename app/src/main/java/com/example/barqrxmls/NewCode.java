@@ -47,7 +47,6 @@ public class NewCode extends AppCompatActivity {
         // get code and user
         Bundle bundle = getIntent().getExtras();
         Code code = (Code) bundle.getSerializable("code");
-        System.out.println(code.getHash());
         CurrentUser user = CurrentUser.getInstance();
 
         // set Name field
@@ -62,7 +61,7 @@ public class NewCode extends AppCompatActivity {
         }
 
         uniqueRepr = findViewById(R.id.barQRImage);
-        uniqueRepr.setImageBitmap(code.getMyImageRepresentation());
+        uniqueRepr.setImageBitmap(code.generateImage());
 
         // set point value
         TextView pointValue = findViewById(R.id.pointsField);

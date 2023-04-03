@@ -3,6 +3,10 @@ package com.example.barqrxmls;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Pair;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+
+import androidx.annotation.ColorInt;
 
 import androidx.annotation.NonNull;
 
@@ -24,6 +28,7 @@ public class Code implements Serializable {
 
     private ArrayList<String> users = new ArrayList<>();
 
+    private Bitmap myImageRepresentation;
     // Access like nameParts['suffix']
 
     // Hashes are uniquely identified by their sha256sum
@@ -80,6 +85,7 @@ public class Code implements Serializable {
         name = generateName(nameParts);
         points = calculateScore();
         latLongPairs = new ArrayList<>();
+        myImageRepresentation = generateImage();
     }
 
 
@@ -90,19 +96,116 @@ public class Code implements Serializable {
 
     }
 
+    /**
+     * Constructor that takes a hashContainer, which is a wrapper class around String, and uses
+     * the contents as the hash for this class. This allows a code object to be constructed from
+     * a pre-existing hash since all of its attributes (name, points, image etc) are calculated
+     * based on the hash in a deterministic fashion.
+     * @param hashContainer A CodeHashContainer object, which wraps around a String.
+     */
+    public Code(CodeHashContainer hashContainer) {
+        hash = hashContainer.getCodeHashString();
+        HashMap<Integer, ArrayList<String>> nameParts = new HashMap<>();
+        // Format will be like "Doctor James Smith the Fat"
+        ArrayList<String> prefixes = new ArrayList<>((Arrays.asList("Doctor", "Professor",
+                "Teacher", "King", "Queen", "The Honourable", "The", "Sir", "Madam", "Dog", "Guy",
+                "That", "Mr", "Mrs", "Ms", "Real G")));
+        ArrayList<String> names = new ArrayList<>(Arrays.asList("Tyler", "Anjelica", "Danielle",
+                "James", "Gregory", "Greg", "Robin", "Richard", "Peter", "Joe", "Joseph", "Kannan",
+                "Sarah", "Morgan"));
+        ArrayList<String> suffixArticles = new ArrayList<>(Arrays.asList(", the", ", a", ", an",
+                ", PhD in", ", MD in"));
+        ArrayList<String> suffixes = new ArrayList<>(Arrays.asList("Tall", "Fat",
+                "Tiny", "Strange", "Round", "Stupid", "Smart", "Courageous", "Cowardly"));
+        nameParts.put(0, prefixes);
+        nameParts.put(1, names);
+        nameParts.put(2, suffixArticles);
+        nameParts.put(3, suffixes);
+
+        name = generateName(nameParts);
+        points = calculateScore();
+        latLongPairs = new ArrayList<>();
+        myImageRepresentation = generateImage();
+    }
+
+    /**
+     * Return the generated bitmap representation of this object.
+     * @return
+     */
+    public Bitmap getMyImageRepresentation() {
+        return myImageRepresentation;
+    }
+
+    /***
+     * Setter for the array list of latitude and longitude pairs (LatLongPair objects).
+     * This overrides the existing ArrayList. Use appendLatLongPairs to not override.
+     * @param latLongPairs ArrayList of LatLongPair objects.
+     */
     public void setLatLongPairs(ArrayList<LatLongPair> latLongPairs) {
         this.latLongPairs = latLongPairs;
     }
 
+    /***
+     * Append a new LatLongPair object to the list of existing LatLongPairs. Constructs the new
+     * object internally using the given parameters.
+     * @param latitude A double representing the latitude
+     * @param longitude A double representing the longitude
+     */
     public void appendLatLongPairs(Double latitude, Double longitude) {
         latLongPairs.add(new LatLongPair(latitude, longitude));
     }
 
+    /**
+     * Get the latitude and longitude pairs list.
+     * @return An ArrayList containing LatLongPair objects
+     */
     public ArrayList<LatLongPair> getLatLongPairs() {
         return latLongPairs;
     }
 
 
+    /**
+     * Generate a bitmap image, with each pixel set to an ARGB value determined in large part by the
+     * Code's hash.
+     * The hash is broken into chunks of 4, parsed as an integer, and placed in an array.
+     * Each pixel then grabs 4 values from this array and uses that as its ARGB value, modulo 256.
+     * @return A bitmap object.
+     */
+    // Method source: https://www.geeksforgeeks.org/image-processing-in-java-creating-a-random-pixel-image/
+    // Color.argb: https://developer.android.com/reference/android/graphics/Color#argb(float,%20float,%20float,%20float)
+    public Bitmap generateImage() {
+        int width = 80, height = 80;
+        Bitmap img = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        int start = 0, end;
+        int step = 4;
+        int pixelPart;
+        ArrayList<Integer> pixelPortions = new ArrayList<>();
+        int digRepr;
+        for (int k = 0; k < 16; k++) {
+            end = start+step;
+            String slice = hash.substring(start, end);
+            digRepr = Integer.parseInt(slice, 16);
+            try {
+                pixelPart = digRepr;
+                pixelPortions.add(pixelPart);
+            } catch (NullPointerException e) {
+                System.out.println(e);
+            }
+            start = end;
+        }
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int a = (pixelPortions.get(Math.abs(x+y)%16) + x + y) % 256;
+                int r = (pixelPortions.get(Math.abs(x+1+y)%16) + x + y) % 256;
+                int g = (pixelPortions.get(Math.abs(x-1+y)%16) + x + y) % 256;
+                int b = (pixelPortions.get(Math.abs(x+2+y)%16) + x + y) % 256;
+                @ColorInt
+                int pixel = Color.argb(a, r, g, b);
+                img.setPixel(x, y, pixel);
+            }
+        }
+        return img;
+    }
 
     /**
      * Take the hash and convert it into a relatively unique name.

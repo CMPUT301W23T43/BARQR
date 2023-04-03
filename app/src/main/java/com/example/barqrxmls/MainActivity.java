@@ -112,11 +112,11 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
 //                                currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
                                 currentTestUser.addCode(testScannedCode, locationString);
                                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                                testScannedCodeImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                                byte[] imageArray = stream.toByteArray();
-
-
-                                currentTestUser.addImage(testScannedCode.getHash(), imageArray);
+                                if (testScannedCodeImage != null) {
+                                    testScannedCodeImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                    byte[] imageArray = stream.toByteArray();
+                                    currentTestUser.addImage(testScannedCode.getHash(), imageArray);
+                                }
 //                                codesRef.document(testScannedCode.getHash()).set(testScannedCode);
                                 CodeDataList.add(testScannedCode);
                                 CodeAdapter.notifyDataSetChanged();

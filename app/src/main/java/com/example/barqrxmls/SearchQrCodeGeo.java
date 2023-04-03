@@ -7,6 +7,7 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -41,6 +42,7 @@ public class SearchQrCodeGeo extends AppCompatActivity {
     EditText searchCity;
     Button Search;
     String location;
+    Button home;
 
 
     @Override
@@ -51,6 +53,15 @@ public class SearchQrCodeGeo extends AppCompatActivity {
         GeoCodeDataList = new ArrayList<>();
         searchCity = findViewById(R.id.cityCountry);
         Search = findViewById(R.id.Search);
+        home = findViewById(R.id.go_Back);
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
         Search.setOnClickListener(v -> {
             GeoCodeDataList.clear();
@@ -64,10 +75,16 @@ public class SearchQrCodeGeo extends AppCompatActivity {
             if (location.length() != 0) {
                 try {
                     addresses = geocoder.getFromLocationName(location, 1);
-                    System.out.println(addresses);
-                    double latitude = addresses.get(0).getLatitude();
-                    double longitude = (addresses.get(0).getLongitude());
-                    SearchDatabase(location);
+                    if (addresses.isEmpty()) {
+                        Context context = getApplicationContext();
+                        CharSequence error = "Invalid search. Try a city, province, or country name.";
+                        Toast toast = Toast.makeText(context, error, Toast.LENGTH_LONG);
+                        toast.show();
+                    }else {
+                        double latitude = addresses.get(0).getLatitude();
+                        double longitude = (addresses.get(0).getLongitude());
+                        SearchDatabase(location);
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -116,6 +133,7 @@ public class SearchQrCodeGeo extends AppCompatActivity {
                                     }
 
                                 } catch (IOException e) {
+
                                     e.printStackTrace();
                                 }
 

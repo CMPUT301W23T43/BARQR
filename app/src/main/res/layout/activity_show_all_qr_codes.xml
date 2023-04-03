@@ -27,8 +27,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/returnToLeaderboard"
             android:backgroundTint="#070707"
+            android:textColor="#81D4FA"
             android:text="Return"
-            android:textColor="#81D4FA">
+            >
         </Button>
 
 

@@ -57,8 +57,6 @@ public class PlayerAccount extends AppCompatActivity {
         ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
         leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
 
-        ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
-        newCode.setOnClickListener(taskbar.getSwitchActivityMap().get("NewCode"));
 
         ImageButton map = (ImageButton) findViewById(R.id.mapButton);
         map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));

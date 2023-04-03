@@ -34,6 +34,13 @@ import org.checkerframework.checker.units.qual.A;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * This class allows the current user to search for other players that have used the app by
+ * specific username or by a letter that the username begins with.
+ *
+ * @author Danielle Hopfe
+ * @author Anjelica Marianicz
+ */
 public class PlayerSearch extends AppCompatActivity {
 
     //NOTE need to limit num chars user can add to their username
@@ -126,6 +133,11 @@ public class PlayerSearch extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method switches to the player account view (activity) of a player from the
+     * resulting search by the current user.
+     * @param username username of player from the resulting search that has been selected
+     */
     private void switchToPlayer(String username) {
         Intent intent = new Intent(PlayerSearch.this, PlayerAccount.class);
         intent.putExtra("username",username);

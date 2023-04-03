@@ -73,7 +73,6 @@ public class LeaderboardUITest {
     /**
      * This test checks that the user ranking is displayed upon the launch of the activity.
      */
-
     @Test
     public void testUserRankDisplay() {
         onView(withId(R.id.leaderBoardButton)).perform(click()).check(matches(isDisplayed()));
@@ -81,7 +80,7 @@ public class LeaderboardUITest {
     }
 
     /**
-     * This test checks that a user can return to the home screen from the leaderboard activty
+     * This test checks that a user can return to the home screen from the leaderboard activity
      * by using the home button on the taskbar.
      */
 

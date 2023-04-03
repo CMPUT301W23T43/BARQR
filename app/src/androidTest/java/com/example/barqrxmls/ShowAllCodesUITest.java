@@ -1,6 +1,5 @@
 package com.example.barqrxmls;
 
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -15,9 +14,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * This test checks that a user can switch from the homepage to the leaderboard, and then
+ * can also switch to the activity that displays all codes in our database. 
+ */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class ShowAllCodesTest {
+public class ShowAllCodesUITest {
 
     @BeforeClass
     public static void setup() {

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ccd0da"
+    android:background="@drawable/darkwave"
     android:gravity="bottom"
     >
     <LinearLayout
@@ -16,19 +16,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="All Codes Scanned "
+            android:text="Scanned Codes "
             android:textSize="25dp"
+            android:paddingRight="50dp"
             android:id="@+id/codeText"
-            android:fontFamily="monospace"
-            android:textColor="#000"
+            android:textColor="#150578"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/returnToLeaderboard"
             android:backgroundTint="#070707"
+            android:textColor="#81D4FA"
             android:text="Return"
-            android:textColor="#81D4FA">
+            >
         </Button>
 
 

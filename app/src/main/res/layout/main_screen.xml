@@ -4,9 +4,20 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@drawable/waves"
+    android:background="@drawable/darkwave"
     android:gravity="bottom"
     >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="BARQR"
+        android:textColor="#B2E4FB"
+        android:layout_gravity="center_horizontal"
+        android:alpha="0.7"
+        android:textSize="30dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,9 +27,8 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="74dp"
+            android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:paddingTop="25dp"
             android:text="Your Codes"
             android:textColor="#150578"
             android:textSize="35dp"/>
@@ -141,13 +151,13 @@
             android:layout_width="8.5dp"
             android:layout_height="75dp"
             />
+
         <ImageButton
             android:id="@+id/newCodeButton"
-            android:layout_width="75dp"
+            android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:src="@drawable/camera"
-            android:background="#E1F5FE"
-            />
+            android:background="#B2E4FB"
+            android:src="@drawable/camera" />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
@@ -157,7 +167,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/trophy"
-            android:background="#E1F5FE"
+            android:background="#B2E4FB"
             />
         <ImageView
             android:layout_width="5dp"
@@ -168,7 +178,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/house"
-            android:background="#E1F5FE"
+            android:background="#B2E4FB"
             />
         <ImageView
             android:layout_width="5dp"
@@ -179,7 +189,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/map"
-            android:background="#E1F5FE"
+            android:background="#B2E4FB"
             />
         <ImageView
             android:layout_width="5dp"
@@ -190,7 +200,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/stare"
-            android:background="#E1F5FE"
+            android:background="#B2E4FB"
             />
         <ImageView
             android:layout_width="8.5dp"

@@ -181,7 +181,7 @@ public class CameraActivity extends AppCompatActivity  {
                                     latitude=addresses.get(0).getLatitude();
                                     longitude=(addresses.get(0).getLongitude());
                                     address=(addresses.get(0).getAddressLine(0)).toString();
-                                    city=(addresses.get(0).getLocality()).toString();
+                                    city=(addresses.get(0)).getLocality().toString();
                                     country=(addresses.get(0).getCountryName()).toString();}
                                 catch (IOException e) {
                                     e.printStackTrace();

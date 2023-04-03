@@ -82,14 +82,6 @@ public class LeaderBoard extends AppCompatActivity {
         home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
 
 
-        /**
-         * NewCode Button implementation
-         * @author Noah Jeans, Tyler Pollom
-         * @version 2
-         * @return opens NewCode which is linked to barqr_code.xml
-         */
-        ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
-        newCode.setOnClickListener(taskbar.getSwitchActivityMap().get("NewCode"));
 
         /**
          * Map Button implementation

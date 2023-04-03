@@ -50,6 +50,29 @@ public class PlayerAccount extends AppCompatActivity {
         //set username textview
         TextView usernameView = findViewById(R.id.playerName);
 
+        // taskbar
+        ImageButton home = (ImageButton) findViewById(R.id.homeButton);
+        home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
+
+        ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
+        leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
+
+
+        ImageButton map = (ImageButton) findViewById(R.id.mapButton);
+        map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));
+
+        ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
+        account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
+
+        //setup close button
+        Button close = findViewById(R.id.closeButton);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         //search for user in database
         String TAG = "PlayerAccount";
         usernameView.setText(username);
@@ -67,14 +90,14 @@ public class PlayerAccount extends AppCompatActivity {
                             //if the user does not exist exit from the player activity and log the issue
                             if(!document.exists()) {
                                 Log.d(TAG, "username in intent does not exist");
-                                return;
+                                finish();
                             }
 
                             User player = document.toObject(User.class);
 
                             if(player == null) {
                                 Log.d(TAG,"error creating user object from database");
-                                return;
+                                finish();
                             }
 
                             //setup player's list of codes
@@ -87,7 +110,8 @@ public class PlayerAccount extends AppCompatActivity {
 
                             //add all codes to the listview
                             for (int i = 0; i < playerCodes.size(); i++) {
-                                Code code = new Code(playerCodes.get(i));
+                                CodeHashContainer hash = new CodeHashContainer(playerCodes.get(i));
+                                Code code = new Code(hash);
                                 CodeDataList.add(code);
                                 CodeAdapter.notifyDataSetChanged();
                             }
@@ -98,35 +122,6 @@ public class PlayerAccount extends AppCompatActivity {
                             totalPoints.setText(Integer.toString(player.getTotalPoints()));
                             totalScanned.setText(Integer.toString(player.getNumCodes()));
 
-                            //Taskbar
-                            
-                            ImageButton home = (ImageButton) findViewById(R.id.homeButton);
-                            home.setOnClickListener(taskbar.getSwitchActivityMap().get("MainActivity"));
-
-                            
-                            ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
-                            leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
-
-                            
-                            ImageButton newCode = (ImageButton) findViewById(R.id.newCodeButton);
-                            newCode.setOnClickListener(taskbar.getSwitchActivityMap().get("NewCode"));
-
-                            
-                            ImageButton map = (ImageButton) findViewById(R.id.mapButton);
-                            map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));
-
-                            
-                            ImageButton account = (ImageButton) findViewById(R.id.settingsButton);
-                            account.setOnClickListener(taskbar.getSwitchActivityMap().get("Account"));
-
-                            //setup close button
-                            Button close = findViewById(R.id.closeButton);
-                            close.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    finish();
-                                }
-                            });
 
                         }
 

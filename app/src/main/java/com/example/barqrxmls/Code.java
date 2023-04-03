@@ -1,10 +1,17 @@
 package com.example.barqrxmls;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Pair;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import androidx.annotation.ColorInt;
 
+import androidx.annotation.NonNull;
+
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,17 +19,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Code {
+/**
+ * Class for representing a scanned code.
+ * All the parameters are stored within the database.
+ */
+public class Code implements Serializable {
 
     private String hash;
     private Integer points;
     private String name;
     private ArrayList<LatLongPair> latLongPairs;
 
-    private Bitmap myImageRepresentation;
-    // Access like nameParts['suffix']
-
-    // Hashes are uniquely identified by their sha256sum
+    private ArrayList<String> users = new ArrayList<>();
 
     /**
      * Constructor that builds the hash, which is a string representation of the
@@ -76,8 +84,8 @@ public class Code {
         name = generateName(nameParts);
         points = calculateScore();
         latLongPairs = new ArrayList<>();
-        myImageRepresentation = generateImage();
     }
+
 
     /**
      * Empty constructor, for use with the Database.
@@ -115,16 +123,8 @@ public class Code {
         name = generateName(nameParts);
         points = calculateScore();
         latLongPairs = new ArrayList<>();
-        myImageRepresentation = generateImage();
     }
 
-    /**
-     * Return the generated bitmap representation of this object.
-     * @return
-     */
-    public Bitmap getMyImageRepresentation() {
-        return myImageRepresentation;
-    }
 
     /***
      * Setter for the array list of latitude and longitude pairs (LatLongPair objects).
@@ -232,8 +232,37 @@ public class Code {
     }
 
     /**
-     *
-     * @return hash
+     * Add a user to the list of this code's users.
+     * @param user The user to add to the list.
+     */
+    public void addUser(String user) {
+        users.add(user);
+    }
+
+    /**
+     * Combines a list of users from the given code and combines it with the list of users from this
+     * code, so that we do not override the codes inside the database.
+     * @param toCombine the other Codes list of Users.
+     */
+    public void combineUsers(ArrayList<String> toCombine) {
+        for (String user : toCombine) {
+            if(!users.contains(user)) {
+                users.add(user);
+            }
+        }
+    }
+
+    /**
+     * Return the list of users.
+     * @return ArrayList<String>; the String representations of the users that have scanned this code.
+     */
+    public ArrayList<String> getUsers() {
+        return users;
+    }
+
+    /**
+     * Return the hash object that dictates this code's existence.
+     * @return hash the String hash.
      */
     public String getHash() {
         return hash;
@@ -321,8 +350,4 @@ public class Code {
         Code code = (Code) o;
         return this.hash.compareTo(code.getHash());
     }
-
-
-
-
 }

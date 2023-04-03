@@ -11,17 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
 
-//tests updateInDatabase
-////        userRef.document("me").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-////            @Override
-////            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-////                if(task.isSuccessful()) {
-////                    DocumentSnapshot document = task.getResult();
-////                    //if username already in use popup invalid username text
-////                    assert(document.exists());
-////                }
-////            }
-////        });
 
 
 public class UserUnitTest {

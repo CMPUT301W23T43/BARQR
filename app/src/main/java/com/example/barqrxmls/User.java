@@ -8,12 +8,15 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -114,6 +117,16 @@ public class User implements Serializable {
         return numCodes;
     }
 
+    public String getGeoLocation(String codeHash) {
+        if(!codes.containsKey(codeHash)) {
+            return null;
+        }
+        else {
+            return codes.get(codeHash).get("geolocation");
+        }
+
+    }
+
     /**
      * adds a code to the user's list of codes without a geolocation
      * @param codeHash is a String of the hash of the code
@@ -163,6 +176,18 @@ public class User implements Serializable {
         totalPoints = totalPoints + codePoints;
         numCodes = numCodes + 1;
         //updateInDatabase();
+    }
+
+    protected void setCodes(HashMap<String,HashMap<String,String>> codes) {
+        this.codes = codes;
+    }
+
+    protected void setTotalPoints(int points) {
+        this.totalPoints = points;
+    }
+
+    protected void setNumCodes(int numCodes) {
+        this.numCodes = numCodes;
     }
 
     /**
@@ -216,6 +241,13 @@ public class User implements Serializable {
 
     }
 
+    public String getComment(String codeHash) {
+        if(!codes.containsKey(codeHash) || codes.get(codeHash) == null) {
+            return null;
+        }
+        return codes.get(codeHash).get("comment");
+    }
+
     /**
      * adds an image represented as a byte array to a code
      * @param codeHash is the hash of the code to add the image to
@@ -223,14 +255,18 @@ public class User implements Serializable {
      */
 
     // how to convert a String to a byte Array and vice versa:
-    // website: Baeldung https://www.baeldung.com/java-string-to-byte-array
-    // author: Chandra Prakash https://www.baeldung.com/author/chandra-prakash
+    // website: https://www.toptip.ca/2019/04/java-convert-byte-array-to-string-then.html
+    // author: Zen
 
     public void addImage(String codeHash, byte[] image) {
         if(!codes.containsKey(codeHash)) {
             return;
         }
-        String convert = new String(image);
+
+        String convert = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            convert = Base64.getEncoder().encodeToString(image);
+        }
         codes.get(codeHash).put("image",convert);
         //updateInDatabase();
     }
@@ -244,13 +280,19 @@ public class User implements Serializable {
         if(convert == null) {
             return null;
         }
-        return convert.getBytes();
+
+        byte[] image = null;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            image = Base64.getDecoder().decode(convert);
+        }
+        return image;
 
     }
 
     /**
      *
-     * @param
+     * @param o
      */
     public int compareTo(Object o) {
         User user = (User) o;

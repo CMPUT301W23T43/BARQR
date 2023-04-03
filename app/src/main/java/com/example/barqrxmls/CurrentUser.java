@@ -32,14 +32,18 @@ public class CurrentUser extends User{
     /***
      * Empty constructor used privately
      */
-    private CurrentUser(String userName, String id, String email) {
-        super(userName,id,email);
+    private CurrentUser(User user) {
+        super(user.getUserName(),user.getId(),user.getEmail());
+        setCodes(user.getCodes());
+        setNumCodes(user.getNumCodes());
+        setTotalPoints(user.getTotalPoints());
         updater = DataBaseUpdater.getInstance();
         updater.updateUser((User)this);
     }
 
     private CurrentUser() {
         super();
+        updater = DataBaseUpdater.getInstance();
     }
 
     /***
@@ -47,18 +51,18 @@ public class CurrentUser extends User{
      * @param user The user to become the CurrentUser
      */
     public void setUser(User user) {
-        instance = new CurrentUser(user.getUserName(),user.getId(),user.getEmail());
+        instance = new CurrentUser(user);
     }
 
 
-    public void addCode(String codeHash, int codePoints) {
-        super.addCode(codeHash,codePoints);
-        updater.updateUser((User)this);
+    public void addCode(Code code) {
+        super.addCode(code.getHash(),code.getPoints());
+        updater.addCode(code,(User)this);
     }
 
-    public void addCode(String codeHash, String geolocation, int codePoints) {
-        super.addCode(codeHash,geolocation,codePoints);
-        updater.updateUser((User)this);
+    public void addCode(Code code,String geolocation) {
+        super.addCode(code.getHash(),geolocation,code.getPoints());
+        updater.addCode(code,(User)this);
     }
 
     public void removeCode(String removeCode, int codePoints) {

@@ -2,7 +2,9 @@ package com.example.barqrxmls;
 
 import android.util.Pair;
 
-public class LatLongPair {
+import java.io.Serializable;
+
+public class LatLongPair implements Serializable {
     public Double first, second;
     /**
      * Constructor for a Pair.

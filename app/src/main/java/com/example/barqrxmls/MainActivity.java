@@ -3,6 +3,7 @@ package com.example.barqrxmls;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -40,6 +41,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.navigation.Navigation;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     ListView CodesList;
-    User currentTestUser;
+    CurrentUser currentTestUser;
 
     Code testScannedCode;
     Bitmap testScannedCodeImage;
@@ -91,22 +93,32 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                                 Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("codeData").toString()));
                                 testScannedCode = new Code(cameraResults.get("codeData").toString());
                                 testScannedCodeImage = (Bitmap) cameraResults.get("codeBitmap");
+
                                 // All this stuff below us might be NULL if the User declines
                                 // Geolocation tagging.
                                 testScannedCountry = cameraResults.getString("codeCountry");
+                                testScannedCity = cameraResults.getString("codeCity");
                                 testScannedAddress = cameraResults.getString("codeAddress");
                                 testScannedLatitude = cameraResults.getDouble("codeLatitude");
                                 testScannedLongitude = cameraResults.getDouble("codeLongitude");
                                 testScannedCompressedByteArray = (byte[]) cameraResults.getByteArray("codeByteArray");
 
 
+                                String locationString = String.format("%s, %s -- %s, %s", testScannedCity, testScannedCountry, testScannedLatitude, testScannedLongitude);
 
                                 ArrayList<LatLongPair> existingPairs = testScannedCode.getLatLongPairs();
                                 LatLongPair myLatLongPair = new LatLongPair(testScannedLatitude, testScannedLongitude);
                                 existingPairs.add(myLatLongPair);
                                 testScannedCode.setLatLongPairs(existingPairs);
-                                currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
-                                codesRef.document(testScannedCode.getHash()).set(testScannedCode);
+//                                currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
+                                currentTestUser.addCode(testScannedCode, locationString);
+                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                if (testScannedCodeImage != null) {
+                                    testScannedCodeImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                    byte[] imageArray = stream.toByteArray();
+                                    currentTestUser.addImage(testScannedCode.getHash(), imageArray);
+                                }
+//                                codesRef.document(testScannedCode.getHash()).set(testScannedCode);
                                 CodeDataList.add(testScannedCode);
                                 CodeAdapter.notifyDataSetChanged();
                                 updateCountTextViews(currentTestUser, CodeDataList);
@@ -121,9 +133,9 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
         Code testCode1 = new Code("/usr/code1");
         Code testCode2 = new Code(";lkajsdf");
         Code testCode3 = new Code("Smithy");
-        currentTestUser.addCode(testCode1.getHash(), testCode1.getPoints());
-        currentTestUser.addCode(testCode2.getHash(), testCode2.getPoints());
-        currentTestUser.addCode(testCode3.getHash(), testCode3.getPoints());
+        //currentTestUser.addCode(testCode1);
+        //currentTestUser.addCode(testCode2,"edmonton");
+        //currentTestUser.addCode(testCode3);
         CodeDataList = new ArrayList<Code>();
         CodeAdapter = new CodeArrayAdapter(MainActivity.this, CodeDataList);
         CodesList.setAdapter(CodeAdapter);
@@ -137,20 +149,20 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
      *
      * @param currentUserTest The User object representing the current user.
      */
-    public void doStuff(User currentUserTest) {
-        System.out.println("After attempting to convert to User object" + currentUserTest);
+    public void doStuff(CurrentUser currentUserTest) {
+
 
         for (String key : currentUserTest.getCodes().keySet()) {
             codesRef.document(key).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
-                        System.out.println("Trying to convert database object with hash " + key);
+
                         Code userCode = task.getResult().toObject(Code.class);
                         if (userCode == null) {
-                            System.out.println("Our converted Code object was null");
+
                         } else {
-                            System.out.println("Document doStuff adding code: " + userCode);
+
                             CodeDataList.add(userCode);
                             CodeAdapter.notifyDataSetChanged();
                             updateCountTextViews(currentUserTest, CodeDataList);
@@ -160,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
             });
         }
 //        CodeAdapter.notifyDataSetChanged();
-        System.out.println("Coded Data List:" + CodeDataList);
+
 
         /**
          Sets up an OnItemLongClickListener for the CodesList AdapterView in the PlayerAccount activity.
@@ -197,15 +209,27 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
             }
         });
 
+
         CodesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Code code = CodeDataList.get(position);
-                new AddCommentFragment(code).show(getSupportFragmentManager(), "Add a comment");
-
-
-            }
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Code code = CodeDataList.get(i);
+                Intent newCodeSwitch = new Intent(MainActivity.this,NewCode.class);
+                newCodeSwitch.putExtra("code",code);
+                startActivity(newCodeSwitch);
+              }
         });
+//
+//        CodesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Code code = CodeDataList.get(position);
+//                new AddCommentFragment(code).show(getSupportFragmentManager(), "Add a comment");
+//
+//
+//            }
+//        });
+
     }
 
 
@@ -222,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
     public void onResume() {
         super.onResume();
         //setContentView(R.layout.main_screen);
-        System.out.print("Inside onResume");
+
 //        dataBase = FirebaseFirestore.getInstance();
 //        mAuth = FirebaseAuth.getInstance();
 

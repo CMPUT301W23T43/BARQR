@@ -22,7 +22,7 @@
             android:textSize="15dp"
             android:backgroundTint="#070707"
             android:textColor="#81D4FA"
-            android:layout_marginLeft="275dp"
+            android:layout_marginLeft="230dp"
             >
         </Button>
 

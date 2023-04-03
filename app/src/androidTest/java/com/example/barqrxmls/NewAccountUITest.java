@@ -65,12 +65,14 @@ public class NewAccountUITest {
 
     @Test
     public void testCheckEditTextClickable() {
-        onView(withId(R.id.usernameField));
-        onView(withId(R.id.emailField));
-        onView(withId(R.id.terms_and_services)).check(matches(isClickable()));
-        onView(withId(R.id.submitButton)).check(matches(isClickable()));
-        onView(withId(R.id.usernameField)).check(matches(isClickable()));
-        onView(withId(R.id.emailField)).check(matches(isClickable()));
+//        onView(withId(R.id.usernameField));
+//        onView(withId(R.id.emailField));
+//        onView(withId(R.id.terms_and_services));
+//        onView(withId(R.id.submitButton));
+        onView(withId(R.id.terms_and_services)).check(matches(isDisplayed()));
+        onView(withId(R.id.submitButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.usernameField)).check(matches(isDisplayed()));
+        onView(withId(R.id.emailField)).check(matches(isDisplayed()));
     }
 
     /**

@@ -28,8 +28,11 @@ import java.util.List;
 import java.util.Locale;
 
 /**
+ *  This class allows the current user to search for any codes in the database that
+ *  have been scanned at a certain location. Allows search by City, Province, or Country.
  *
- * @Author Anjelica Marianicz and Kannan Khosla
+ * @author Anjelica Marianicz
+ * @author Kannan Khosla
  * @Version 2
  *
  */
@@ -100,17 +103,15 @@ public class SearchQrCodeGeo extends AppCompatActivity {
 
     }
     /**
-     *
-     * This queries the database to lok through every code to find which match geolocation.
-     * @param location
-     *      This is the location which the code must match.
+     * This method queries the database to lok through every code to find which match geolocation.
+     * @param location This is the location entered by the user which the code must match.
      */
     private void SearchDatabase(String location){
 
         Query getCodesByLocation = codesRef.orderBy("points", Query.Direction.DESCENDING);
 
         Geocoder geocoder = new Geocoder(SearchQrCodeGeo.this, Locale.getDefault());
-
+        // Queries the database to find all codes and convert their latitudes and longitudes to the user input location.
         getCodesByLocation.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

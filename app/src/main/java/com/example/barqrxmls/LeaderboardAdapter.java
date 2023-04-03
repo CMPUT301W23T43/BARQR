@@ -15,16 +15,8 @@ import java.util.Map;
 /**
  * This class converts from a HashMap where the keys are userNames and the values are the
  * totalPoints for the user under that username.
+ * @author Anjelica Marianicz
  *
- * The code for this class was followed from:
- * URL: https://stackoverflow.com/questions/19466757/hashmap-to-listview
- * Website: https://stackoverflow.com
- * Author: https://stackoverflow.com/user/1981118/oleksii-k
- *
- * Code changes to maintain proper order from:
- * URL: https://stackoverflow.com/questions/9061689/how-to-sort-hashmap-as-added-in-android-with-arrayadapter
- * Website: https://stackoverflow.com
- * Author: https://stackoverflow.com/user/1103682/jeet
  */
 public class LeaderboardAdapter extends BaseAdapter {
 

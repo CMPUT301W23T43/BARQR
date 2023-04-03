@@ -37,6 +37,7 @@ import java.util.Locale;
 //        });
 
 public class NewCode extends AppCompatActivity {
+    ImageView uniqueRepr;
 
     String comment = "";
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class NewCode extends AppCompatActivity {
         // get code and user
         Bundle bundle = getIntent().getExtras();
         Code code = (Code) bundle.getSerializable("code");
+        System.out.println(code.getHash());
         CurrentUser user = CurrentUser.getInstance();
 
         // set Name field
@@ -58,6 +60,9 @@ public class NewCode extends AppCompatActivity {
             comment = user.getComment(code.getHash());
             codeComment.setText(comment);
         }
+
+        uniqueRepr = findViewById(R.id.barQRImage);
+        uniqueRepr.setImageBitmap(code.getMyImageRepresentation());
 
         // set point value
         TextView pointValue = findViewById(R.id.pointsField);

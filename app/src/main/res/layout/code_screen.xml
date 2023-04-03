@@ -128,14 +128,12 @@ android:paddingBottom="100dp"
         android:id="@+id/myImage"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:background="#000"
         />
     <ImageView
         android:id="@+id/barQRImage"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginLeft="70dp"
-        android:background="#000"
         />
 </LinearLayout>
 

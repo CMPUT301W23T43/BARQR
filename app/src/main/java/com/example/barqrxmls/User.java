@@ -8,8 +8,10 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -253,14 +255,18 @@ public class User implements Serializable {
      */
 
     // how to convert a String to a byte Array and vice versa:
-    // website: Baeldung https://www.baeldung.com/java-string-to-byte-array
-    // author: Chandra Prakash https://www.baeldung.com/author/chandra-prakash
+    // website: https://www.toptip.ca/2019/04/java-convert-byte-array-to-string-then.html
+    // author: Zen
 
     public void addImage(String codeHash, byte[] image) {
         if(!codes.containsKey(codeHash)) {
             return;
         }
-        String convert = new String(image);
+
+        String convert = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            convert = Base64.getEncoder().encodeToString(image);
+        }
         codes.get(codeHash).put("image",convert);
         //updateInDatabase();
     }
@@ -274,13 +280,19 @@ public class User implements Serializable {
         if(convert == null) {
             return null;
         }
-        return convert.getBytes();
+
+        byte[] image = null;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            image = Base64.getDecoder().decode(convert);
+        }
+        return image;
 
     }
 
     /**
      *
-     * @param
+     * @param o
      */
     public int compareTo(Object o) {
         User user = (User) o;

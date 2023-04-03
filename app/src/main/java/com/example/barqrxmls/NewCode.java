@@ -38,6 +38,7 @@ import java.util.Locale;
 
 public class NewCode extends AppCompatActivity {
     ImageView uniqueRepr;
+    ImageView surroundings;
 
     String comment = "";
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class NewCode extends AppCompatActivity {
             comment = user.getComment(code.getHash());
             codeComment.setText(comment);
         }
-
+        // Set unique representation.
         uniqueRepr = findViewById(R.id.barQRImage);
         uniqueRepr.setImageBitmap(code.generateImage());
 
@@ -76,7 +77,9 @@ public class NewCode extends AppCompatActivity {
         ImageView imageBlock = findViewById(R.id.myImage);
         byte[] bytes = user.getImage(code.getHash());
         if(bytes != null) {
+
             Bitmap image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
             imageBlock.setImageBitmap(image);
         }
 
@@ -85,7 +88,7 @@ public class NewCode extends AppCompatActivity {
         playerScans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(code.getHash());
+
                 Intent scans = new Intent(NewCode.this,PlayerScans.class);
                 scans.putExtra("code",code);
                 startActivity(scans);

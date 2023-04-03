@@ -3,6 +3,7 @@ package com.example.barqrxmls;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -40,6 +41,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.navigation.Navigation;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                                 Log.d(TAG, "onActivityResult: ".concat(cameraResults.get("codeData").toString()));
                                 testScannedCode = new Code(cameraResults.get("codeData").toString());
                                 testScannedCodeImage = (Bitmap) cameraResults.get("codeBitmap");
+
                                 // All this stuff below us might be NULL if the User declines
                                 // Geolocation tagging.
                                 testScannedCountry = cameraResults.getString("codeCountry");
@@ -108,6 +111,12 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                                 testScannedCode.setLatLongPairs(existingPairs);
 //                                currentTestUser.addCode(testScannedCode.getHash(), testScannedCode.getPoints());
                                 currentTestUser.addCode(testScannedCode, locationString);
+                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                testScannedCodeImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                byte[] imageArray = stream.toByteArray();
+
+
+                                currentTestUser.addImage(testScannedCode.getHash(), imageArray);
 //                                codesRef.document(testScannedCode.getHash()).set(testScannedCode);
                                 CodeDataList.add(testScannedCode);
                                 CodeAdapter.notifyDataSetChanged();
@@ -139,20 +148,20 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
      *
      * @param currentUserTest The User object representing the current user.
      */
-    public void doStuff(User currentUserTest) {
-        System.out.println("After attempting to convert to User object" + currentUserTest);
+    public void doStuff(CurrentUser currentUserTest) {
+
 
         for (String key : currentUserTest.getCodes().keySet()) {
             codesRef.document(key).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
-                        System.out.println("Trying to convert database object with hash " + key);
+
                         Code userCode = task.getResult().toObject(Code.class);
                         if (userCode == null) {
-                            System.out.println("Our converted Code object was null");
+
                         } else {
-                            System.out.println("Document doStuff adding code: " + userCode);
+
                             CodeDataList.add(userCode);
                             CodeAdapter.notifyDataSetChanged();
                             updateCountTextViews(currentUserTest, CodeDataList);
@@ -162,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
             });
         }
 //        CodeAdapter.notifyDataSetChanged();
-        System.out.println("Coded Data List:" + CodeDataList);
+
 
         /**
          Sets up an OnItemLongClickListener for the CodesList AdapterView in the PlayerAccount activity.
@@ -236,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
     public void onResume() {
         super.onResume();
         //setContentView(R.layout.main_screen);
-        System.out.print("Inside onResume");
+
 //        dataBase = FirebaseFirestore.getInstance();
 //        mAuth = FirebaseAuth.getInstance();
 

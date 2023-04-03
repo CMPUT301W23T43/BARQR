@@ -28,7 +28,6 @@ public class Code implements Serializable {
 
     private ArrayList<String> users = new ArrayList<>();
 
-    private Bitmap myImageRepresentation;
     // Access like nameParts['suffix']
 
     // Hashes are uniquely identified by their sha256sum
@@ -85,7 +84,6 @@ public class Code implements Serializable {
         name = generateName(nameParts);
         points = calculateScore();
         latLongPairs = new ArrayList<>();
-        myImageRepresentation = generateImage();
     }
 
 
@@ -125,16 +123,8 @@ public class Code implements Serializable {
         name = generateName(nameParts);
         points = calculateScore();
         latLongPairs = new ArrayList<>();
-        myImageRepresentation = generateImage();
     }
 
-    /**
-     * Return the generated bitmap representation of this object.
-     * @return
-     */
-    public Bitmap getMyImageRepresentation() {
-        return myImageRepresentation;
-    }
 
     /***
      * Setter for the array list of latitude and longitude pairs (LatLongPair objects).

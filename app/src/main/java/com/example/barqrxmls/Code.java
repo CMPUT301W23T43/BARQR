@@ -19,6 +19,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * Class for representing a scanned code.
+ * All the parameters are stored within the database.
+ */
 public class Code implements Serializable {
 
     private String hash;
@@ -27,10 +31,6 @@ public class Code implements Serializable {
     private ArrayList<LatLongPair> latLongPairs;
 
     private ArrayList<String> users = new ArrayList<>();
-
-    // Access like nameParts['suffix']
-
-    // Hashes are uniquely identified by their sha256sum
 
     /**
      * Constructor that builds the hash, which is a string representation of the
@@ -231,10 +231,19 @@ public class Code implements Serializable {
         return generatedName.toString();
     }
 
+    /**
+     * Add a user to the list of this code's users.
+     * @param user The user to add to the list.
+     */
     public void addUser(String user) {
         users.add(user);
     }
 
+    /**
+     * Combines a list of users from the given code and combines it with the list of users from this
+     * code, so that we do not override the codes inside the database.
+     * @param toCombine the other Codes list of Users.
+     */
     public void combineUsers(ArrayList<String> toCombine) {
         for (String user : toCombine) {
             if(!users.contains(user)) {
@@ -242,12 +251,18 @@ public class Code implements Serializable {
             }
         }
     }
+
+    /**
+     * Return the list of users.
+     * @return ArrayList<String>; the String representations of the users that have scanned this code.
+     */
     public ArrayList<String> getUsers() {
         return users;
     }
+
     /**
-     *
-     * @return hash
+     * Return the hash object that dictates this code's existence.
+     * @return hash the String hash.
      */
     public String getHash() {
         return hash;

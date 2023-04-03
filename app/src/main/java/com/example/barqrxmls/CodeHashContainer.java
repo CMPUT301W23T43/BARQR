@@ -9,6 +9,12 @@ package com.example.barqrxmls;
  */
 public class CodeHashContainer {
     private String codeHashString;
+
+    /**
+     * Create a new container object; the String given must be the hash of the Code object
+     * you want to later store.
+     * @param hash A (String) representing the hash object.
+     */
     public CodeHashContainer(String hash) {
         this.codeHashString = hash;
     }

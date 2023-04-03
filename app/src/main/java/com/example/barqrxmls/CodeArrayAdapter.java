@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * Custom array adapter for Codes arrays.
+ */
 public class CodeArrayAdapter extends ArrayAdapter<Code> {
 
     public CodeArrayAdapter(@NonNull Context context, ArrayList<Code> codes) {

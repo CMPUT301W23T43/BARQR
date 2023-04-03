@@ -14,7 +14,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Locale;
-
+// note, this class exists solely to update the database and as such cannot be properly tested
+// to my knowledge
 /**
  * A singleton which takes care of all changes to Users and Codes in the Database
  */

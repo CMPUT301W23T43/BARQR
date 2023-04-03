@@ -37,6 +37,11 @@ public class NewCode extends AppCompatActivity {
         setContentView(R.layout.code_screen);
 
         // get code and user
+        if(!getIntent().hasExtra("code")) {
+            finish();
+            Intent intent = new Intent(NewCode.this,MainActivity.class);
+            startActivity(intent);
+        }
         Bundle bundle = getIntent().getExtras();
         Code code = (Code) bundle.get("code");
         CurrentUser user = CurrentUser.getInstance();

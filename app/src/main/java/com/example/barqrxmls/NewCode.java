@@ -47,7 +47,7 @@ public class NewCode extends AppCompatActivity {
 
         // get code and user
         Bundle bundle = getIntent().getExtras();
-        Code code = (Code) bundle.getSerializable("code");
+        Code code = (Code) bundle.get("code");
         CurrentUser user = CurrentUser.getInstance();
 
         // set Name field

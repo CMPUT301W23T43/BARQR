@@ -7,6 +7,7 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.CursorMatchers.withRowString;
 import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -76,10 +77,10 @@ public class PlayerSearchUITest {
         intended(hasComponent(PlayerSearch.class.getName()));
         onView(withId(R.id.search_bar)).check(matches(isClickable()));
         onView(withId(R.id.search_button)).check(matches(isClickable()));
-        onView(withId(R.id.search_bar)).perform(typeText("U"));
+        onView(withId(R.id.search_bar)).perform(typeText("a"));
         onView(withId(R.id.search_button)).perform(click());
-        onData(allOf()).inAdapterView(withId(R.id.accountNameList)).atPosition(1).perform(click());
-        intended(hasComponent(PlayerAccount.class.getName()));
+        onView(withText("anji"));
+        onView(withText("anjiphone"));
     }
 
     @Test

@@ -35,44 +35,50 @@ public class NewCodeUITest {
     public Code code = new Code("test");
     public Intent intent = new Intent().putExtra("code",code);
     public Bundle bundle = intent.getExtras();
+    CurrentUser c = CurrentUser.getInstance();
 
+    // Fuck intent tests :)
 
     @Rule
     public ActivityScenarioRule<NewCode> activityRule = new ActivityScenarioRule<>(NewCode.class,bundle);
     @Rule
     public IntentsRule intentsRule = new IntentsRule();
 
-    @BeforeClass
-    public static void setup() {
-        Code code = new Code("test");
-        User test = new User("test","test","test");
-        CurrentUser c = CurrentUser.getInstance();
-        c.setUser(test);
-        c.addCode(code.getHash(),"geolocation",code.getPoints());
-        c.addComment(code.getHash(),"comment");
-
-    }
-
     @Test
     public void checkOnScreen() {
-        onView(withId(R.id.code_name)).check(matches(withText(code.getName())));
+        Code code = new Code("test");
+        User test = new User("test","test","test");
+        c.setUser(test);
+        c.addCode(code,"geolocation");
+        c.addComment(code.getHash(),"comment");
+        onView(withId(R.id.nameField)).check(matches(withText(code.getName())));
         onView(withId(R.id.commentField)).check(matches(withText(CurrentUser.getInstance().getComment(code.getHash()))));
         onView(withId(R.id.code_geolocation)).check(matches(withText(CurrentUser.getInstance().getGeoLocation(code.getHash()))));
-        onView(withId(R.id.point_value)).check(matches(withText(code.getPoints().toString())));
+        onView(withId(R.id.pointsField)).check(matches(withText(code.getPoints().toString())));
     }
 
     @Test
     public void checkEditComment() {
+        Code code = new Code("test");
+        User test = new User("test","test","test");
+        c.setUser(test);
+        c.addCode(code,"geolocation");
+        c.addComment(code.getHash(),"comment");
         intending(toPackage("com.android.MainActivity")).respondWith(null);
         onView(withId(R.id.commentField)).perform(click()).perform(typeText("newComment"));
-        onView(withId(R.id.close_button)).perform(click());
+        onView(withId(R.id.closeButton)).perform(click());
         assert(CurrentUser.getInstance().getComment(code.getHash())).equals("newComment");
     }
 
     @Test
     public void checkCloseButton() {
-        onView(withId(R.id.close_button)).check(matches(isClickable()));
-        onView(withId(R.id.close_button)).perform(click());
+        Code code = new Code("test");
+        User test = new User("test","test","test");
+        c.setUser(test);
+        c.addCode(code,"geolocation");
+        c.addComment(code.getHash(),"comment");
+        onView(withId(R.id.closeButton)).check(matches(isClickable()));
+        onView(withId(R.id.closeButton)).perform(click());
         intended(hasComponent(MainActivity.class.getName()));
     }
 
@@ -82,12 +88,17 @@ public class NewCodeUITest {
     // author: denys https://stackoverflow.com/users/2980933/denys
     @Test
     public void deleteButton() {
-        onView(withId(R.id.delete_code_button)).check(matches(isClickable()));
-        onView(withId((R.id.delete_code_button))).perform(click());
+        Code code = new Code("test");
+        User test = new User("test","test","test");
+        c.setUser(test);
+        c.addCode(code,"geolocation");
+        c.addComment(code.getHash(),"comment");
+        onView(withId(R.id.deleteCodeButton)).check(matches(isClickable()));
+        onView(withId((R.id.deleteCodeButton))).perform(click());
         onView(withText("Are you sure you want to delete this Code?"));
         onView(withId(android.R.id.button2)).perform(click());
-        onView(withId(R.id.delete_code_button)).check(matches(isClickable()));
-        onView(withId((R.id.delete_code_button))).perform(click());
+        onView(withId(R.id.deleteCodeButton)).check(matches(isClickable()));
+        onView(withId((R.id.deleteCodeButton))).perform(click());
         onView(withId(android.R.id.button1)).perform(click());
         intended(hasComponent(MainActivity.class.getName()));
         boolean check = CurrentUser.getInstance().hasComment(code.getHash());

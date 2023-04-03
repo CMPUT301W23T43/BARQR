@@ -110,7 +110,8 @@ public class PlayerAccount extends AppCompatActivity {
 
                             //add all codes to the listview
                             for (int i = 0; i < playerCodes.size(); i++) {
-                                Code code = new Code(playerCodes.get(i));
+                                CodeHashContainer hash = new CodeHashContainer(playerCodes.get(i));
+                                Code code = new Code(hash);
                                 CodeDataList.add(code);
                                 CodeAdapter.notifyDataSetChanged();
                             }

@@ -170,14 +170,13 @@ android:paddingBottom="100dp"
         android:id="@+id/deleteCodeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="75dp"
         android:layout_gravity="center"
-        android:backgroundTint="#070707"
-        android:textColor="#81D4FA"
+        android:layout_marginLeft="75dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="30dp"
-        />
+        android:backgroundTint="#070707"
+        android:text="Delete"
+        android:textColor="#81D4FA" />
 </LinearLayout>
 
 

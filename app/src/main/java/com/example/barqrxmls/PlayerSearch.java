@@ -34,6 +34,9 @@ import org.checkerframework.checker.units.qual.A;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * allows a person using the app to search for other users by username
+ */
 public class PlayerSearch extends AppCompatActivity {
 
     //NOTE need to limit num chars user can add to their username
@@ -126,6 +129,10 @@ public class PlayerSearch extends AppCompatActivity {
         });
     }
 
+    /**
+     * changes to the PlayerAccount activity
+     * @param username the username of the player who's account to display
+     */
     private void switchToPlayer(String username) {
         Intent intent = new Intent(PlayerSearch.this, PlayerAccount.class);
         intent.putExtra("username",username);

@@ -24,18 +24,9 @@ import org.w3c.dom.Text;
 
 import java.util.Locale;
 
-//PUT IN MAIN
-//
-//        CodesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//              @Override
-//          public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//        Code code = CodeDataList.get(i);
-//        Intent newCodeSwitch = new Intent(MainActivity.this,NewCode.class);
-//        newCodeSwitch.putExtra("code",code);
-//
-//        }
-//        });
-
+/**
+ * displays a code's information
+ */
 public class NewCode extends AppCompatActivity {
     ImageView uniqueRepr;
     ImageView surroundings;

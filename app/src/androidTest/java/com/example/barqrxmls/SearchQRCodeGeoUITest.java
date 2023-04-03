@@ -23,7 +23,10 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
+/**
+ * Tests the switch to code search activity and possible
+ * interactions from the user.
+ */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class SearchQRCodeGeoUITest {
@@ -42,12 +45,18 @@ public class SearchQRCodeGeoUITest {
 
     final CollectionReference usersRef = database.collection("Users");
 
+    /**
+     * This test checks that the switch to the search code page is done properly
+     */
     @Test
     public void clickSearchTest(){
         onView(withId(R.id.codeSearchButton)).perform(click());
         onView(withId(R.id.go_Back)).check(matches(isDisplayed()));
     }
 
+    /**
+     * This test checks that the user can return to the homepage from the code search
+     */
     @Test
     public void returnHomeTest(){
         onView(withId(R.id.codeSearchButton)).perform(click());
@@ -56,6 +65,9 @@ public class SearchQRCodeGeoUITest {
 
     }
 
+    /**
+     * This test checks that the user can type an address in the search bar.
+     */
     @Test
     public void typeSearchTest(){
         onView(withId(R.id.codeSearchButton)).perform(click());
@@ -64,6 +76,9 @@ public class SearchQRCodeGeoUITest {
 
     }
 
+    /**
+     * This test checks that the search button is clickable by the user.
+     */
     @Test
     public void searchButtonClickableTest(){
         onView(withId(R.id.codeSearchButton)).perform(click());

@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements AddCommentFragmen
                                 // All this stuff below us might be NULL if the User declines
                                 // Geolocation tagging.
                                 testScannedCountry = cameraResults.getString("codeCountry");
+                                testScannedCity = cameraResults.getString("codeCity");
                                 testScannedAddress = cameraResults.getString("codeAddress");
                                 testScannedLatitude = cameraResults.getDouble("codeLatitude");
                                 testScannedLongitude = cameraResults.getDouble("codeLongitude");

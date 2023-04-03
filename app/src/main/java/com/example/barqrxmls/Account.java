@@ -57,13 +57,13 @@ public class Account extends AppCompatActivity {
     TextView lowCodeName;
     DocumentReference userInDatabase;
 
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_screen);
 
         CurrentUser user = CurrentUser.getInstance();
 
+        // setup close button
         Button close = findViewById(R.id.close_button);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,10 +72,8 @@ public class Account extends AppCompatActivity {
             }
         });
 
-        username = findViewById(R.id.usernameMyAccount);
 
-        email = findViewById(R.id.emailMyAccount);
-
+        // get code rank views
         highCodeName = findViewById(R.id.highestQRCode);
         lowCodeName = findViewById(R.id.lowestQRCode);
         highCodeRank = findViewById(R.id.highCodeHash);
@@ -83,20 +81,17 @@ public class Account extends AppCompatActivity {
         highCodeName.setVisibility(View.INVISIBLE);
         lowCodeName.setVisibility(View.INVISIBLE);
 
-        Button closeButton = (Button) findViewById(R.id.close_button);
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
+        // setup username and email fields in the layout
+        username = findViewById(R.id.usernameMyAccount);
+        email = findViewById(R.id.emailMyAccount);
         usernameValue = user.getUserName();
         username.setText(usernameValue);
         email.setText(user.getEmail());
 
+        // get a document reference of the user from the database
         userInDatabase = usersRef.document(user.getUserName().toLowerCase(Locale.ROOT));
 
+        // setup a query of the database codes by rank
         Query codesByScores = codesRef.orderBy("points", Query.Direction.DESCENDING);
         getCodeRank(codesByScores);
 
@@ -153,6 +148,7 @@ public class Account extends AppCompatActivity {
      * all of the codes within the database.
      * @param query this query retrieves all codes in order from highest to lowest points value.
      */
+
     private void getCodeRank(Query query){
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

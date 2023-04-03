@@ -18,6 +18,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * displays a list of players that have scanned a code
+ */
+
 public class PlayerScans extends AppCompatActivity {
 
     @Override

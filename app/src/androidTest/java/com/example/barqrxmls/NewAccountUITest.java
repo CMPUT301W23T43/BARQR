@@ -14,6 +14,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.is;
 
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsRule;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
@@ -65,8 +66,8 @@ public class NewAccountUITest {
 
     @Test
     public void testCheckEditTextClickable() {
-        onView(withId(R.id.usernameField));
-        onView(withId(R.id.emailField));
+        //onView(withId(R.id.usernameField));
+        //onView(withId(R.id.emailField));
         onView(withId(R.id.terms_and_services)).check(matches(isClickable()));
         onView(withId(R.id.submitButton)).check(matches(isClickable()));
         onView(withId(R.id.usernameField)).check(matches(isClickable()));
@@ -79,10 +80,10 @@ public class NewAccountUITest {
 
     @Test
     public void testCheckEditTextInput() {
-        onView(withId(R.id.usernameField));
-        onView(withId(R.id.emailField));
-        onView(withId(R.id.terms_and_services));
-        onView(withId(R.id.submitButton));
+        //onView(withId(R.id.usernameField));
+        //onView(withId(R.id.emailField));
+        //onView(withId(R.id.terms_and_services));
+        //onView(withId(R.id.submitButton));
 
         onView(withId(R.id.usernameField)).perform(click()).perform(typeText("UserName"));
         onView(withId(R.id.emailField)).perform(click()).perform(typeText("Email"));
@@ -99,10 +100,10 @@ public class NewAccountUITest {
      */
     @Test
     public void testCheckAddUser() {
-        onView(withId(R.id.usernameField));
-        onView(withId(R.id.emailField));
-        onView(withId(R.id.terms_and_services));
-        onView(withId(R.id.submitButton));
+        //onView(withId(R.id.usernameField));
+        //onView(withId(R.id.emailField));
+        //onView(withId(R.id.terms_and_services));
+        //onView(withId(R.id.submitButton));
 
         onView(withId(R.id.usernameField)).perform(click()).perform(typeText("UserNameTest"));
         onView(withId(R.id.emailField)).perform(click()).perform(typeText("Email"));

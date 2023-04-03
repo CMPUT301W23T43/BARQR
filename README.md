@@ -30,8 +30,12 @@ How to implement the QR scanner: [youtube.com](https://www.youtube.com/watch?v=j
 
 How to Take the image of the surrounding: [youtube.com](https://www.youtube.com/watch?v=JMdHMMEO8ZQ&t=400s), by [Muhammad Saad](https://www.youtube.com/@Muhammad_SaadAhmed)
 
+How to record geolocation:[youtube.com](https://www.youtube.com/watch?v=pNeuuImirHY), by [SmallAcademy](https://www.youtube.com/smallacademy)
 ##### [User]
 How to convert a String to a byte array and vice versa [toptip](https://www.toptip.ca/2019/04/java-convert-byte-array-to-string-then.html), by Zen
+
+##### [NewCode Testing] 
+How to use an intent with ActivityScenarioRule [stackoverflow.com](https://stackoverflow.com/questions/54179560/how-to-putextra-data-using-newest-activityscenariorule-activityscenarioespress) by, [Jose Leles https](//stackoverflow.com/users/11301807/jose-leles) and edited by [anotherdave](https://stackoverflow.com/users/1474421/anotherdave)
 
 ##### Other citations
 How to create an Intent Launcher [@DailyCoding](https://www.youtube.com/@DailyCoding), [Video here](https://www.youtube.com/watch?v=DfDj9EadOLk

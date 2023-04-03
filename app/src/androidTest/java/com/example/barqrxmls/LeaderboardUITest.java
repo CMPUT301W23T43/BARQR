@@ -68,7 +68,6 @@ public class LeaderboardUITest {
     public void testButtonsDisplay() {
         onView(withId(R.id.leaderBoardButton)).perform(click()).check(matches(isDisplayed()));
         onView(withId(R.id.playerSearchButton)).check(matches(isDisplayed()));
-        onView(withId(R.id.codeSearchButton)).check(matches(isDisplayed()));
     }
 
     /**

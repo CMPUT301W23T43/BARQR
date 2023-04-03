@@ -30,6 +30,7 @@ How to implement the QR scanner: [youtube.com](https://www.youtube.com/watch?v=j
 
 How to Take the image of the surrounding: [youtube.com](https://www.youtube.com/watch?v=JMdHMMEO8ZQ&t=400s), by [Muhammad Saad](https://www.youtube.com/@Muhammad_SaadAhmed)
 
+How to record geolocation:[youtube.com](https://www.youtube.com/watch?v=pNeuuImirHY), by [SmallAcademy](https://www.youtube.com/smallacademy)
 ##### [User]
 How to convert a String to a byte array and vice versa [toptip](https://www.toptip.ca/2019/04/java-convert-byte-array-to-string-then.html), by Zen
 

@@ -40,16 +40,7 @@ import android.widget.Toast;
 /**
  * QR Camera and Capture Location implementation
  * @author Shafayat Sadman
- * @version 1
  * Has no Unit and UI tests as the QR code have to be scanned manually after opening camera.
- * @return
- *      String data: Data of the QR code that is scanned.
- *      Bitmap bitmapOfLocation: The bitmap of the image of the surrounding Location.
- * Citations:
- *              SCANCODE = "https://www.youtube.com/watch?v=jtT60yFPelI&t=18s"
- *              Take Image = "https://www.youtube.com/watch?v=JMdHMMEO8ZQ&t=400s"
- *
- *
  */
 public class CameraActivity extends AppCompatActivity  {
     String data="";
@@ -195,6 +186,10 @@ public class CameraActivity extends AppCompatActivity  {
         }
     }
 
+    /**
+     * Launches the activity for asking camera permission if not given.
+     */
+
     private void askPermission() {
         ActivityCompat.requestPermissions(CameraActivity.this, new String[]
                 {Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
@@ -229,7 +224,6 @@ public class CameraActivity extends AppCompatActivity  {
 
     /**
      * The activity for the image of surrounding location and compresses the image.
-     * @return the generated bitmap of the image of surrounding location .
      */
     ActivityResultLauncher<Intent> activitySurroundingResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -256,6 +250,10 @@ public class CameraActivity extends AppCompatActivity  {
     public Bitmap getBitmap(){
         return bitmapOfLocation;
     }
+
+    /**
+     * Passes data of qr scanner, geolocation and image back to main .
+     */
     public void getBackToMain(){
         Intent backToMain = new Intent(CameraActivity.this, MainActivity.class);
         String qrData = "codeData";

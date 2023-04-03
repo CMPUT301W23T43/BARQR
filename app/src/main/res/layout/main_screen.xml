@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@drawable/waves"
+    android:background="@drawable/darkwave"
     android:gravity="bottom"
     >
     <LinearLayout
@@ -141,13 +141,13 @@
             android:layout_width="8.5dp"
             android:layout_height="75dp"
             />
+
         <ImageButton
             android:id="@+id/newCodeButton"
-            android:layout_width="75dp"
+            android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:src="@drawable/camera"
-            android:background="#E1F5FE"
-            />
+            android:background="#B2E4FB"
+            android:src="@drawable/camera" />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
@@ -157,7 +157,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/trophy"
-            android:background="#E1F5FE"
+            android:background="#B2E4FB"
             />
         <ImageView
             android:layout_width="5dp"
@@ -168,7 +168,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/house"
-            android:background="#E1F5FE"
+            android:background="#B2E4FB"
             />
         <ImageView
             android:layout_width="5dp"
@@ -179,7 +179,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/map"
-            android:background="#E1F5FE"
+            android:background="#B2E4FB"
             />
         <ImageView
             android:layout_width="5dp"
@@ -190,7 +190,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/stare"
-            android:background="#E1F5FE"
+            android:background="#B2E4FB"
             />
         <ImageView
             android:layout_width="8.5dp"

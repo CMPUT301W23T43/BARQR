@@ -96,17 +96,14 @@
         <TextView
             android:id="@+id/lowestQRCode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
+            android:layout_height="35dp"
             android:paddingLeft="70dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
             android:textStyle="italic"
             android:text="                "
             android:textColor="#150578"
             android:autoSizeTextType="uniform"
-            android:autoSizeMaxTextSize="20dp"
-            android:autoSizeMinTextSize="18dp"
+            android:autoSizeMaxTextSize="19dp"
+            android:autoSizeMinTextSize="17dp"
             android:autoSizeStepGranularity="2dp"/>
     </LinearLayout>
 
@@ -139,8 +136,8 @@
             android:textColor="#150578"
             android:textStyle="italic"
             android:autoSizeTextType="uniform"
-            android:autoSizeMaxTextSize="20dp"
-            android:autoSizeMinTextSize="18dp"
+            android:autoSizeMaxTextSize="19dp"
+            android:autoSizeMinTextSize="17dp"
             android:autoSizeStepGranularity="2dp"
             />
         <LinearLayout

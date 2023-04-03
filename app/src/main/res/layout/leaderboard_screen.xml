@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="bottom"
-    android:background="@drawable/nextwaves"
+    android:background="@drawable/darkwave"
     >
 
     <LinearLayout
@@ -42,21 +42,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="Number of Codes"
+            android:text="View All Codes"
             android:layout_gravity="center"
             android:backgroundTint="#070707"
             android:textColor="#81D4FA"
             android:layout_marginRight="20dp"
-            >
-        </Button>
-        <Button
-            android:id="@+id/codeSearchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Individual Codes"
-            android:layout_gravity="center"
-            android:backgroundTint="#070707"
-            android:textColor="#81D4FA"
             >
         </Button>
 
@@ -78,29 +68,6 @@
         </TextView>
         <TextView
             android:id="@+id/playerRanking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="_____"
-            android:textColor="#150578"
-            >
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:width="@android:dimen/notification_large_icon_height"
-            >
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Code Ranking:"
-            android:textColor="#150578"
-            >
-        </TextView>
-        <TextView
-            android:id="@+id/codeRanking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="_____"
@@ -136,13 +103,13 @@
             android:layout_width="8.5dp"
             android:layout_height="75dp"
             />
+
         <ImageButton
             android:id="@+id/newCodeButton"
-            android:layout_width="75dp"
+            android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:src="@drawable/camera"
-            android:background="#E1F5FE"
-            />
+            android:background="#B2E4FB"
+            android:src="@drawable/camera" />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
@@ -152,19 +119,19 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/trophy"
-            android:background="#E1F5FE"
+            android:background="#B2E4FB"
             />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
             />
+
         <ImageButton
             android:id="@+id/homeButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:src="@drawable/house"
-            android:background="#E1F5FE"
-            />
+            android:background="#B2E4FB"
+            android:src="@drawable/house" />
         <ImageView
             android:layout_width="5dp"
             android:layout_height="75dp"
@@ -174,7 +141,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/map"
-            android:background="#E1F5FE"
+            android:background="#B2E4FB"
             />
         <ImageView
             android:layout_width="5dp"
@@ -184,8 +151,8 @@
             android:id="@+id/settingsButton"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:src="@drawable/setting"
-            android:background="#E1F5FE"
+            android:src="@drawable/stare"
+            android:background="#B2E4FB"
             />
         <ImageView
             android:layout_width="8.5dp"

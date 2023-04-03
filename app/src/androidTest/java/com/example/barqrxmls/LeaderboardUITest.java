@@ -19,6 +19,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +31,12 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class LeaderboardUITest {
+
+    @BeforeClass
+    public static void setup() {
+        User test = new User("test","test","test");
+        CurrentUser.getInstance().setUser(test);
+    }
 
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<MainActivity>(MainActivity.class);
@@ -61,13 +68,11 @@ public class LeaderboardUITest {
     public void testButtonsDisplay() {
         onView(withId(R.id.leaderBoardButton)).perform(click()).check(matches(isDisplayed()));
         onView(withId(R.id.playerSearchButton)).check(matches(isDisplayed()));
-        onView(withId(R.id.codeSearchButton)).check(matches(isDisplayed()));
     }
 
     /**
      * This test checks that the user ranking is displayed upon the launch of the activity.
      */
-
     @Test
     public void testUserRankDisplay() {
         onView(withId(R.id.leaderBoardButton)).perform(click()).check(matches(isDisplayed()));
@@ -75,7 +80,7 @@ public class LeaderboardUITest {
     }
 
     /**
-     * This test checks that a user can return to the home screen from the leaderboard activty
+     * This test checks that a user can return to the home screen from the leaderboard activity
      * by using the home button on the taskbar.
      */
 

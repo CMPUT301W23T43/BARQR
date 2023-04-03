@@ -117,6 +117,11 @@ public class User implements Serializable {
         return numCodes;
     }
 
+    /**
+     * gets the geolocation for a given code
+     * @param codeHash the hash of the code to get the geolocation for
+     * @return the geolocation of the code
+     */
     public String getGeoLocation(String codeHash) {
         if(!codes.containsKey(codeHash)) {
             return null;
@@ -178,14 +183,26 @@ public class User implements Serializable {
         //updateInDatabase();
     }
 
+    /**
+     * allows subclasses to set their list of codes
+     * @param codes the list of codes to set User.codes to
+     */
     protected void setCodes(HashMap<String,HashMap<String,String>> codes) {
         this.codes = codes;
     }
 
+    /**
+     * allows subclasses to set their total points
+     * @param points the integer of points to set totalPoints to
+     */
     protected void setTotalPoints(int points) {
         this.totalPoints = points;
     }
 
+    /**
+     * allows subclasses to set their number of codes
+     * @param numCodes integer of the number of codes to set numCodes to
+     */
     protected void setNumCodes(int numCodes) {
         this.numCodes = numCodes;
     }
@@ -241,6 +258,11 @@ public class User implements Serializable {
 
     }
 
+    /**
+     * gets the comment of a given code
+     * @param codeHash the hash of the code to get the comment for
+     * @return the comment of the code
+     */
     public String getComment(String codeHash) {
         if(!codes.containsKey(codeHash) || codes.get(codeHash) == null) {
             return null;
@@ -258,6 +280,11 @@ public class User implements Serializable {
     // website: https://www.toptip.ca/2019/04/java-convert-byte-array-to-string-then.html
     // author: Zen
 
+    /**
+     * adds an image to the a the given code of a User
+     * @param codeHash the hash of the code to add the image to
+     * @param image the image to add to the code
+     */
     public void addImage(String codeHash, byte[] image) {
         if(!codes.containsKey(codeHash)) {
             return;
@@ -271,6 +298,11 @@ public class User implements Serializable {
         //updateInDatabase();
     }
 
+    /**
+     * gets an image for a given code
+     * @param codeHash the hash of the code to get the image for
+     * @return an image represented as a byte array
+     */
     public byte[] getImage(String codeHash) {
         if(!codes.containsKey(codeHash)) {
             return null;
@@ -291,7 +323,7 @@ public class User implements Serializable {
     }
 
     /**
-     *
+     * compares two users by username
      * @param o
      */
     public int compareTo(Object o) {

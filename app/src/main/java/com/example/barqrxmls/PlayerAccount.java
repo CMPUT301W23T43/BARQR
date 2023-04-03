@@ -27,6 +27,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
 
+/**
+ * displays another player's account information
+ */
 public class PlayerAccount extends AppCompatActivity {
 
     private ArrayList<Code> CodeDataList;
@@ -56,7 +59,6 @@ public class PlayerAccount extends AppCompatActivity {
 
         ImageButton leaderboard = (ImageButton) findViewById(R.id.leaderBoardButton);
         leaderboard.setOnClickListener(taskbar.getSwitchActivityMap().get("LeaderBoard"));
-
 
         ImageButton map = (ImageButton) findViewById(R.id.mapButton);
         map.setOnClickListener(taskbar.getSwitchActivityMap().get("Map"));

@@ -14,8 +14,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.JMock1Matchers.equalTo;
 import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+
+import android.widget.AdapterView;
+
+import static kotlin.jvm.internal.Intrinsics.checkNotNull;
 
 import android.util.Log;
 
@@ -28,6 +34,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.checkerframework.checker.units.qual.Current;
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -36,10 +43,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * tests the PlayerSearch Activity
+ */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class PlayerSearchUITest {
 
+    /**
+     * sets up the current user
+     */
     @BeforeClass
     public static void setup() {
         User test = new User("test","test","test");
@@ -55,6 +68,9 @@ public class PlayerSearchUITest {
 
     final CollectionReference usersRef = database.collection("Users");
 
+    /**
+     * checks that snack pops up when nothing is entered in the searchbar
+     */
     @Test
     public void testEnterNothing() {
         User test = new User("test", "test", "test");
@@ -68,6 +84,9 @@ public class PlayerSearchUITest {
         onView(withId(R.id.mySnackId)).check(matches(isDisplayed()));
     }
 
+    /**
+     * checks if search correctly returns a list of players
+     */
     @Test
     public void testSearch() {
         User test = new User("test", "test", "test");
@@ -79,10 +98,12 @@ public class PlayerSearchUITest {
         onView(withId(R.id.search_button)).check(matches(isClickable()));
         onView(withId(R.id.search_bar)).perform(typeText("a"));
         onView(withId(R.id.search_button)).perform(click());
-        onView(withText("anji"));
         onView(withText("anjiphone"));
     }
 
+    /**
+     * tests the close button
+     */
     @Test
     public void testCloseButton() {
         User test = new User("test", "test", "test");

@@ -24,18 +24,9 @@ import org.w3c.dom.Text;
 
 import java.util.Locale;
 
-//PUT IN MAIN
-//
-//        CodesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//              @Override
-//          public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//        Code code = CodeDataList.get(i);
-//        Intent newCodeSwitch = new Intent(MainActivity.this,NewCode.class);
-//        newCodeSwitch.putExtra("code",code);
-//
-//        }
-//        });
-
+/**
+ * displays a code's information
+ */
 public class NewCode extends AppCompatActivity {
     ImageView uniqueRepr;
     ImageView surroundings;
@@ -46,6 +37,11 @@ public class NewCode extends AppCompatActivity {
         setContentView(R.layout.code_screen);
 
         // get code and user
+        if(!getIntent().hasExtra("code")) {
+            finish();
+            Intent intent = new Intent(NewCode.this,MainActivity.class);
+            startActivity(intent);
+        }
         Bundle bundle = getIntent().getExtras();
         Code code = (Code) bundle.get("code");
         CurrentUser user = CurrentUser.getInstance();

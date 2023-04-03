@@ -122,8 +122,7 @@ public class SearchQrCodeGeo extends AppCompatActivity {
                                 List<Address> addresses2 = null;
                                 try {
                                     addresses2 = geocoder.getFromLocation((Double) latLong.get("first"), (Double) latLong.get("second"), 1);
-                                    System.out.println(addresses2.get(0).getLocality().toLowerCase());
-                                    System.out.println(location.toLowerCase());
+
                                     if (addresses2.get(0).getLocality().toLowerCase().equalsIgnoreCase(location) || addresses2.get(0).getCountryName().equalsIgnoreCase(location) ||
                                             addresses2.get(0).getAdminArea().equalsIgnoreCase(location)) {
                                         GeoCodeDataList.add(new Code((String) document.get("hash")));

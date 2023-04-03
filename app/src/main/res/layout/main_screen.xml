@@ -7,6 +7,17 @@
     android:background="@drawable/darkwave"
     android:gravity="bottom"
     >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="BARQR"
+        android:textColor="#B2E4FB"
+        android:layout_gravity="center_horizontal"
+        android:alpha="0.7"
+        android:textSize="30dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,9 +27,8 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="74dp"
+            android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:paddingTop="25dp"
             android:text="Your Codes"
             android:textColor="#150578"
             android:textSize="35dp"/>

@@ -14,10 +14,37 @@
 
         <ImageView
             android:layout_width="180dp"
-            android:layout_height="180dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="90dp"
-            android:background="#000" />
+            android:layout_height="150dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/trophy_view" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:paddingTop="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player"
+                android:textSize="25dp"
+                android:textColor="#150578"
+                android:fontFamily="sans-serif-smallcaps">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leaderboard"
+                android:textSize="25dp"
+                android:textColor="#150578"
+                android:fontFamily="sans-serif-smallcaps">
+
+            </TextView>
+
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/closeButton"

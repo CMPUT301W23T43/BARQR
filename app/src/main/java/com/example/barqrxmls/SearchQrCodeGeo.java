@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -66,6 +68,8 @@ public class SearchQrCodeGeo extends AppCompatActivity {
         });
 
 
+
+
         Search.setOnClickListener(v -> {
             GeoCodeDataList.clear();
             CodeAdapter = new CodeArrayAdapter(SearchQrCodeGeo.this, GeoCodeDataList);
@@ -87,6 +91,15 @@ public class SearchQrCodeGeo extends AppCompatActivity {
                         double latitude = addresses.get(0).getLatitude();
                         double longitude = (addresses.get(0).getLongitude());
                         SearchDatabase(location);
+                        GeoCodesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                Code code = GeoCodeDataList.get(i);
+                                Intent newCodeSwitch = new Intent(SearchQrCodeGeo.this, CodeViewDatabase.class);
+                                newCodeSwitch.putExtra("code",code);
+                                startActivity(newCodeSwitch);
+                            }
+                        });
                     }
 
                 } catch (IOException e) {
@@ -126,7 +139,7 @@ public class SearchQrCodeGeo extends AppCompatActivity {
 
                                     if (addresses2.get(0).getLocality().toLowerCase().equalsIgnoreCase(location) || addresses2.get(0).getCountryName().equalsIgnoreCase(location) ||
                                             addresses2.get(0).getAdminArea().equalsIgnoreCase(location)) {
-                                        GeoCodeDataList.add(new Code((String) document.get("hash")));
+                                        GeoCodeDataList.add(new Code(new CodeHashContainer((String) document.get("hash"))));
                                         CodeAdapter = new CodeArrayAdapter(SearchQrCodeGeo.this, GeoCodeDataList);
                                         GeoCodesList.setAdapter(CodeAdapter);
                                         CodeAdapter.notifyDataSetChanged();

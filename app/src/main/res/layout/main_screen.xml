@@ -169,10 +169,7 @@
             android:src="@drawable/trophy"
             android:background="#B2E4FB"
             />
-        <ImageView
-            android:layout_width="5dp"
-            android:layout_height="75dp"
-            />
+
         <ImageButton
             android:id="@+id/homeButton"
             android:layout_width="75dp"
@@ -180,10 +177,7 @@
             android:src="@drawable/house"
             android:background="#B2E4FB"
             />
-        <ImageView
-            android:layout_width="5dp"
-            android:layout_height="75dp"
-            />
+
         <ImageButton
             android:id="@+id/mapButton"
             android:layout_width="75dp"

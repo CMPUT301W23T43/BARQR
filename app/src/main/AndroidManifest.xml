@@ -26,6 +26,9 @@
             android:name=".SearchQrCodeGeo"
             android:exported="false" />
         <activity
+            android:name=".CodeViewDatabase"
+            android:exported="false" />
+        <activity
             android:name=".PlayerSearch"
             android:exported="false" />
         <activity

@@ -36,6 +36,7 @@ How to convert a String to a byte array and vice versa [toptip](https://www.topt
 
 ##### [NewCode Testing] 
 How to use an intent with ActivityScenarioRule [stackoverflow.com](https://stackoverflow.com/questions/54179560/how-to-putextra-data-using-newest-activityscenariorule-activityscenarioespress) by, [Jose Leles https](//stackoverflow.com/users/11301807/jose-leles) and edited by [anotherdave](https://stackoverflow.com/users/1474421/anotherdave)
+How to test dialogbuilders [stackoverflow.com](https://stackoverflow.com/questions/21045509/check-if-a-dialog-is-displayed-with-espresso) by, [denys](https://stackoverflow.com/users/2980933/denys)
 
 ##### Other citations
 How to create an Intent Launcher [@DailyCoding](https://www.youtube.com/@DailyCoding), [Video here](https://www.youtube.com/watch?v=DfDj9EadOLk
